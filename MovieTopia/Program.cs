@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using dotenv.net;
 
 namespace MovieTopia
 {
@@ -14,6 +17,9 @@ namespace MovieTopia
         [STAThread]
         static void Main()
         {
+            // Load environment variables from .env file
+            DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 4, encoding: Encoding.ASCII));
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Home());
