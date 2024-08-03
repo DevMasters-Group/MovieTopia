@@ -28,34 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.btnCStaff = new MovieTopia.Controls.BTN();
+            this.btnCAdmin = new MovieTopia.Controls.BTN();
             this.SuspendLayout();
             // 
-            // label1
+            // btnCStaff
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Home Page";
+            this.btnCStaff.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCStaff.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCStaff.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCStaff.BorderRadius = 40;
+            this.btnCStaff.BorderSize = 0;
+            this.btnCStaff.FlatAppearance.BorderSize = 0;
+            this.btnCStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCStaff.ForeColor = System.Drawing.Color.White;
+            this.btnCStaff.Location = new System.Drawing.Point(386, 200);
+            this.btnCStaff.Name = "btnCStaff";
+            this.btnCStaff.Size = new System.Drawing.Size(150, 40);
+            this.btnCStaff.TabIndex = 1;
+            this.btnCStaff.Text = "Continue as Staff";
+            this.btnCStaff.TextColor = System.Drawing.Color.White;
+            this.btnCStaff.UseVisualStyleBackColor = false;
+            this.btnCStaff.Click += new System.EventHandler(this.btnCStaff_Click);
+            // 
+            // btnCAdmin
+            // 
+            this.btnCAdmin.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCAdmin.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCAdmin.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCAdmin.BorderRadius = 40;
+            this.btnCAdmin.BorderSize = 0;
+            this.btnCAdmin.FlatAppearance.BorderSize = 0;
+            this.btnCAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCAdmin.ForeColor = System.Drawing.Color.White;
+            this.btnCAdmin.Location = new System.Drawing.Point(386, 246);
+            this.btnCAdmin.Name = "btnCAdmin";
+            this.btnCAdmin.Size = new System.Drawing.Size(150, 40);
+            this.btnCAdmin.TabIndex = 2;
+            this.btnCAdmin.Text = "Continue as Admin";
+            this.btnCAdmin.TextColor = System.Drawing.Color.White;
+            this.btnCAdmin.UseVisualStyleBackColor = false;
+            this.btnCAdmin.Click += new System.EventHandler(this.btnCAdmin_Click);
             // 
             // Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(946, 541);
+            this.Controls.Add(this.btnCAdmin);
+            this.Controls.Add(this.btnCStaff);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Home";
             this.Text = "MovieTopia";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private Controls.BTN btnCStaff;
+        private Controls.BTN btnCAdmin;
     }
 }
 

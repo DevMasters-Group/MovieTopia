@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,23 @@ namespace MovieTopia
         public Home()
         {
             InitializeComponent();
+        }
+
+        private void btnCStaff_Click(object sender, EventArgs e)
+        {
+            HomeStaff homeStaff = new HomeStaff();
+            this.Hide();
+            homeStaff.ShowDialog();
+            this.Close();
+        }
+
+        private void btnCAdmin_Click(object sender, EventArgs e)
+        {
+            HomeAdmin homeAdmin = new HomeAdmin();
+            this.Hide();
+            homeAdmin.ShowDialog();
+            this.Close();
+            
         }
     }
 }
