@@ -81,6 +81,7 @@
             this.Name = "Home";
             this.Text = "MovieTopia";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Home_Load);
             this.ResumeLayout(false);
 
         }

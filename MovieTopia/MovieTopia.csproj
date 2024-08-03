@@ -83,6 +83,12 @@
     <Compile Include="HomeStaff.Designer.cs">
       <DependentUpon>HomeStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="MMovies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MMovies.Designer.cs">
+      <DependentUpon>MMovies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Home.resx">
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HomeAdmin.resx">
       <DependentUpon>HomeAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MMovies.resx">
+      <DependentUpon>MMovies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
