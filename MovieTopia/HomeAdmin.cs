@@ -52,7 +52,10 @@ namespace MovieTopia
 
         private void btnMTickets_Click(object sender, EventArgs e)
         {
-
+            MaintainMovies maintainMovies = new MaintainMovies();
+            this.Hide();
+            maintainMovies.ShowDialog();
+            this.Show();
         }
 
         private void btnSTickets_Click(object sender, EventArgs e)
