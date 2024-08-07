@@ -31,7 +31,8 @@ namespace MovieTopia
             ScheduleMovies scheduleMoviesForm = new ScheduleMovies();
             this.Hide();
             scheduleMoviesForm.ShowDialog();
-            this.Close();
+            this.Show();
+            //this.Close();
         }
 
         private void btnMTheatres_Click(object sender, EventArgs e)
