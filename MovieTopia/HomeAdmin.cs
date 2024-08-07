@@ -31,7 +31,8 @@ namespace MovieTopia
             ScheduleMovies scheduleMoviesForm = new ScheduleMovies();
             this.Hide();
             scheduleMoviesForm.ShowDialog();
-            this.Close();
+            this.Show();
+            //this.Close();
         }
 
         private void btnMTheatres_Click(object sender, EventArgs e)
@@ -51,7 +52,10 @@ namespace MovieTopia
 
         private void btnMTickets_Click(object sender, EventArgs e)
         {
-
+            MaintainMovies maintainMovies = new MaintainMovies();
+            this.Hide();
+            maintainMovies.ShowDialog();
+            this.Show();
         }
 
         private void btnSTickets_Click(object sender, EventArgs e)
