@@ -21,15 +21,29 @@ namespace MovieTopia
         DataSet ds;
         SqlDataAdapter adapter;
 
-        public DetailsForm(string schemaName, bool newRecord, Dictionary<string, string> foreignKeySchemaNames = null, DataSet dataSet = null, DataGridViewRow row = null)
+        /// <summary>
+        /// This form automatically builds itself based on the parameters passed into it.
+        /// The schemaName is the table name of the record which you are creating or editing.
+        /// The dataSet contains all of the DataTables from the select queries for accessing child entity data. Important that the table or accessing name is the entity name itself eg. Movie or MovieSchedule.
+        /// The selectedDataGridViewRow is the currently selected or highlighted row in the Data grid. Ensure to set the datagrid Multiselect property to false, otherwise errors can occur.
+        /// The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's
+        /// 
+        /// Alot of the automation is based on a schema query to the database to get it's structure and layout, such as the primitive data types (to create the correct control), and whether the field is a foreign key or primary key etc.
+        /// </summary>
+        /// <param name="schemaName"></param>
+        /// <param name="dataSet"></param>
+        /// <param name="selectedDataGridViewRow"></param>
+        /// <param name="foreignKeySchemaNames"></param>
+        public DetailsForm(string schemaName, DataSet dataSet = null, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null)
         {
             InitializeComponent();
 
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-            this.newRecord = newRecord;
+            if (dataSet == null || selectedDataGridViewRow == null) this.newRecord = true;
+
             QuerySchema(schemaName);
-            PopulateFields(row, dataSet, foreignKeySchemaNames);          
+            PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);          
         }
 
         private void QuerySchema(string schemaName)
@@ -207,8 +221,10 @@ namespace MovieTopia
                             DataTable foreignEntity = dataSet.Tables[schemaColumnName.Substring(0, schemaColumnName.Length - 2)];
                             if (fieldData.ContainsKey(schemaColumnName))
                             {
-                                
-                                string foreignKeyRelation = foreignKeySchemaNames[schemaColumnName];
+                                if (foreignKeySchemaNames == null || !foreignKeySchemaNames.TryGetValue(schemaColumnName, out string foreignKeyRelation))
+                                {
+                                    foreignKeyRelation = schemaColumnName;
+                                }
 
                                 List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
                                 foreach (DataRow row in foreignEntity.Rows)
@@ -274,7 +290,7 @@ namespace MovieTopia
                         Top = y,
                         Left = 120,
                         Width = 200,
-                        ShowUpDown = true,
+                        //ShowUpDown = true,
                         Format = DateTimePickerFormat.Custom,
                         CustomFormat = "yyyy-MM-dd HH:mm"
                     };
