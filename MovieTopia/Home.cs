@@ -14,9 +14,21 @@ namespace MovieTopia
 {
     public partial class Home : Form
     {
+        private int padding = 10;
+
         public Home()
         {
             InitializeComponent();
+
+            this.Resize += _Resize;
+        }
+
+        private void _Resize(Object sender, EventArgs e)
+        {
+            btnCStaff.Left = (this.ClientSize.Width - btnCStaff.Width) / 2;
+            btnCAdmin.Left = (this.ClientSize.Width - btnCAdmin.Width) / 2;
+            btnCStaff.Top = (this.ClientSize.Height / 4) * 3 - btnCStaff.Height - padding / 2;
+            btnCAdmin.Top = (this.ClientSize.Height / 4) * 3 + padding / 2;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -27,7 +39,7 @@ namespace MovieTopia
                 try
                 {
                     connection.Open();
-                    MessageBox.Show("Connection successful!");
+                    connection.Close();
                 }
                 catch (Exception ex)
                 {

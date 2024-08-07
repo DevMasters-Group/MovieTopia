@@ -36,15 +36,15 @@
             // 
             this.btnCStaff.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnCStaff.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCStaff.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCStaff.BorderRadius = 40;
-            this.btnCStaff.BorderSize = 0;
+            this.btnCStaff.BorderColor = System.Drawing.Color.DarkSlateBlue;
+            this.btnCStaff.BorderRadius = 20;
+            this.btnCStaff.BorderSize = 2;
             this.btnCStaff.FlatAppearance.BorderSize = 0;
             this.btnCStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCStaff.ForeColor = System.Drawing.Color.White;
-            this.btnCStaff.Location = new System.Drawing.Point(386, 200);
+            this.btnCStaff.Location = new System.Drawing.Point(386, 345);
             this.btnCStaff.Name = "btnCStaff";
-            this.btnCStaff.Size = new System.Drawing.Size(150, 40);
+            this.btnCStaff.Size = new System.Drawing.Size(172, 47);
             this.btnCStaff.TabIndex = 1;
             this.btnCStaff.Text = "Continue as Staff";
             this.btnCStaff.TextColor = System.Drawing.Color.White;
@@ -53,17 +53,17 @@
             // 
             // btnCAdmin
             // 
-            this.btnCAdmin.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCAdmin.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCAdmin.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCAdmin.BorderRadius = 40;
-            this.btnCAdmin.BorderSize = 0;
+            this.btnCAdmin.BackColor = System.Drawing.Color.DarkOrchid;
+            this.btnCAdmin.BackgroundColor = System.Drawing.Color.DarkOrchid;
+            this.btnCAdmin.BorderColor = System.Drawing.Color.DarkViolet;
+            this.btnCAdmin.BorderRadius = 20;
+            this.btnCAdmin.BorderSize = 2;
             this.btnCAdmin.FlatAppearance.BorderSize = 0;
             this.btnCAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCAdmin.ForeColor = System.Drawing.Color.White;
-            this.btnCAdmin.Location = new System.Drawing.Point(386, 246);
+            this.btnCAdmin.Location = new System.Drawing.Point(386, 413);
             this.btnCAdmin.Name = "btnCAdmin";
-            this.btnCAdmin.Size = new System.Drawing.Size(150, 40);
+            this.btnCAdmin.Size = new System.Drawing.Size(172, 47);
             this.btnCAdmin.TabIndex = 2;
             this.btnCAdmin.Text = "Continue as Admin";
             this.btnCAdmin.TextColor = System.Drawing.Color.White;
@@ -74,6 +74,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullDark;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(946, 541);
             this.Controls.Add(this.btnCAdmin);
             this.Controls.Add(this.btnCStaff);
