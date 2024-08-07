@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MovieTopia
 {
-    public partial class Form1 : Form
+    public partial class HomeStaff : Form
     {
-        public Form1()
+        public HomeStaff()
         {
             InitializeComponent();
         }
