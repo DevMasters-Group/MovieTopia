@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -25,13 +26,19 @@ namespace MovieTopia
             // Build the connection string
             string server = Environment.GetEnvironmentVariable("DB_SERVER");
             string database = Environment.GetEnvironmentVariable("DB_DATABASE");
-            string user = Environment.GetEnvironmentVariable("DB_USER");
-            string password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            string connectionString = $"Server={server};Database={database};Integrated Security=True";
+            string connectionString = $"Server={server};Database={database};Integrated Security=True;TrustServerCertificate=True";
 
             // Optionally, set the connection string as an environment variable (optional)
             Environment.SetEnvironmentVariable("DATABASE_URL", connectionString);
+
+            // Set the connection string in configuration
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.ConnectionStrings.ConnectionStrings["MovieTopiaDatabase"].ConnectionString = connectionString;
+            config.Save(ConfigurationSaveMode.Modified);
+
+            ConfigurationManager.RefreshSection("connectionStrings");
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
