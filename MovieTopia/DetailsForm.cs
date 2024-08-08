@@ -284,9 +284,12 @@ namespace MovieTopia
                 }
                 else if (dataType == "smallmoney")  // Handle currency
                 {
-                    control = new TextBox
+                    control = new NumericUpDown
                     {
-                        Text = fieldData[schemaColumnName].ToString(),
+                        Minimum = 0,
+                        Maximum = 1000,
+                        DecimalPlaces = 2,
+                        Value = decimal.Parse(fieldData[schemaColumnName].ToString()),
                         Top = y,
                         Left = label.Width + padding,
                         Width = 200,
