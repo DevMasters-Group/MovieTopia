@@ -198,14 +198,15 @@ namespace MovieTopia
                 fieldData.TryGetValue(schemaColumnName, out object fieldValue);
                 if (dataType == "bit") // Handle booleans
                 {
+                    bool.TryParse(fieldData[schemaColumnName].ToString(), out bool active);
                     control = new CheckBox
                     {
-                        Text = schemaColumnName,
-                        Checked = (bool)fieldData[schemaColumnName],
+                        Checked = active,
                         Top = y,
                         Left = label.Width + padding,
                         Width = 200,
                         Font = new Font("Arial", 10, FontStyle.Regular),
+                        BackColor = Color.Transparent
                     };
                 }
                 else if (dataType == "int") // Handle integers
