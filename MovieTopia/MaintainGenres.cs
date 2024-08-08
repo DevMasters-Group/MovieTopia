@@ -5,21 +5,20 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MovieTopia
 {
-    public partial class MaintainMovies : Form
+    public partial class MaintainGenres : Form
     {
         private string DATABASE_URL;
         private int padding = 20;
         DataSet ds;
         SqlDataAdapter adapter;
 
-        public MaintainMovies()
+        public MaintainGenres()
         {
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
@@ -33,13 +32,12 @@ namespace MovieTopia
         private void Form_Resize(Object sender, EventArgs e)
         {
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
-            btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) /2;
+            btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
-            btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding*2);
-            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding*2);
-
+            btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
+            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
@@ -51,66 +49,48 @@ namespace MovieTopia
                 ds = new DataSet();
                 adapter = new SqlDataAdapter();
 
-                //string sql = "SELECT * FROM Movie";
-                string sqlMovies = @"
+                string sqlGenres = @"
                             SELECT
-                                m.MovieID, m.GenreID, m.Title, m.Description, m.Duration, m.PG_Rating, g.GenreName
+                                g.GenreID, g.GenreName
                             FROM
-                                Movie m
-                            JOIN
-                                Genre g ON m.GenreID = g.GenreID";
-                string sqlGenres = "SELECT * FROM Genre";
-                string sqlSeats = "SELECT * FROM Seat";
-                //cmd = new SqlCommand(sqlMovies, conn);
+                                Genre g
+                            ;";
 
-                adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
-                adapter.Fill(ds, "Movie");
                 adapter.SelectCommand = new SqlCommand(sqlGenres, conn); ;
                 adapter.Fill(ds, "Genre");
-                adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
-                adapter.Fill(ds, "Seat");
 
-                dgvMovies.DataSource = ds;
-                dgvMovies.DataMember = "Movie";
+                dgvGenres.DataSource = ds;
+                dgvGenres.DataMember = "Genre";
             }
         }
 
         private void AdjustDataGridViewSize()
         {
-            dgvMovies.Width = this.ClientSize.Width - (2 * padding);
-            dgvMovies.Height = this.ClientSize.Height - (10 * padding);
-            dgvMovies.Location = new Point(padding, padding * 3);
+            dgvGenres.Width = this.ClientSize.Width - (2 * padding);
+            dgvGenres.Height = this.ClientSize.Height - (10 * padding);
+            dgvGenres.Location = new Point(padding, padding * 3);
         }
 
         private void AdjustColumnWidths()
         {
-            if (dgvMovies.Columns.Count == 0)
+            if (dgvGenres.Columns.Count == 0)
                 return;
 
-            dgvMovies.Columns["MovieID"].HeaderText = "Movie ID";
-            dgvMovies.Columns["PG_Rating"].HeaderText = "PG Rating";
-            dgvMovies.Columns["GenreName"].HeaderText = "Genre";
+            dgvGenres.Columns["GenreID"].HeaderText = "Genre ID";
+            dgvGenres.Columns["GenreName"].HeaderText = "Genre Name";
 
-            dgvMovies.Columns["MovieID"].Width = (int)(dgvMovies.Width * 0.1);
-            //dgvMovies.Columns["GenreID"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["GenreName"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["Title"].Width = (int)(dgvMovies.Width * 0.2);
-            dgvMovies.Columns["Description"].Width = (int)(dgvMovies.Width * 0.378);
-            dgvMovies.Columns["Duration"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["PG_Rating"].Width = (int)(dgvMovies.Width * 0.1);
+            dgvGenres.Columns["GenreID"].Width = (int)(dgvGenres.Width * 0.2);
+            dgvGenres.Columns["GenreName"].Width = (int)(dgvGenres.Width * 0.8);
 
             // optionally set specific columns to hidden
-            dgvMovies.Columns["GenreID"].Visible = false;
+            //dgvGenres.Columns["GenreID"].Visible = false;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            if (dgvGenres.SelectedRows.Count == 1)
             {
-                Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-                foreignKeySchemaNames["GenreID"] = "GenreName";
-
-                DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
+                DetailsForm detailsForm = new DetailsForm("Genre", null, null, null);
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -118,20 +98,12 @@ namespace MovieTopia
 
                     string sql = @"
                         INSERT INTO 
-                            Movie (
-                                GenreID,
-                                Title,
-                                Description,
-                                Duration,
-                                PG_Rating
+                            Genre (
+                                GenreName
                             )
                             VALUES
                             (
-                                @GenreID,
-                                @Title,
-                                @Description,
-                                @Duration,
-                                @PG_Rating
+                                @GenreName
                             );";
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -142,11 +114,7 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
-                        command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
-                        command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
-                        command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
-                        command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
+                        command.Parameters.AddWithValue("@GenreName", ((TextBox)data["GenreName"]).Text);
 
                         try
                         {
@@ -167,14 +135,14 @@ namespace MovieTopia
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            if (dgvGenres.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvGenres.SelectedRows[0];
 
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
                 foreignKeySchemaNames["GenreID"] = "GenreName";
 
-                DetailsForm detailsForm = new DetailsForm("Movie", ds, selectedRow, foreignKeySchemaNames);
+                DetailsForm detailsForm = new DetailsForm("Genre", ds, selectedRow, foreignKeySchemaNames);
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -182,15 +150,11 @@ namespace MovieTopia
 
                     string sql = @"
                         UPDATE 
-                            Movie
+                            Genre
                         SET 
-                            GenreID = @GenreID,
-                            Title = @Title,
-                            Description = @Description,
-                            Duration = @Duration,
-                            PG_Rating = @PG_Rating
+                            GenreName = @GenreName
                         WHERE
-                            MovieID = @MovieID;
+                            GenreID = @GenreID;
                         ";
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -201,12 +165,8 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
-                        command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
-                        command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
-                        command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
-                        command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
-                        command.Parameters.AddWithValue("@MovieID", ((TextBox)data["MovieID"]).Text);
+                        command.Parameters.AddWithValue("@GenreID", ((TextBox)data["GenreID"]).Text);
+                        command.Parameters.AddWithValue("@GenreName", ((TextBox)data["GenreName"]).Text);
 
                         try
                         {
@@ -227,15 +187,15 @@ namespace MovieTopia
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            if (dgvGenres.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvGenres.SelectedRows[0];
 
                 string sql = @"
                         DELETE FROM 
-                            Movie
+                            Genre
                         WHERE
-                            MovieID = @MovieID;";
+                            GenreID = @GenreID;";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
@@ -245,7 +205,7 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@MovieID", selectedRow.Cells["MovieID"].Value);
+                    command.Parameters.AddWithValue("@GenreID", selectedRow.Cells["GenreID"].Value);
 
                     try
                     {

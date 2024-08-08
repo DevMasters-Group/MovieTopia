@@ -284,9 +284,12 @@ namespace MovieTopia
                 }
                 else if (dataType == "smallmoney")  // Handle currency
                 {
-                    control = new TextBox
+                    control = new NumericUpDown
                     {
-                        Text = fieldData[schemaColumnName].ToString(),
+                        Minimum = 0,
+                        Maximum = 1000,
+                        DecimalPlaces = 2,
+                        Value = decimal.Parse(fieldData[schemaColumnName].ToString()),
                         Top = y,
                         Left = label.Width + padding,
                         Width = 200,
@@ -416,36 +419,7 @@ namespace MovieTopia
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            string msg = "";
-
-            //Validation checks
-
-            //if (controlsDict.TryGetValue("Title", out Control control))
-            //{
-            //    TextBox textBox = control as TextBox;
-            //    string currentValue = textBox?.Text;
-
-            //    MessageBox.Show($"The current value is: {currentValue}");
-            //}
-
-            //if (controlsDict.TryGetValue("Description", out Control control1))
-            //{
-            //    TextBox textBox = control1 as TextBox;
-            //    string currentValue = textBox?.Text;
-
-            //    MessageBox.Show($"The current value is: {currentValue}");
-            //}
-
-            if (controlsDict.TryGetValue("GenreID", out Control control2))
-            {
-                ComboBox cbx = control2 as ComboBox;
-                string currentValue = cbx.SelectedValue?.ToString();
-                
-
-                MessageBox.Show($"The current value is: {currentValue}");
-            }
-
-
+            // TODO - Validation checks
 
             // dialog result to handle data grid reload
             this.Close();
