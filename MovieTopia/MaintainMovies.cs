@@ -95,7 +95,7 @@ namespace MovieTopia
             //dgvMovies.Columns["GenreID"].Width = (int)(dgvMovies.Width * 0.1);
             dgvMovies.Columns["GenreName"].Width = (int)(dgvMovies.Width * 0.1);
             dgvMovies.Columns["Title"].Width = (int)(dgvMovies.Width * 0.2);
-            dgvMovies.Columns["Description"].Width = (int)(dgvMovies.Width * 0.378);
+            dgvMovies.Columns["Description"].Width = (int)(dgvMovies.Width * 0.377);
             dgvMovies.Columns["Duration"].Width = (int)(dgvMovies.Width * 0.1);
             dgvMovies.Columns["PG_Rating"].Width = (int)(dgvMovies.Width * 0.1);
 

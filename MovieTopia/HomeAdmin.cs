@@ -16,6 +16,20 @@ namespace MovieTopia
         public HomeAdmin()
         {
             InitializeComponent();
+
+            btnMMovies.BackColor = HexToColor("#36455D");
+            btnMTheatres.BackColor = HexToColor("#4B5C9C");
+            btnMGenres.BackColor = HexToColor("#6A80ED");
+            btnMSeats.BackColor = HexToColor("#419DF4");
+            btnMTickets.BackColor = HexToColor("#2C9ACF");
+            btnSMTimes.BackColor = HexToColor("#5A79B6");
+            btnSTickets.BackColor = HexToColor("#8660A8");
+            btnRReports.BackColor = HexToColor("#B54A99");
+        }
+
+        public Color HexToColor(string hex)
+        {
+            return ColorTranslator.FromHtml(hex);
         }
 
         /// <summary>

@@ -132,6 +132,9 @@
     <EmbeddedResource Include="HomeAdmin.resx">
       <DependentUpon>HomeAdmin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HomeStaff.resx">
+      <DependentUpon>HomeStaff.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MaintainGenres.resx">
       <DependentUpon>MaintainGenres.cs</DependentUpon>
     </EmbeddedResource>
