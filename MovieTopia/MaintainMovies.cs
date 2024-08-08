@@ -16,10 +16,8 @@ namespace MovieTopia
     {
         private string DATABASE_URL;
         private int padding = 20;
-        //SqlConnection conn;
         DataSet ds;
         SqlDataAdapter adapter;
-        //SqlCommand cmd;
 
         public MaintainMovies()
         {
@@ -104,6 +102,68 @@ namespace MovieTopia
             dgvMovies.Columns["GenreID"].Visible = false;
         }
 
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            if (dgvMovies.SelectedRows.Count == 1)
+            {
+                Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
+                foreignKeySchemaNames["GenreID"] = "GenreName";
+
+                DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
+                DialogResult result = detailsForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                    string sql = @"
+                        INSERT INTO 
+                            Movie (
+                                GenreID,
+                                Title,
+                                Description,
+                                Duration,
+                                PG_Rating
+                            )
+                            VALUES
+                            (
+                                @GenreID,
+                                @Title,
+                                @Description,
+                                @Duration,
+                                @PG_Rating
+                            );";
+
+                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    {
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                        //command.Parameters["@ID"].Value = customerID;
+
+                        // Use AddWithValue to assign Demographics.
+                        // SQL Server will implicitly convert strings into XML.
+                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
+                        command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
+                        command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
+                        command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
+                        command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Created Successfully", "Success");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error");
+                        }
+                    }
+
+                    LoadMovies();
+                }
+            }
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             if (dgvMovies.SelectedRows.Count == 1)
@@ -117,6 +177,48 @@ namespace MovieTopia
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
+                    Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                    string sql = @"
+                        UPDATE 
+                            Movie
+                        SET 
+                            GenreID = @GenreID,
+                            Title = @Title,
+                            Description = @Description,
+                            Duration = @Duration,
+                            PG_Rating = @PG_Rating
+                        WHERE
+                            MovieID = @MovieID;
+                        ";
+
+                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    {
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                        //command.Parameters["@ID"].Value = customerID;
+
+                        // Use AddWithValue to assign Demographics.
+                        // SQL Server will implicitly convert strings into XML.
+                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
+                        command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
+                        command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
+                        command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
+                        command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
+                        command.Parameters.AddWithValue("@MovieID", ((TextBox)data["MovieID"]).Text);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Updated Successfully", "Success");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error");
+                        }
+                    }
+
                     LoadMovies();
                 }
             }
@@ -124,30 +226,38 @@ namespace MovieTopia
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //if (dgvMovies.SelectedRows.Count == 1)
-            //{
-            //    DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
-
-
-            //    // Assuming you have a new form called DetailsForm
-            //    DetailsForm detailsForm = new DetailsForm("Movie", false, selectedRow, ds);
-            //    DialogResult result = detailsForm.ShowDialog();
-            //    if (result == DialogResult.OK)
-            //    {
-            //        LoadMovies();
-            //    }
-            //}
-        }
-
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-            foreignKeySchemaNames["GenreID"] = "GenreName";
-
-            DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
-            DialogResult result = detailsForm.ShowDialog();
-            if (result == DialogResult.OK)
+            if (dgvMovies.SelectedRows.Count == 1)
             {
+                DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
+
+                string sql = @"
+                        DELETE FROM 
+                            Movie
+                        WHERE
+                            MovieID = @MovieID;";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                {
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
+
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@MovieID", selectedRow.Cells["MovieID"].Value);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Deleted Successfully", "Success");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
+                }
+
                 LoadMovies();
             }
         }

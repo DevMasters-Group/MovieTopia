@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.btnCStaff = new MovieTopia.Controls.BTN();
             this.btnCAdmin = new MovieTopia.Controls.BTN();
             this.SuspendLayout();
@@ -76,11 +77,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullDark;
+            this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1264, 761);
             this.Controls.Add(this.btnCAdmin);
             this.Controls.Add(this.btnCStaff);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "Home";
