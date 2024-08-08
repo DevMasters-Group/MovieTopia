@@ -204,7 +204,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(1264, 761);
             this.Controls.Add(this.btnRReports);
             this.Controls.Add(this.btnSTickets);
             this.Controls.Add(this.btnSMTimes);
@@ -214,6 +214,7 @@
             this.Controls.Add(this.btnMTheatres);
             this.Controls.Add(this.btnMMovies);
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "HomeAdmin";
             this.Text = "HomeAdmin";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
