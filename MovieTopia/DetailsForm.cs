@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,22 +19,20 @@ namespace MovieTopia
         private int padding = 20;
         public Dictionary<string, Control> controlsDict = new Dictionary<string, Control>();
         private bool newRecord;
+        private Image backgroundImage;
+        private int numCharCountLabels = 0;
+        private Label[] charCountLabels;
         DataSet ds;
         SqlDataAdapter adapter;
 
         /// <summary>
-        /// This form automatically builds itself based on the parameters passed into it.
-        /// The schemaName is the table name of the record which you are creating or editing.
-        /// The dataSet contains all of the DataTables from the select queries for accessing child entity data. Important that the table or accessing name is the entity name itself eg. Movie or MovieSchedule.
-        /// The selectedDataGridViewRow is the currently selected or highlighted row in the Data grid. Ensure to set the datagrid Multiselect property to false, otherwise errors can occur.
-        /// The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's
-        /// 
+        /// This form automatically builds itself based on the parameters passed into it. See <see cref="DetailsForm"/> for more.
         /// Alot of the automation is based on a schema query to the database to get it's structure and layout, such as the primitive data types (to create the correct control), and whether the field is a foreign key or primary key etc.
         /// </summary>
-        /// <param name="schemaName"></param>
-        /// <param name="dataSet"></param>
-        /// <param name="selectedDataGridViewRow"></param>
-        /// <param name="foreignKeySchemaNames"></param>
+        /// <param name="schemaName">The schemaName is the table name of the record which you are creating or editing.</param>
+        /// <param name="dataSet">The dataSet contains all of the DataTables from the select queries for accessing child entity data. Important that the table or accessing name is the entity name itself eg. 'Movie' or 'MovieSchedule'.</param>
+        /// <param name="selectedDataGridViewRow">The selectedDataGridViewRow is the currently selected or highlighted row in the Data grid. Ensure to set the datagrid Multiselect property to false, otherwise errors can occur.</param>
+        /// <param name="foreignKeySchemaNames">The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's</param>
         public DetailsForm(string schemaName, DataSet dataSet = null, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null)
         {
             InitializeComponent();
@@ -43,7 +42,7 @@ namespace MovieTopia
             if (dataSet == null || selectedDataGridViewRow == null) this.newRecord = true;
 
             QuerySchema(schemaName);
-            PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);          
+            PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);
         }
 
         private void QuerySchema(string schemaName)
@@ -148,12 +147,14 @@ namespace MovieTopia
 
         private void PopulateFields(DataGridViewRow dataRow, DataSet dataSet, Dictionary<string, string> foreignKeySchemaNames)
         {
+            
             // Clear existing controls
             this.Controls.Clear();
 
             int y = 10; // Initial vertical position for the fields
 
             DataTable schemaTable = ds.Tables["TableSchema"];
+            charCountLabels = new Label[schemaTable.Rows.Count];
 
             var schemaRowData = ToDictionary(schemaTable);
             var fieldData = schemaRowData;
@@ -166,17 +167,18 @@ namespace MovieTopia
             {
                 Text = newRecord ? "New Item" : "Edit Item",
                 Top = y,
-                Left = 10,
-                Width = 100
+                Left = padding,
+                Width = 200,
+                Font = new Font("Arial", 16, FontStyle.Bold),
             };
             this.Controls.Add(formLabel);
-            y += 30;
+            y += 2 * padding;
 
             foreach (DataRow schemaRow in schemaTable.Rows)
             {
                 string schemaColumnName = schemaRow["columnName"].ToString();
                 string dataType = schemaRow["dataType"].ToString();
-                string maxLength = schemaRow["maxLength"].ToString();
+                int maxLength = int.Parse(schemaRow["maxLength"].ToString());
                 var defaultValue = schemaRow["defaultValue"];
                 bool foreignKey = (bool)schemaRow["isForeign"];
                 bool primaryKey = (bool)schemaRow["isPrimary"];
@@ -187,8 +189,9 @@ namespace MovieTopia
                 {
                     Text = schemaColumnName,
                     Top = y,
-                    Left = 10,
-                    Width = 100
+                    Left = padding,
+                    Width = 100,
+                    Font = new Font("Arial", 10, FontStyle.Regular),
                 };
 
                 Control control;
@@ -201,7 +204,8 @@ namespace MovieTopia
                         Checked = (bool)fieldData[schemaColumnName],
                         Top = y,
                         Left = 120,
-                        Width = 200
+                        Width = 200,
+                        Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                 }
                 else if (dataType == "int") // Handle integers
@@ -214,40 +218,35 @@ namespace MovieTopia
                             Left = 120,
                             Width = 200,
                             DropDownStyle = ComboBoxStyle.DropDownList,
+                            Font = new Font("Arial", 10, FontStyle.Regular),
                         };
 
-                        //try
-                        { // parameters for foreign key diplay members 
-                            DataTable foreignEntity = dataSet.Tables[schemaColumnName.Substring(0, schemaColumnName.Length - 2)];
-                            if (fieldData.ContainsKey(schemaColumnName))
+                        // parameters for foreign key diplay members 
+                        DataTable foreignEntity = dataSet.Tables[schemaColumnName.Substring(0, schemaColumnName.Length - 2)];
+                        if (fieldData.ContainsKey(schemaColumnName))
+                        {
+                            if (foreignKeySchemaNames == null || !foreignKeySchemaNames.TryGetValue(schemaColumnName, out string foreignKeyRelation))
                             {
-                                if (foreignKeySchemaNames == null || !foreignKeySchemaNames.TryGetValue(schemaColumnName, out string foreignKeyRelation))
-                                {
-                                    foreignKeyRelation = schemaColumnName;
-                                }
-
-                                List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
-                                foreach (DataRow row in foreignEntity.Rows)
-                                {
-                                    items.Add(new KeyValuePair<string, string>(row[schemaColumnName].ToString(), row[foreignKeyRelation].ToString()));
-                                }
-
-                                ComboBox cbx = (ComboBox)control;
-                                cbx.DataSource = items;
-                                cbx.ValueMember = "Key";
-                                cbx.DisplayMember = "Value";
-
-                                // TODO - fix the selection stuff
-                                //fieldData.TryGetValue(foreignKeyRelation, out string key)
-                                string selected = fieldData[schemaColumnName].ToString();
-                                cbx.SelectedText = selected;
-                                control = cbx;
+                                foreignKeyRelation = schemaColumnName;
                             }
+
+                            List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
+                            foreach (DataRow row in foreignEntity.Rows)
+                            {
+                                items.Add(new KeyValuePair<string, string>(row[schemaColumnName].ToString(), row[foreignKeyRelation].ToString()));
+                            }
+
+                            ComboBox cbx = (ComboBox)control;
+                            cbx.DataSource = items;
+                            cbx.ValueMember = "Key";
+                            cbx.DisplayMember = "Value";
+
+                            // TODO - fix the selection stuff
+                            //fieldData.TryGetValue(foreignKeyRelation, out string key)
+                            string selected = fieldData[schemaColumnName].ToString();
+                            cbx.SelectedText = selected;
+                            control = cbx;
                         }
-                        //catch (Exception ex)
-                        //{
-                        //    continue;
-                        //}
                     }
                     else if (primaryKey)
                     {
@@ -257,17 +256,21 @@ namespace MovieTopia
                             Top = y,
                             Left = 120,
                             Width = 200,
-                            Enabled = false
+                            Enabled = false,
+                            Font = new Font("Arial", 10, FontStyle.Regular),
                         };
                     }
                     else
                     {
-                        control = new TextBox
+                        control = new NumericUpDown
                         {
-                            Text = fieldData[schemaColumnName].ToString(),
+                            Minimum = 0,
+                            Maximum = 300,
+                            Value = int.Parse(fieldData[schemaColumnName].ToString()),
                             Top = y,
                             Left = 120,
                             Width = 200,
+                            Font = new Font("Arial", 10, FontStyle.Regular),
                         };
                     }
                 }
@@ -278,7 +281,8 @@ namespace MovieTopia
                         Text = fieldData[schemaColumnName].ToString(),
                         Top = y,
                         Left = 120,
-                        Width = 200
+                        Width = 200,
+                        Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                 }
                 else if (dataType == "datetime")  // Handle datetime
@@ -292,43 +296,95 @@ namespace MovieTopia
                         Width = 200,
                         //ShowUpDown = true,
                         Format = DateTimePickerFormat.Custom,
-                        CustomFormat = "yyyy-MM-dd HH:mm"
+                        CustomFormat = "yyyy-MM-dd HH:mm",
+                        Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                 }
                 else  // Handle textboxes for other data types
                 {
-                    // use max length here
+
+                    int requiredWidth = ((int)maxLength / 17) == 0 ? 200 : 400;
+                    int heightMultiplier = (int)Math.Ceiling((float)maxLength / (float)17);
+                    int requiredHeightMultiplier = heightMultiplier > 5 ? 5 : heightMultiplier;
+                    bool multiLine = heightMultiplier > 1 ? true : false;
+                    bool scrollBars = heightMultiplier > 5 ? true : false;
+
                     control = new TextBox
                     {
                         Text = fieldData[schemaColumnName].ToString(),
                         Top = y,
                         Left = 120,
-                        Width = 200
-                    };                  
-                }
+                        Width = requiredWidth,
+                        Multiline = multiLine,
+                        ScrollBars = scrollBars ? ScrollBars.Vertical : ScrollBars.None,
+                        MaxLength = maxLength,
+                        Font = new Font("Arial", 10, FontStyle.Regular),
+                    };
+                    control.Height *= requiredHeightMultiplier;
+                    
 
+                    // Create and configure the character count Label
+                    Label charCountLabel = new Label
+                    {
+                        //Location = new Point(50, 160), // Set the location
+                        AutoSize = true,
+                        ForeColor = Color.Gray,
+                        Font = new Font("Arial", 10, FontStyle.Regular),
+                        BackColor = Color.White,
+                        //Top = y,
+                        //Left = control.Right + padding,
+                        //Width = 400,
+                        //Text = $"0 / {maxLength} characters",
+                    };
+
+                    this.Controls.Add(charCountLabel);
+                    charCountLabels[numCharCountLabels++] = charCountLabel;
+
+                    ((TextBox)control).TextChanged += (sender, e) => UpdateCharCountLabel(sender as TextBox, charCountLabel);
+                }
                 
                 this.Controls.Add(label);
                 this.Controls.Add(control);
 
                 controlsDict.Add(schemaColumnName, control);
 
-                y += 30; // Move down for the next field
+                y += padding + control.Height; // Move down for the next field
             }
 
             // Add Save and Cancel buttons
             AddButtons(y);
         }
 
+        /// <summary>
+        /// Updates the character count label based on the content of the TextBox.
+        /// </summary>
+        /// <param name="textBox">The TextBox control.</param>
+        /// <param name="charCountLabel">The Label to update.</param>
+        private void UpdateCharCountLabel(TextBox textBox, Label charCountLabel)
+        {
+            if (textBox != null)
+            {
+                int charCount = textBox.Text.Length;
+                charCountLabel.Text = $"{charCount} / {textBox.MaxLength}";
+
+                // Adjust the position of the label to the bottom right of the TextBox
+                charCountLabel.Location = new Point(textBox.Right - charCountLabel.Width - 5, textBox.Bottom - charCountLabel.Height - 5);
+            }
+        }
+
         private void AddButtons(int topPosition)
         {
             Button saveButton = new BTN
             {
-                Text = "Save",
+                Text = newRecord ? "Create" : "Save",
                 Top = topPosition + 10,
                 Left = 120,
                 Width = 100,
                 DialogResult = DialogResult.OK,
+                Font = new Font("Arial", 12, FontStyle.Regular),
+                BackgroundColor = Color.DodgerBlue,
+                BorderColor = Color.MediumBlue,
+                BorderSize = 1,
             };
             saveButton.Click += SaveButton_Click;
 
@@ -339,6 +395,10 @@ namespace MovieTopia
                 Left = 230,
                 Width = 100,
                 DialogResult = DialogResult.Cancel,
+                Font = new Font("Arial", 12, FontStyle.Regular),
+                BackgroundColor = Color.Red,
+                BorderColor = Color.DarkRed,
+                BorderSize = 1,
             };
             cancelButton.Click += CancelButton_Click;
 
@@ -348,8 +408,9 @@ namespace MovieTopia
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // Handle save logic here
             string msg = "";
+
+            //Validation checks
 
             //if (controlsDict.TryGetValue("Title", out Control control))
             //{
