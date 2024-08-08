@@ -33,7 +33,7 @@ namespace MovieTopia
         /// <param name="dataSet">The dataSet contains all of the DataTables from the select queries for accessing child entity data. Important that the table or accessing name is the entity name itself eg. 'Movie' or 'MovieSchedule'.</param>
         /// <param name="selectedDataGridViewRow">The selectedDataGridViewRow is the currently selected or highlighted row in the Data grid. Ensure to set the datagrid Multiselect property to false, otherwise errors can occur.</param>
         /// <param name="foreignKeySchemaNames">The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's</param>
-        public DetailsForm(string schemaName, DataSet dataSet = null, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null)
+        public DetailsForm(string schemaName, DataSet dataSet, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null)
         {
             InitializeComponent();
 
@@ -190,7 +190,7 @@ namespace MovieTopia
                     Text = schemaColumnName,
                     Top = y,
                     Left = padding,
-                    Width = 100,
+                    Width = 160,
                     Font = new Font("Arial", 10, FontStyle.Regular),
                 };
 
@@ -203,7 +203,7 @@ namespace MovieTopia
                         Text = schemaColumnName,
                         Checked = (bool)fieldData[schemaColumnName],
                         Top = y,
-                        Left = 120,
+                        Left = label.Width + padding,
                         Width = 200,
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
@@ -215,37 +215,45 @@ namespace MovieTopia
                         control = new ComboBox
                         {
                             Top = y,
-                            Left = 120,
+                            Left = label.Width + padding,
                             Width = 200,
                             DropDownStyle = ComboBoxStyle.DropDownList,
                             Font = new Font("Arial", 10, FontStyle.Regular),
                         };
 
-                        // parameters for foreign key diplay members 
-                        DataTable foreignEntity = dataSet.Tables[schemaColumnName.Substring(0, schemaColumnName.Length - 2)];
-                        if (fieldData.ContainsKey(schemaColumnName))
+                        // parameters for foreign key diplay members
+                        string childEntity = schemaColumnName.Substring(0, schemaColumnName.Length - 2);
+                        if (dataSet == null || !dataSet.Tables.Contains(childEntity))
                         {
-                            if (foreignKeySchemaNames == null || !foreignKeySchemaNames.TryGetValue(schemaColumnName, out string foreignKeyRelation))
+                            MessageBox.Show("Improperly configured DataSet. The child entity table could not be found in the DataSet");
+                        }
+                        else
+                        {
+                            DataTable foreignEntity = dataSet.Tables[childEntity];
+                            if (fieldData.ContainsKey(schemaColumnName))
                             {
-                                foreignKeyRelation = schemaColumnName;
+                                if (foreignKeySchemaNames == null || !foreignKeySchemaNames.TryGetValue(schemaColumnName, out string foreignKeyRelation))
+                                {
+                                    foreignKeyRelation = schemaColumnName;
+                                }
+
+                                List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
+                                foreach (DataRow row in foreignEntity.Rows)
+                                {
+                                    items.Add(new KeyValuePair<string, string>(row[schemaColumnName].ToString(), row[foreignKeyRelation].ToString()));
+                                }
+
+                                ComboBox cbx = (ComboBox)control;
+                                cbx.DataSource = items;
+                                cbx.ValueMember = "Key";
+                                cbx.DisplayMember = "Value";
+
+                                // TODO - fix the selection stuff
+                                //fieldData.TryGetValue(foreignKeyRelation, out string key)
+                                string selected = fieldData[schemaColumnName].ToString();
+                                cbx.SelectedText = selected;
+                                control = cbx;
                             }
-
-                            List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
-                            foreach (DataRow row in foreignEntity.Rows)
-                            {
-                                items.Add(new KeyValuePair<string, string>(row[schemaColumnName].ToString(), row[foreignKeyRelation].ToString()));
-                            }
-
-                            ComboBox cbx = (ComboBox)control;
-                            cbx.DataSource = items;
-                            cbx.ValueMember = "Key";
-                            cbx.DisplayMember = "Value";
-
-                            // TODO - fix the selection stuff
-                            //fieldData.TryGetValue(foreignKeyRelation, out string key)
-                            string selected = fieldData[schemaColumnName].ToString();
-                            cbx.SelectedText = selected;
-                            control = cbx;
                         }
                     }
                     else if (primaryKey)
@@ -254,7 +262,7 @@ namespace MovieTopia
                         {
                             Text = fieldData[schemaColumnName].ToString(),
                             Top = y,
-                            Left = 120,
+                            Left = label.Width + padding,
                             Width = 200,
                             Enabled = false,
                             Font = new Font("Arial", 10, FontStyle.Regular),
@@ -268,7 +276,7 @@ namespace MovieTopia
                             Maximum = 300,
                             Value = int.Parse(fieldData[schemaColumnName].ToString()),
                             Top = y,
-                            Left = 120,
+                            Left = label.Width + padding,
                             Width = 200,
                             Font = new Font("Arial", 10, FontStyle.Regular),
                         };
@@ -280,7 +288,7 @@ namespace MovieTopia
                     {
                         Text = fieldData[schemaColumnName].ToString(),
                         Top = y,
-                        Left = 120,
+                        Left = label.Width + padding,
                         Width = 200,
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
@@ -290,9 +298,9 @@ namespace MovieTopia
                     control = new DateTimePicker
                     {
                         //Value = (DateTime)fieldData[schemaColumnName],
-                        Value = newRecord ? DateTime.Today : (DateTime)fieldData[schemaColumnName],
+                        Value = newRecord ? DateTime.Now : (DateTime)fieldData[schemaColumnName],
                         Top = y,
-                        Left = 120,
+                        Left = label.Width + padding,
                         Width = 200,
                         //ShowUpDown = true,
                         Format = DateTimePickerFormat.Custom,
@@ -313,7 +321,7 @@ namespace MovieTopia
                     {
                         Text = fieldData[schemaColumnName].ToString(),
                         Top = y,
-                        Left = 120,
+                        Left = label.Width + padding,
                         Width = requiredWidth,
                         Multiline = multiLine,
                         ScrollBars = scrollBars ? ScrollBars.Vertical : ScrollBars.None,
@@ -378,8 +386,8 @@ namespace MovieTopia
             {
                 Text = newRecord ? "Create" : "Save",
                 Top = topPosition + 10,
-                Left = 120,
-                Width = 100,
+                Left = 160 + padding,
+                Width = 95,
                 DialogResult = DialogResult.OK,
                 Font = new Font("Arial", 12, FontStyle.Regular),
                 BackgroundColor = Color.DodgerBlue,
@@ -392,8 +400,8 @@ namespace MovieTopia
             {
                 Text = "Cancel",
                 Top = topPosition + 10,
-                Left = 230,
-                Width = 100,
+                Left = 285,
+                Width = 95,
                 DialogResult = DialogResult.Cancel,
                 Font = new Font("Arial", 12, FontStyle.Regular),
                 BackgroundColor = Color.Red,
