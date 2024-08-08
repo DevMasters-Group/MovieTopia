@@ -18,6 +18,35 @@ namespace MovieTopia
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Overrides the OnPaint method to draw the background image centered and scaled.
+        /// </summary>
+        /// <param name="e">The PaintEventArgs instance containing the event data.</param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            Image backgroundImage = BackgroundImage;
+
+            if (backgroundImage != null)
+            {
+                // Calculate the scaling factor
+                float widthRatio = (float)this.ClientSize.Width / backgroundImage.Width;
+                float heightRatio = (float)this.ClientSize.Height / backgroundImage.Height;
+                float scalingFactor = Math.Max(widthRatio, heightRatio);
+
+                // Calculate the destination rectangle
+                int scaledWidth = (int)(backgroundImage.Width * scalingFactor);
+                int scaledHeight = (int)(backgroundImage.Height * scalingFactor);
+                int x = (this.ClientSize.Width - scaledWidth) / 2;
+                int y = (this.ClientSize.Height - scaledHeight) / 2;
+                Rectangle destRect = new Rectangle(x, y, scaledWidth, scaledHeight);
+
+                // Draw the image
+                e.Graphics.DrawImage(backgroundImage, destRect);
+            }
+        }
+
         private void btnMMovies_Click(object sender, EventArgs e)
         {
             MaintainMovies movieForm = new MaintainMovies();
@@ -52,9 +81,9 @@ namespace MovieTopia
 
         private void btnMTickets_Click(object sender, EventArgs e)
         {
-            MaintainMovies maintainMovies = new MaintainMovies();
+            MaintainTickets maintainTickets = new MaintainTickets();
             this.Hide();
-            maintainMovies.ShowDialog();
+            maintainTickets.ShowDialog();
             this.Show();
         }
 
