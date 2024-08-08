@@ -102,6 +102,12 @@
     <Compile Include="MaintainMovies.Designer.cs">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
     </Compile>
+    <Compile Include="MaintainTheatres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainTheatres.Designer.cs">
+      <DependentUpon>MaintainTheatres.cs</DependentUpon>
+    </Compile>
     <Compile Include="MaintainTickets.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MaintainMovies.resx">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainTheatres.resx">
+      <DependentUpon>MaintainTheatres.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MaintainTickets.resx">
       <DependentUpon>MaintainTickets.cs</DependentUpon>
