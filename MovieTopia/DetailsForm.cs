@@ -19,7 +19,6 @@ namespace MovieTopia
         private int padding = 20;
         public Dictionary<string, Control> controlsDict = new Dictionary<string, Control>();
         private bool newRecord;
-        private Image backgroundImage;
         private int numCharCountLabels = 0;
         private Label[] charCountLabels;
         DataSet ds;

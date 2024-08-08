@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScheduleMovies));
             this.btnEdit = new MovieTopia.Controls.BTN();
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
             this.btnNew = new MovieTopia.Controls.BTN();
@@ -41,7 +42,7 @@
             this.btnEdit.BackColor = System.Drawing.Color.LightGreen;
             this.btnEdit.BackgroundColor = System.Drawing.Color.LightGreen;
             this.btnEdit.BorderColor = System.Drawing.Color.DarkGreen;
-            this.btnEdit.BorderRadius = 20;
+            this.btnEdit.BorderRadius = 30;
             this.btnEdit.BorderSize = 2;
             this.btnEdit.FlatAppearance.BorderSize = 0;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -49,7 +50,7 @@
             this.btnEdit.ForeColor = System.Drawing.Color.DarkGreen;
             this.btnEdit.Location = new System.Drawing.Point(210, 365);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(178, 49);
+            this.btnEdit.Size = new System.Drawing.Size(180, 50);
             this.btnEdit.TabIndex = 0;
             this.btnEdit.Text = "Edit";
             this.btnEdit.TextColor = System.Drawing.Color.DarkGreen;
@@ -76,7 +77,7 @@
             this.btnNew.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnNew.BackgroundColor = System.Drawing.Color.RoyalBlue;
             this.btnNew.BorderColor = System.Drawing.Color.MidnightBlue;
-            this.btnNew.BorderRadius = 20;
+            this.btnNew.BorderRadius = 30;
             this.btnNew.BorderSize = 2;
             this.btnNew.FlatAppearance.BorderSize = 0;
             this.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -84,7 +85,7 @@
             this.btnNew.ForeColor = System.Drawing.Color.MidnightBlue;
             this.btnNew.Location = new System.Drawing.Point(25, 365);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(177, 49);
+            this.btnNew.Size = new System.Drawing.Size(180, 50);
             this.btnNew.TabIndex = 2;
             this.btnNew.Text = "New";
             this.btnNew.TextColor = System.Drawing.Color.MidnightBlue;
@@ -106,7 +107,7 @@
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
             this.btnDelete.BackgroundColor = System.Drawing.Color.IndianRed;
             this.btnDelete.BorderColor = System.Drawing.Color.DarkRed;
-            this.btnDelete.BorderRadius = 20;
+            this.btnDelete.BorderRadius = 30;
             this.btnDelete.BorderSize = 2;
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -115,7 +116,7 @@
             this.btnDelete.Location = new System.Drawing.Point(395, 365);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(177, 49);
+            this.btnDelete.Size = new System.Drawing.Size(180, 50);
             this.btnDelete.TabIndex = 10;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextColor = System.Drawing.Color.DarkRed;
@@ -132,6 +133,7 @@
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.dgvSchedules);
             this.Controls.Add(this.btnEdit);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "ScheduleMovies";
             this.Text = "MScheduleMovies";
