@@ -66,7 +66,10 @@ namespace MovieTopia
 
         private void btnMTheatres_Click(object sender, EventArgs e)
         {
-
+            MaintainTheatres maintainTheatresForm = new MaintainTheatres();
+            this.Hide();
+            maintainTheatresForm.ShowDialog();
+            this.Show();
         }
 
         private void btnMGenres_Click(object sender, EventArgs e)
