@@ -26,7 +26,7 @@ namespace MovieTopia
 
             this.Resize += Form_Resize;
 
-            LoadMovies();
+            LoadData();
         }
 
         private void Form_Resize(Object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace MovieTopia
             AdjustColumnWidths();
         }
 
-        private void LoadMovies()
+        private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
@@ -128,7 +128,7 @@ namespace MovieTopia
                         }
                     }
 
-                    LoadMovies();
+                    LoadData();
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace MovieTopia
                         }
                     }
 
-                    LoadMovies();
+                    LoadData();
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace MovieTopia
                     }
                 }
 
-                LoadMovies();
+                LoadData();
             }
         }
     }

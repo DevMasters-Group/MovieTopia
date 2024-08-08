@@ -27,7 +27,7 @@ namespace MovieTopia
 
             this.Resize += Form_Resize;
 
-            LoadMovies();
+            LoadData();
         }
 
         private void Form_Resize(Object sender, EventArgs e)
@@ -39,11 +39,12 @@ namespace MovieTopia
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding*2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding*2);
+
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
 
-        private void LoadMovies()
+        private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
@@ -159,7 +160,7 @@ namespace MovieTopia
                         }
                     }
 
-                    LoadMovies();
+                    LoadData();
                 }
             }
         }
@@ -219,7 +220,7 @@ namespace MovieTopia
                         }
                     }
 
-                    LoadMovies();
+                    LoadData();
                 }
             }
         }
@@ -258,7 +259,7 @@ namespace MovieTopia
                     }
                 }
 
-                LoadMovies();
+                LoadData();
             }
         }
     }
