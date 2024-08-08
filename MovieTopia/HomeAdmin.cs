@@ -52,7 +52,7 @@ namespace MovieTopia
             MaintainMovies movieForm = new MaintainMovies();
             this.Hide();
             movieForm.ShowDialog();
-            this.Close();
+            this.Show();
         }
 
         private void btnSMTimes_Click(object sender, EventArgs e)
@@ -71,7 +71,10 @@ namespace MovieTopia
 
         private void btnMGenres_Click(object sender, EventArgs e)
         {
-
+            MaintainGenres maintainGenresForm = new MaintainGenres();
+            this.Hide();
+            maintainGenresForm.ShowDialog();
+            this.Show();
         }
 
         private void btnMSeats_Click(object sender, EventArgs e)
