@@ -21,7 +21,7 @@ namespace MovieTopia
         static void Main()
         {
             // Load environment variables from .env file
-            DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 4, encoding: Encoding.ASCII));
+            DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 2, encoding: Encoding.ASCII));
 
             // Build the connection string
             string server = Environment.GetEnvironmentVariable("DB_SERVER");
