@@ -105,63 +105,60 @@ namespace MovieTopia
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
+            foreignKeySchemaNames["GenreID"] = "GenreName";
+
+            DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
+            DialogResult result = detailsForm.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-                foreignKeySchemaNames["GenreID"] = "GenreName";
+                Dictionary<string, Control> data = detailsForm.controlsDict;
 
-                DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
-                DialogResult result = detailsForm.ShowDialog();
-                if (result == DialogResult.OK)
+                string sql = @"
+                    INSERT INTO 
+                        Movie (
+                            GenreID,
+                            Title,
+                            Description,
+                            Duration,
+                            PG_Rating
+                        )
+                        VALUES
+                        (
+                            @GenreID,
+                            @Title,
+                            @Description,
+                            @Duration,
+                            @PG_Rating
+                        );";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    Dictionary<string, Control> data = detailsForm.controlsDict;
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
 
-                    string sql = @"
-                        INSERT INTO 
-                            Movie (
-                                GenreID,
-                                Title,
-                                Description,
-                                Duration,
-                                PG_Rating
-                            )
-                            VALUES
-                            (
-                                @GenreID,
-                                @Title,
-                                @Description,
-                                @Duration,
-                                @PG_Rating
-                            );";
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
+                    command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
+                    command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
+                    command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
+                    command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
 
-                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    try
                     {
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
-
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
-                        command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
-                        command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
-                        command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
-                        command.Parameters.AddWithValue("@PG_Rating", ((TextBox)data["PG_Rating"]).Text);
-
-                        try
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Created Successfully", "Success");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, "Error");
-                        }
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Created Successfully", "Success");
                     }
-
-                    LoadData();
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
                 }
+
+                LoadData();
             }
         }
 
