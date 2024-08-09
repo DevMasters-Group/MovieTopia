@@ -88,48 +88,45 @@ namespace MovieTopia
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (dgvGenres.SelectedRows.Count == 1)
+            DetailsForm detailsForm = new DetailsForm("Genre", null, null, null);
+            DialogResult result = detailsForm.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                DetailsForm detailsForm = new DetailsForm("Genre", null, null, null);
-                DialogResult result = detailsForm.ShowDialog();
-                if (result == DialogResult.OK)
+                Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                string sql = @"
+                    INSERT INTO 
+                        Genre (
+                            GenreName
+                        )
+                        VALUES
+                        (
+                            @GenreName
+                        );";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    Dictionary<string, Control> data = detailsForm.controlsDict;
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
 
-                    string sql = @"
-                        INSERT INTO 
-                            Genre (
-                                GenreName
-                            )
-                            VALUES
-                            (
-                                @GenreName
-                            );";
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@GenreName", ((TextBox)data["GenreName"]).Text);
 
-                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    try
                     {
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
-
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@GenreName", ((TextBox)data["GenreName"]).Text);
-
-                        try
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Created Successfully", "Success");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, "Error");
-                        }
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Created Successfully", "Success");
                     }
-
-                    LoadData();
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
                 }
+
+                LoadData();
             }
         }
 

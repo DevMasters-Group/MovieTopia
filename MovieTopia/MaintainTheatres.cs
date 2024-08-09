@@ -93,57 +93,54 @@ namespace MovieTopia
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            if (dgvData.SelectedRows.Count == 1)
+            DetailsForm detailsForm = new DetailsForm("Theatre", ds, null, null);
+            DialogResult result = detailsForm.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                DetailsForm detailsForm = new DetailsForm("Theatre", ds, null, null);
-                DialogResult result = detailsForm.ShowDialog();
-                if (result == DialogResult.OK)
+                Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                string sql = @"
+                    INSERT INTO 
+                        Theatre (
+                            TheatreName,
+                            Active,
+                            NumRows,
+                            NumCols
+                        )
+                        VALUES
+                        (
+                            @TheatreName,
+                            @Active,
+                            @NumRows,
+                            @NumCols
+                        );";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    Dictionary<string, Control> data = detailsForm.controlsDict;
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
 
-                    string sql = @"
-                        INSERT INTO 
-                            Theatre (
-                                TheatreName,
-                                Active,
-                                NumRows,
-                                NumCols
-                            )
-                            VALUES
-                            (
-                                @TheatreName,
-                                @Active,
-                                @NumRows,
-                                @NumCols
-                            );";
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
+                    command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
+                    command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
+                    command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
 
-                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    try
                     {
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
-
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
-                        command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
-                        command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
-                        command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
-
-                        try
-                        {
-                            connection.Open();
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Created Successfully", "Success");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message, "Error");
-                        }
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Created Successfully", "Success");
                     }
-
-                    LoadData();
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
                 }
+
+                LoadData();
             }
         }
 
