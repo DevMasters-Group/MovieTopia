@@ -114,7 +114,10 @@ namespace MovieTopia
 
         private void btnRReports_Click(object sender, EventArgs e)
         {
-
+            RequestReports requestReports = new RequestReports();
+            this.Hide();
+            requestReports.ShowDialog();
+            this.Show();
         }
     }
 }
