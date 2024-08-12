@@ -102,6 +102,12 @@
     <Compile Include="MaintainMovies.Designer.cs">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
     </Compile>
+    <Compile Include="MaintainSeats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainSeats.Designer.cs">
+      <DependentUpon>MaintainSeats.cs</DependentUpon>
+    </Compile>
     <Compile Include="MaintainTheatres.cs">
       <SubType>Form</SubType>
     </Compile>
