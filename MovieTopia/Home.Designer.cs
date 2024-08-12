@@ -79,7 +79,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullLight;
+            this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullPurple;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1264, 761);
             this.Controls.Add(this.btnCAdmin);
