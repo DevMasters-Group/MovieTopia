@@ -90,11 +90,29 @@
     <Compile Include="HomeStaff.Designer.cs">
       <DependentUpon>HomeStaff.cs</DependentUpon>
     </Compile>
+    <Compile Include="MaintainGenres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainGenres.Designer.cs">
+      <DependentUpon>MaintainGenres.cs</DependentUpon>
+    </Compile>
     <Compile Include="MaintainMovies.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MaintainMovies.Designer.cs">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaintainTheatres.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainTheatres.Designer.cs">
+      <DependentUpon>MaintainTheatres.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaintainTickets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainTickets.Designer.cs">
+      <DependentUpon>MaintainTickets.cs</DependentUpon>
     </Compile>
     <Compile Include="ScheduleMovies.cs">
       <SubType>Form</SubType>
@@ -109,12 +127,25 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HomeAdmin.resx">
       <DependentUpon>HomeAdmin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HomeStaff.resx">
+      <DependentUpon>HomeStaff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainGenres.resx">
+      <DependentUpon>MaintainGenres.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MaintainMovies.resx">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainTheatres.resx">
+      <DependentUpon>MaintainTheatres.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaintainTickets.resx">
+      <DependentUpon>MaintainTickets.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScheduleMovies.resx">
       <DependentUpon>ScheduleMovies.cs</DependentUpon>

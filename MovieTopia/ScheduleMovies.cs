@@ -29,25 +29,25 @@ namespace MovieTopia
             this.Resize += Form_Resize;
 
             // load initial data when form loads
-            LoadMovies();
+            LoadData();
         }
 
         private void Form_Resize(Object sender, EventArgs e)
         {
             // position controls
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
-            btnEdit.Left = (this.ClientSize.Width / 2) + padding / 2;
-            btnNew.Left = (this.ClientSize.Width / 2) - btnNew.Width - padding / 2;
-            //btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
+            btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
+            btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
-            //btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
 
-        private void LoadMovies()
+        private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
@@ -57,16 +57,18 @@ namespace MovieTopia
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
                             SELECT
-                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, m.Title, t.TheatreName
+                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
                             FROM
                                 MovieSchedule ms
                             JOIN
                                 Movie m ON ms.MovieID = m.MovieID
                             JOIN
-                                Theatre t ON ms.TheatreID = t.TheatreID";
+                                Theatre t ON ms.TheatreID = t.TheatreID
+                            JOIN
+                                Genre g ON m.GenreID = g.GenreID";
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
-                string sqlTheatres = "SELECT * FROM Theatre";
+                string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
 
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn); ;
@@ -95,13 +97,82 @@ namespace MovieTopia
                 return;
 
             // Set DataGridView column text
-            //dgvSchedules.Columns["MovieScheduleID"].HeaderText = "ID";
+            dgvSchedules.Columns["MovieScheduleID"].HeaderText = "Schedule ID";
+            dgvSchedules.Columns["TheatreName"].HeaderText = "Theatre";
+            dgvSchedules.Columns["PG_Rating"].HeaderText = "PG Rating";
+            dgvSchedules.Columns["GenreName"].HeaderText = "Genre";
+            dgvSchedules.Columns["DateTime"].HeaderText = "Start Time";
 
             // Set DataGridView column widths
-            //dgvSchedules.Columns["MovieScheduleID"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["MovieScheduleID"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Price"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["DateTime"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Title"].Width = (int)(dgvSchedules.Width * 0.272);
+            dgvSchedules.Columns["Duration"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["PG_Rating"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["TheatreName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["GenreName"].Width = (int)(dgvSchedules.Width * 0.1);
 
             // optionally set specific columns to hidden
-            //dgvSchedules.Columns["GenreID"].Visible = false;
+            dgvSchedules.Columns["MovieID"].Visible = false;
+            dgvSchedules.Columns["TheatreID"].Visible = false;
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
+            foreignKeySchemaNames["MovieID"] = "Title";
+            foreignKeySchemaNames["TheatreID"] = "TheatreName";
+
+            DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, null, foreignKeySchemaNames);
+            DialogResult result = detailsForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                string sql = @"
+                        INSERT INTO 
+                            MovieSchedule (
+                                MovieID,
+                                TheatreID,
+                                Price,
+                                DateTime
+                            )
+                            VALUES
+                            (
+                                @MovieID,
+                                @TheatreID,
+                                @Price,
+                                @DateTime
+                            );";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                {
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
+
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@MovieID", ((ComboBox)data["MovieID"]).SelectedValue);
+                    command.Parameters.AddWithValue("@TheatreID", ((ComboBox)data["TheatreID"]).SelectedValue);
+                    command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                    command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Created Successfully", "Success");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
+                }
+
+                LoadData();
+            }
         }
 
         private void btnEdit_Click_1(object sender, EventArgs e)
@@ -121,29 +192,86 @@ namespace MovieTopia
                 if (result == DialogResult.OK)
                 {
                     // get the dictionary of controls back from the form to get their values
-                    Dictionary<string, Control> controlsDict = detailsForm.controlsDict;
-                    // get values from the dictionary - casting is necessary depending on the control that is used for each datatype
-                    int MovieID = int.Parse(((ComboBox)controlsDict["MovieID"]).SelectedValue.ToString());
+                    Dictionary<string, Control> data = detailsForm.controlsDict;
 
-                    MessageBox.Show("Test ID: " + MovieID);
+                    string sql = @"
+                        UPDATE 
+                            MovieSchedule
+                        SET
+                            MovieID = @MovieID,
+                            TheatreID = @TheatreID,
+                            Price = @Price,
+                            DateTime = @DateTime
+                        WHERE
+                            MovieScheduleID = @MovieScheduleID;
+                        ";
 
-                    // reload the data to the datagrid after SQL queries
-                    LoadMovies();
+                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    {
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                        //command.Parameters["@ID"].Value = customerID;
+
+                        // Use AddWithValue to assign Demographics.
+                        // SQL Server will implicitly convert strings into XML.
+                        command.Parameters.AddWithValue("@MovieID", ((ComboBox)data["MovieID"]).SelectedValue);
+                        command.Parameters.AddWithValue("@TheatreID", ((ComboBox)data["TheatreID"]).SelectedValue);
+                        command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                        command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
+                        command.Parameters.AddWithValue("@MovieScheduleID", ((TextBox)data["MovieScheduleID"]).Text);
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Updated Successfully", "Success");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error");
+                        }
+                    }
+
+                    LoadData();
                 }
             }
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-            Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-            foreignKeySchemaNames["MovieID"] = "Title";
-            foreignKeySchemaNames["TheatreID"] = "TheatreName";
-
-            DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, null, foreignKeySchemaNames);
-            DialogResult result = detailsForm.ShowDialog();
-            if (result == DialogResult.OK)
+            if (dgvSchedules.SelectedRows.Count == 1)
             {
-                LoadMovies();
+                DataGridViewRow selectedRow = dgvSchedules.SelectedRows[0];
+
+                string sql = @"
+                        DELETE FROM 
+                            MovieSchedule
+                        WHERE
+                            MovieScheduleID = @MovieScheduleID;";
+
+                using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                {
+                    SqlCommand command = new SqlCommand(sql, connection);
+                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                    //command.Parameters["@ID"].Value = customerID;
+
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    command.Parameters.AddWithValue("@MovieScheduleID", selectedRow.Cells["MovieScheduleID"].Value);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Deleted Successfully", "Success");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                    }
+                }
+
+                LoadData();
             }
         }
     }

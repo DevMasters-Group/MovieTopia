@@ -1,6 +1,6 @@
 ﻿namespace MovieTopia
 {
-    partial class MaintainMovies
+    partial class MaintainGenres
     {
         /// <summary>
         /// Required designer variable.
@@ -28,39 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintainMovies));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintainGenres));
+            this.dgvGenres = new System.Windows.Forms.DataGridView();
             this.lblName = new System.Windows.Forms.Label();
-            this.dgvMovies = new System.Windows.Forms.DataGridView();
             this.btnNew = new MovieTopia.Controls.BTN();
             this.btnDelete = new MovieTopia.Controls.BTN();
             this.btnEdit = new MovieTopia.Controls.BTN();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGenres)).BeginInit();
             this.SuspendLayout();
+            // 
+            // dgvGenres
+            // 
+            this.dgvGenres.AllowUserToAddRows = false;
+            this.dgvGenres.AllowUserToDeleteRows = false;
+            this.dgvGenres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvGenres.Location = new System.Drawing.Point(76, 97);
+            this.dgvGenres.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvGenres.MultiSelect = false;
+            this.dgvGenres.Name = "dgvGenres";
+            this.dgvGenres.ReadOnly = true;
+            this.dgvGenres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvGenres.Size = new System.Drawing.Size(547, 354);
+            this.dgvGenres.TabIndex = 10;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(13, 9);
+            this.lblName.Location = new System.Drawing.Point(70, 36);
             this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(106, 31);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Movies";
-            // 
-            // dgvMovies
-            // 
-            this.dgvMovies.AllowUserToAddRows = false;
-            this.dgvMovies.AllowUserToDeleteRows = false;
-            this.dgvMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMovies.Location = new System.Drawing.Point(13, 62);
-            this.dgvMovies.Margin = new System.Windows.Forms.Padding(4);
-            this.dgvMovies.MultiSelect = false;
-            this.dgvMovies.Name = "dgvMovies";
-            this.dgvMovies.ReadOnly = true;
-            this.dgvMovies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMovies.Size = new System.Drawing.Size(547, 354);
-            this.dgvMovies.TabIndex = 1;
+            this.lblName.Size = new System.Drawing.Size(109, 31);
+            this.lblName.TabIndex = 9;
+            this.lblName.Text = "Genres";
             // 
             // btnNew
             // 
@@ -73,11 +73,11 @@
             this.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNew.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.btnNew.Location = new System.Drawing.Point(13, 455);
+            this.btnNew.Location = new System.Drawing.Point(76, 514);
             this.btnNew.Margin = new System.Windows.Forms.Padding(4);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(180, 50);
-            this.btnNew.TabIndex = 8;
+            this.btnNew.TabIndex = 13;
             this.btnNew.Text = "New";
             this.btnNew.TextColor = System.Drawing.Color.MidnightBlue;
             this.btnNew.UseVisualStyleBackColor = false;
@@ -94,11 +94,11 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnDelete.Location = new System.Drawing.Point(383, 455);
+            this.btnDelete.Location = new System.Drawing.Point(471, 514);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(180, 50);
-            this.btnDelete.TabIndex = 7;
+            this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextColor = System.Drawing.Color.DarkRed;
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -115,17 +115,17 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnEdit.Location = new System.Drawing.Point(198, 455);
+            this.btnEdit.Location = new System.Drawing.Point(272, 514);
             this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(180, 50);
-            this.btnEdit.TabIndex = 6;
+            this.btnEdit.TabIndex = 11;
             this.btnEdit.Text = "Edit";
             this.btnEdit.TextColor = System.Drawing.Color.DarkGreen;
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
-            // MaintainMovies
+            // MaintainGenres
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,15 +133,14 @@
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.dgvMovies);
+            this.Controls.Add(this.dgvGenres);
             this.Controls.Add(this.lblName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
-            this.Name = "MaintainMovies";
-            this.Text = "MMovies";
+            this.Name = "MaintainGenres";
+            this.Text = "MaintainGenres";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvGenres)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,10 +148,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.DataGridView dgvMovies;
-        private Controls.BTN btnEdit;
-        private Controls.BTN btnDelete;
         private Controls.BTN btnNew;
+        private Controls.BTN btnDelete;
+        private Controls.BTN btnEdit;
+        private System.Windows.Forms.DataGridView dgvGenres;
+        private System.Windows.Forms.Label lblName;
     }
 }
