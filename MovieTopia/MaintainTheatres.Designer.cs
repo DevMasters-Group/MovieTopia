@@ -1,6 +1,6 @@
 ﻿namespace MovieTopia
 {
-    partial class MaintainMovies
+    partial class MaintainTheatres
     {
         /// <summary>
         /// Required designer variable.
@@ -28,39 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintainMovies));
-            this.lblName = new System.Windows.Forms.Label();
-            this.dgvMovies = new System.Windows.Forms.DataGridView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintainTheatres));
             this.btnNew = new MovieTopia.Controls.BTN();
             this.btnDelete = new MovieTopia.Controls.BTN();
             this.btnEdit = new MovieTopia.Controls.BTN();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).BeginInit();
+            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.lblName = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lblName
-            // 
-            this.lblName.AutoSize = true;
-            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(13, 9);
-            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(106, 31);
-            this.lblName.TabIndex = 0;
-            this.lblName.Text = "Movies";
-            // 
-            // dgvMovies
-            // 
-            this.dgvMovies.AllowUserToAddRows = false;
-            this.dgvMovies.AllowUserToDeleteRows = false;
-            this.dgvMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMovies.Location = new System.Drawing.Point(13, 62);
-            this.dgvMovies.Margin = new System.Windows.Forms.Padding(4);
-            this.dgvMovies.MultiSelect = false;
-            this.dgvMovies.Name = "dgvMovies";
-            this.dgvMovies.ReadOnly = true;
-            this.dgvMovies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMovies.Size = new System.Drawing.Size(547, 354);
-            this.dgvMovies.TabIndex = 1;
             // 
             // btnNew
             // 
@@ -77,7 +52,7 @@
             this.btnNew.Margin = new System.Windows.Forms.Padding(4);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(180, 50);
-            this.btnNew.TabIndex = 8;
+            this.btnNew.TabIndex = 13;
             this.btnNew.Text = "New";
             this.btnNew.TextColor = System.Drawing.Color.MidnightBlue;
             this.btnNew.UseVisualStyleBackColor = false;
@@ -98,7 +73,7 @@
             this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(180, 50);
-            this.btnDelete.TabIndex = 7;
+            this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextColor = System.Drawing.Color.DarkRed;
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -119,13 +94,38 @@
             this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(180, 50);
-            this.btnEdit.TabIndex = 6;
+            this.btnEdit.TabIndex = 11;
             this.btnEdit.Text = "Edit";
             this.btnEdit.TextColor = System.Drawing.Color.DarkGreen;
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
-            // MaintainMovies
+            // dgvData
+            // 
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.Location = new System.Drawing.Point(13, 62);
+            this.dgvData.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvData.MultiSelect = false;
+            this.dgvData.Name = "dgvData";
+            this.dgvData.ReadOnly = true;
+            this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvData.Size = new System.Drawing.Size(547, 354);
+            this.dgvData.TabIndex = 10;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(13, 9);
+            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(130, 31);
+            this.lblName.TabIndex = 9;
+            this.lblName.Text = "Theatres";
+            // 
+            // MaintainTheatres
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -133,15 +133,14 @@
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.dgvMovies);
+            this.Controls.Add(this.dgvData);
             this.Controls.Add(this.lblName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
-            this.Name = "MaintainMovies";
-            this.Text = "MMovies";
+            this.Name = "MaintainTheatres";
+            this.Text = "MaintainTheatres";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,10 +148,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.DataGridView dgvMovies;
-        private Controls.BTN btnEdit;
-        private Controls.BTN btnDelete;
         private Controls.BTN btnNew;
+        private Controls.BTN btnDelete;
+        private Controls.BTN btnEdit;
+        private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.Label lblName;
     }
 }
