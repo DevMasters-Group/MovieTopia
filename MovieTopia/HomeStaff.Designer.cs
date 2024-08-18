@@ -29,20 +29,66 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeStaff));
+            this.dgvSchedules = new System.Windows.Forms.DataGridView();
+            this.picLogo = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // dgvSchedules
+            // 
+            this.dgvSchedules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSchedules.Location = new System.Drawing.Point(42, 159);
+            this.dgvSchedules.Name = "dgvSchedules";
+            this.dgvSchedules.RowHeadersWidth = 51;
+            this.dgvSchedules.RowTemplate.Height = 24;
+            this.dgvSchedules.Size = new System.Drawing.Size(1353, 430);
+            this.dgvSchedules.TabIndex = 0;
+            // 
+            // picLogo
+            // 
+            this.picLogo.BackColor = System.Drawing.Color.Transparent;
+            this.picLogo.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullDark;
+            this.picLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picLogo.Location = new System.Drawing.Point(0, 0);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(204, 100);
+            this.picLogo.TabIndex = 1;
+            this.picLogo.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel1.Controls.Add(this.picLogo);
+            this.panel1.Location = new System.Drawing.Point(1, 2);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1436, 100);
+            this.panel1.TabIndex = 2;
             // 
             // HomeStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1438, 745);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.dgvSchedules);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "HomeStaff";
             this.Text = "HomeStaff";
+            this.Load += new System.EventHandler(this.HomeStaff_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dgvSchedules;
+        private System.Windows.Forms.PictureBox picLogo;
+        private System.Windows.Forms.Panel panel1;
     }
 }
