@@ -70,14 +70,15 @@ namespace MovieTopia
                             s.SeatRow
                         FROM
                             Ticket t
-                        JOIN
+                        LEFT JOIN
                             MovieSchedule ms ON t.MovieScheduleID = ms.MovieScheduleID
-                        JOIN
+                        LEFT JOIN
                             Movie m ON ms.MovieID = m.MovieID
-                        JOIN
+                        LEFT JOIN
                             Theatre th ON ms.TheatreID = th.TheatreID
-                        JOIN
+                        LEFT JOIN
                             Seat s ON t.SeatID = s.SeatID";
+
 
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
@@ -242,6 +243,7 @@ namespace MovieTopia
                         command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                         command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
                         command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
+                        command.Parameters.AddWithValue("@TicketID", ((TextBox)data["TicketID"]).Text);
 
                         try
                         {
