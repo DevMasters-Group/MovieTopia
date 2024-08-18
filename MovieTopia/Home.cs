@@ -84,7 +84,7 @@ namespace MovieTopia
             HomeStaff homeStaff = new HomeStaff();
             this.Hide();
             homeStaff.ShowDialog();
-            this.Close();
+            this.Show();
         }
 
         private void btnCAdmin_Click(object sender, EventArgs e)

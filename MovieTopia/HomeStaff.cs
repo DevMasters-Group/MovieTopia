@@ -60,8 +60,8 @@ namespace MovieTopia
                             Genre g ON m.GenreID = g.GenreID
                         LEFT JOIN
                             Ticket ticket ON ms.MovieScheduleID = ticket.MovieScheduleID
-                        WHERE
-                            ms.DateTime > GETDATE()
+                        --WHERE
+                            --ms.DateTime > GETDATE()
                         GROUP BY
                             ms.MovieScheduleID, 
                             ms.MovieID, 
@@ -100,6 +100,41 @@ namespace MovieTopia
         private void HomeStaff_Load(object sender, EventArgs e)
         {
             
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            // Show a message box with Yes and No buttons
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel the ticket?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Check which button was clicked
+            if (result == DialogResult.Yes)
+            {
+                // Close the form if No was clicked
+                this.Close();
+            }
+            else if (result == DialogResult.No)
+            {
+                // Exit the method if Yes was clicked
+                return;
+            }
+        }
+
+        private void btnSelectMovie_Click(object sender, EventArgs e)
+        {
+            if (dgvSchedules.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dgvSchedules.SelectedRows[0];  // get the selected row
+
+                int movieScheduleID = Convert.ToInt32(selectedRow.Cells[0].Value);
+
+                MessageBox.Show(movieScheduleID.ToString());
+
+                //Seats SeatForm = new Seats(int movieScheduleID);
+                //this.Hide();
+                //homeAdmin.ShowDialog();
+                //this.Close();
+            }
         }
     }
 }

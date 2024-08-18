@@ -35,7 +35,10 @@
             this.btnSelectMovie = new MovieTopia.Controls.BTN();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbxGenre = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -47,6 +50,7 @@
             this.dgvSchedules.BackgroundColor = System.Drawing.Color.LightPink;
             this.dgvSchedules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSchedules.Location = new System.Drawing.Point(42, 313);
+            this.dgvSchedules.MultiSelect = false;
             this.dgvSchedules.Name = "dgvSchedules";
             this.dgvSchedules.RowHeadersWidth = 51;
             this.dgvSchedules.RowTemplate.Height = 24;
@@ -91,6 +95,7 @@
             this.btnSelectMovie.Text = "Select Movie";
             this.btnSelectMovie.TextColor = System.Drawing.Color.Black;
             this.btnSelectMovie.UseVisualStyleBackColor = false;
+            this.btnSelectMovie.Click += new System.EventHandler(this.btnSelectMovie_Click);
             // 
             // btnCancel
             // 
@@ -110,11 +115,15 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.Black;
             this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // gbxFiltering
             // 
             this.gbxFiltering.BackColor = System.Drawing.Color.LightBlue;
-            this.gbxFiltering.Controls.Add(this.comboBox1);
+            this.gbxFiltering.Controls.Add(this.label2);
+            this.gbxFiltering.Controls.Add(this.dtpDate);
+            this.gbxFiltering.Controls.Add(this.label1);
+            this.gbxFiltering.Controls.Add(this.cbxGenre);
             this.gbxFiltering.Location = new System.Drawing.Point(42, 126);
             this.gbxFiltering.Name = "gbxFiltering";
             this.gbxFiltering.Size = new System.Drawing.Size(1353, 168);
@@ -122,13 +131,42 @@
             this.gbxFiltering.TabStop = false;
             this.gbxFiltering.Text = "Selection";
             // 
-            // comboBox1
+            // cbxGenre
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(393, 63);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 0;
+            this.cbxGenre.FormattingEnabled = true;
+            this.cbxGenre.Location = new System.Drawing.Point(278, 33);
+            this.cbxGenre.Name = "cbxGenre";
+            this.cbxGenre.Size = new System.Drawing.Size(148, 24);
+            this.cbxGenre.TabIndex = 0;
+            this.cbxGenre.Text = "* Please Select *";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(266, 17);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Select a genre to filter movies by Genre: ";
+            // 
+            // dtpDate
+            // 
+            this.dtpDate.Location = new System.Drawing.Point(278, 83);
+            this.dtpDate.MinDate = new System.DateTime(2024, 8, 18, 0, 0, 0, 0);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(251, 22);
+            this.dtpDate.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(6, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(213, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Select a date to filter movies by: ";
             // 
             // HomeStaff
             // 
@@ -148,6 +186,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panel1.ResumeLayout(false);
             this.gbxFiltering.ResumeLayout(false);
+            this.gbxFiltering.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -160,6 +199,9 @@
         private Controls.BTN btnSelectMovie;
         private Controls.BTN btnCancel;
         private System.Windows.Forms.GroupBox gbxFiltering;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbxGenre;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dtpDate;
+        private System.Windows.Forms.Label label2;
     }
 }
