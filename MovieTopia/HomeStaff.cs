@@ -26,6 +26,7 @@ namespace MovieTopia
 
             // load initial data when form loads
             LoadData();
+            LoadGenre();
         }
 
         private void LoadData()
@@ -38,9 +39,7 @@ namespace MovieTopia
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
                         SELECT
-                            ms.MovieScheduleID, 
-                            ms.MovieID, 
-                            ms.TheatreID, 
+                            ms.MovieScheduleID AS Code, 
                             ms.Price, 
                             ms.DateTime, 
                             m.Title, 
@@ -64,8 +63,6 @@ namespace MovieTopia
                             --ms.DateTime > GETDATE()
                         GROUP BY
                             ms.MovieScheduleID, 
-                            ms.MovieID, 
-                            ms.TheatreID, 
                             ms.Price, 
                             ms.DateTime, 
                             m.Title, 
@@ -94,6 +91,54 @@ namespace MovieTopia
                 // fill the datagrid
                 dgvSchedules.DataSource = ds;
                 dgvSchedules.DataMember = "MovieSchedule";
+            }
+        }
+
+        private void LoadGenre()
+        {
+            using (SqlConnection conn = new SqlConnection(DATABASE_URL))
+            {
+                ds = new DataSet();
+                adapter = new SqlDataAdapter();
+
+                // select the parent table and join any additional fields from child entities
+                string sqlGenre = @"
+                        SELECT
+                            g.GenreID,
+                            g.GenreName
+                        FROM
+                            Genre g
+                        JOIN
+                            Movie m ON g.GenreID = m.GenreID
+                        JOIN
+                            MovieSchedule ms ON ms.MovieID = m.MovieID
+                        --WHERE
+                            --ms.DateTime > GETDATE()
+                        GROUP BY
+                            g.GenreID,
+                            g.GenreName";
+
+                // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
+                string sqlMovies = "SELECT * FROM Movie";
+                string sqlMovieSchedule = "SELECT * FROM MovieSchedule";
+
+                // important to name the returned data in the dataset with the entity name
+                adapter.SelectCommand = new SqlCommand(sqlGenre, conn); ;
+                adapter.Fill(ds, "Genre");
+                adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
+                adapter.Fill(ds, "Movie");
+                adapter.SelectCommand = new SqlCommand(sqlMovieSchedule, conn); ;
+                adapter.Fill(ds, "MovieSchedule");
+
+                cbxGenre.Items.Clear();
+
+                // Loop through the Genre DataTable and add each genre to the ComboBox
+                foreach (DataRow row in ds.Tables["Genre"].Rows)
+                {
+                    string genreItem = row["GenreID"].ToString() + " " + row["GenreName"].ToString();
+                    cbxGenre.Items.Add(genreItem);
+                }
+
             }
         }
 
@@ -134,6 +179,48 @@ namespace MovieTopia
                 //this.Hide();
                 //homeAdmin.ShowDialog();
                 //this.Close();
+            }
+        }
+
+        private void cbxGenre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxGenre.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select a genre to filter by!");
+                return;
+            } else
+            {
+                // Parse the selected item to get the GenreID
+                string selectedGenre = cbxGenre.SelectedItem.ToString();
+                string[] genreParts = selectedGenre.Split(' '); // Assuming the format is "GenreID GenreName"
+                string selectedGenreName = genreParts[0];
+
+                // Get the DataTable for the MovieSchedule
+                DataTable movieScheduleTable = ds.Tables["Movie"];
+
+                // List all column names for debugging
+                StringBuilder sb = new StringBuilder();
+                foreach (DataColumn column in movieScheduleTable.Columns)
+                {
+                    sb.AppendLine(column.ColumnName);
+                }
+                MessageBox.Show("Columns in MovieSchedule DataTable:\n" + sb.ToString());
+
+                // Check if the GenreName column exists
+                if (!movieScheduleTable.Columns.Contains("GenreID"))
+                {
+                    MessageBox.Show("GenreName column not found in MovieSchedule DataTable.");
+                    return;
+                }
+
+                // Get the DataView for the MovieSchedule DataTable
+                DataView dv = new DataView(movieScheduleTable);
+
+                // Apply the filter based on the selected GenreID
+                dv.RowFilter = $"GenreID = {selectedGenreName}";
+
+                // Set the filtered DataView as the DataSource for the DataGridView
+                dgvSchedules.DataSource = dv;
             }
         }
     }
