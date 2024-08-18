@@ -37,16 +37,48 @@ namespace MovieTopia
 
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
-                            SELECT
-                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
-                            FROM
-                                MovieSchedule ms
-                            JOIN
-                                Movie m ON ms.MovieID = m.MovieID
-                            JOIN
-                                Theatre t ON ms.TheatreID = t.TheatreID
-                            JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                        SELECT
+                            ms.MovieScheduleID, 
+                            ms.MovieID, 
+                            ms.TheatreID, 
+                            ms.Price, 
+                            ms.DateTime, 
+                            m.Title, 
+                            m.Duration, 
+                            m.PG_Rating, 
+                            t.TheatreName, 
+                            g.GenreName,
+                            t.NumRows * t.NumCols AS TotalSeats, -- Total number of seats in the theatre
+                            COUNT(ticket.SeatID) AS BookedSeats  -- Number of seats already booked
+                        FROM
+                            MovieSchedule ms
+                        JOIN
+                            Movie m ON ms.MovieID = m.MovieID
+                        JOIN
+                            Theatre t ON ms.TheatreID = t.TheatreID
+                        JOIN
+                            Genre g ON m.GenreID = g.GenreID
+                        LEFT JOIN
+                            Ticket ticket ON ms.MovieScheduleID = ticket.MovieScheduleID
+                        WHERE
+                            ms.DateTime > GETDATE()
+                        GROUP BY
+                            ms.MovieScheduleID, 
+                            ms.MovieID, 
+                            ms.TheatreID, 
+                            ms.Price, 
+                            ms.DateTime, 
+                            m.Title, 
+                            m.Duration, 
+                            m.PG_Rating, 
+                            t.TheatreName, 
+                            g.GenreName, 
+                            t.NumRows, 
+                            t.NumCols
+                        HAVING
+                            COUNT(ticket.SeatID) < (t.NumRows * t.NumCols)";
+                //display only movie data that is still yet to be played
+
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
