@@ -274,5 +274,10 @@ namespace MovieTopia
                 LoadData();
             }
         }
+
+        private void ScheduleMovies_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
