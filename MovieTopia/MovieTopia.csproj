@@ -52,6 +52,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,8 +64,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avalible_seats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Avalible_seats.Designer.cs">
+      <DependentUpon>Avalible_seats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BTN.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LBL.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LBL.Designer.cs">
+      <DependentUpon>LBL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PBX.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PBX.Designer.cs">
+      <DependentUpon>PBX.cs</DependentUpon>
     </Compile>
     <Compile Include="DetailsForm.cs">
       <SubType>Form</SubType>
@@ -128,6 +147,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Avalible_seats.resx">
+      <DependentUpon>Avalible_seats.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DetailsForm.resx">
       <DependentUpon>DetailsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,7 +227,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Resources\Booked.png" />
+    <Content Include="Resources\Not_booked.png" />
     <Content Include="Resources\Seat_Booking\Screenshot 2024-08-18 224911.png" />
+    <Content Include="Resources\Selected_seat.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
