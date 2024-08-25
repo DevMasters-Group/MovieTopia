@@ -5,6 +5,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Windows.Forms;
 
 namespace MovieTopia
@@ -89,6 +91,7 @@ namespace MovieTopia
             {
                 for (int column = 0; column < columns; column++)
                 {
+                    // Add seat labels by using controll properties
                     LBL colLabel = new LBL
                     {
                         Text = ((char)('A' + column)).ToString(),
@@ -98,7 +101,7 @@ namespace MovieTopia
                     };
                     this.Controls.Add(colLabel);
 
-
+                    // Add seat picture boxes by using controll properties
                     PBX seat = new PBX
                     {
                         Name = ( (row + 1).ToString()+(char)('A' + column)).ToString() ,
@@ -107,7 +110,9 @@ namespace MovieTopia
                         Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
                         Image = Properties.Resources.logoFullPurple, // Default to available seat
                         SizeMode = PictureBoxSizeMode.StretchImage,
+                        BackColor = Color.Purple,
                     };
+                    // Add event handler for seat click so that when clicked on it will triger the click event
                     seat.Click += new EventHandler(PBX_Click);
                     this.Controls.Add(seat);
                 }
@@ -134,19 +139,20 @@ namespace MovieTopia
 
         private void MarkOccupiedSeats(SqlConnection conn, int rows, int columns)
         {
+            
             string sqlSeats = @"
-                SELECT
-                    t.SeatID, 
-                    s.SeatRow, 
-                    s.SeatColumn
-                FROM
-                    MovieSchedule ms
-                JOIN
-                    Ticket t ON t.MovieScheduleID = ms.MovieScheduleID
-                JOIN
-                    Seat s ON s.SeatID = t.SeatID
-                WHERE
-                    ms.MovieScheduleID = @MovieScheduleID";
+            SELECT
+                t.SeatID, 
+                s.SeatRow, 
+                s.SeatColumn
+            FROM
+                MovieSchedule ms
+            JOIN
+                Ticket t ON t.MovieScheduleID = ms.MovieScheduleID
+            JOIN
+                Seat s ON s.SeatID = t.SeatID
+            WHERE
+                ms.MovieScheduleID = @MovieScheduleID";
             SqlCommand command = new SqlCommand(sqlSeats, conn);
             //
             //logic to get the movie schedule id
@@ -157,10 +163,11 @@ namespace MovieTopia
             SqlDataReader reader = command.ExecuteReader();
             HashSet<string> occupiedSeats = new HashSet<string>();
 
+            // Add occupied seats to a hash set, buy uploading the the information from the table of the lows and columns 
             while (reader.Read())
             {
                 string seatPosition = reader["SeatRow"].ToString() + reader["SeatColumn"].ToString();
-                
+
                 occupiedSeats.Add(seatPosition);
             }
 
@@ -169,61 +176,139 @@ namespace MovieTopia
             // Update seat images based on occupancy
             foreach (Control control in this.Controls)
             {
-                
+
                 if (control is PBX seat)
                 {
                     if (occupiedSeats.Contains(seat.Name))
                     {
-                        MessageBox.Show(seat.Name);
+                        //MessageBox.Show(seat.Name);
                         seat.Image = Properties.Resources.logoIconLight; // Seat is taken
+                        seat.BackColor = Color.Red;
 
                     }
                 }
             }
-            
 
+            
         }
 
-
+        //Click event where we check if the seat is taken or not and change the Backcolor of the seat. Long with the imagige to show that it is selceted
         private void PBX_Click(object sender, EventArgs e)
         {
+            //
+            //I know it is scuffed but it works
+            //
             PBX seat = sender as PBX;
-
-            MessageBox.Show(seat.Name);
-
-            /*
             // Check the current image and switch to the next state
-            if (seat.Image == Properties.Resources.logoFullPurple)
+            if (seat.BackColor == Color.Purple)
             {
                 seat.Image = Properties.Resources.logoFullDarkBlackAndWhite;
+                seat.BackColor = Color.Black;
+                //MessageBox.Show(seat.Name);
             }
-            else if (seat.Image == Properties.Resources.logoFullDarkBlackAndWhite)
+            else if (seat.BackColor == Color.Black)
             {
                 seat.Image = Properties.Resources.logoFullPurple;
+                seat.BackColor = Color.Purple;
             }
             else
             {
                 seat.Image = Properties.Resources.logoIconLight;
+                seat.BackColor = Color.Red;
             }
-            */
+            
         }
 
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            foreach (Control control in this.Controls)
+            using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
+                conn.Open();
 
-                if (control is PBX seat)
+                // Retrieve occupied seats for the current movie schedule
+                string sqlOccupiedSeats = @"
+                    SELECT
+                        t.SeatID, 
+                        s.SeatRow, 
+                        s.SeatColumn
+                    FROM
+                        MovieSchedule ms
+                    JOIN
+                        Ticket t ON t.MovieScheduleID = ms.MovieScheduleID
+                    JOIN
+                        Seat s ON s.SeatID = t.SeatID
+                    WHERE
+                        ms.MovieScheduleID = @MovieScheduleID";
+
+                SqlCommand command = new SqlCommand(sqlOccupiedSeats, conn);
+                //
+                // Logic to get the movie schedule ID
+                //
+                int movieScheduleID = 1;
+                command.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
+
+                SqlDataReader reader = command.ExecuteReader();
+                HashSet<string> occupiedSeats = new HashSet<string>();
+
+                while (reader.Read())
                 {
-                    if (seat.Image == Properties.Resources.logoFullDarkBlackAndWhite)
+                    string seatPosition = reader["SeatRow"].ToString() + reader["SeatColumn"].ToString();
+                    occupiedSeats.Add(seatPosition);
+                }
+
+                reader.Close();
+
+                foreach (Control control in this.Controls)
+                {
+                    if (control is PBX seat && seat.BackColor == Color.Black)
                     {
-                        MessageBox.Show(seat.Name);
-                        seat.Image = Properties.Resources.logoIconLight; // Seat is taken
+                        string seatName = seat.Name;
+                        string seatRow = seatName.Substring(0, 1);
+                        string seatColumn = seatName.Substring(1);
+                        decimal price = 70;
+                        DateTime purchaseDateTime = DateTime.Now;
+
+                        // Check if the seat is already taken
+                        if (!occupiedSeats.Contains(seatName))
+                        {
+                            // Insert the selected seat into the Ticket table
+                            string insertTicketSql = @"
+                                INSERT INTO Ticket 
+                                    (SeatID, MovieScheduleID, Price, PurchaseDateTime, CustomerFirstName, CustomerLastName, CustomerPhoneNumber)
+                                SELECT 
+                                     SeatID, @MovieScheduleID, @Price, @PurchaseDateTime, @CustomerFirstName, @CustomerLastName, @CustomerPhoneNumber
+                                FROM 
+                                    Seat 
+                                WHERE 
+                                    SeatRow = @SeatRow AND SeatColumn = @SeatColumn";
+
+                            SqlCommand insertCommand = new SqlCommand(insertTicketSql, conn);
+                            insertCommand.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
+                            insertCommand.Parameters.AddWithValue("@SeatRow", seatRow);
+                            insertCommand.Parameters.AddWithValue("@SeatColumn", seatColumn);
+                            insertCommand.Parameters.AddWithValue("@Price", price);
+                            insertCommand.Parameters.AddWithValue("@PurchaseDateTime", purchaseDateTime);
+                            insertCommand.Parameters.AddWithValue("@CustomerFirstName", "Jim");
+                            insertCommand.Parameters.AddWithValue("@CustomerLastName", "Shack");
+                            insertCommand.Parameters.AddWithValue("@CustomerPhoneNumber", "0740504642");
+
+                            insertCommand.ExecuteNonQuery();
+                            MessageBox.Show($"Seat {seat.Name} has been successfully booked.");
+                        }
+
+                        else
+                        {
+                            MessageBox.Show($"Seat {seat.Name} is already taken.");
+                        }
+                        
                     }
                 }
             }
+            this.Close();
+            
         }
+
     }
 }
 
