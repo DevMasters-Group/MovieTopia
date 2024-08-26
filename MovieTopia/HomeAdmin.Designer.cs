@@ -50,10 +50,10 @@
             this.btnRReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRReports.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRReports.ForeColor = System.Drawing.Color.White;
-            this.btnRReports.Location = new System.Drawing.Point(17, 420);
-            this.btnRReports.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRReports.Location = new System.Drawing.Point(19, 525);
+            this.btnRReports.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnRReports.Name = "btnRReports";
-            this.btnRReports.Size = new System.Drawing.Size(250, 50);
+            this.btnRReports.Size = new System.Drawing.Size(281, 62);
             this.btnRReports.TabIndex = 7;
             this.btnRReports.Text = "Request Reports";
             this.btnRReports.TextColor = System.Drawing.Color.White;
@@ -71,10 +71,10 @@
             this.btnSTickets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSTickets.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSTickets.ForeColor = System.Drawing.Color.White;
-            this.btnSTickets.Location = new System.Drawing.Point(17, 362);
-            this.btnSTickets.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSTickets.Location = new System.Drawing.Point(19, 452);
+            this.btnSTickets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSTickets.Name = "btnSTickets";
-            this.btnSTickets.Size = new System.Drawing.Size(250, 50);
+            this.btnSTickets.Size = new System.Drawing.Size(281, 62);
             this.btnSTickets.TabIndex = 6;
             this.btnSTickets.Text = "Sell Tickets";
             this.btnSTickets.TextColor = System.Drawing.Color.White;
@@ -92,10 +92,10 @@
             this.btnSMTimes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSMTimes.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSMTimes.ForeColor = System.Drawing.Color.White;
-            this.btnSMTimes.Location = new System.Drawing.Point(17, 304);
-            this.btnSMTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSMTimes.Location = new System.Drawing.Point(19, 380);
+            this.btnSMTimes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSMTimes.Name = "btnSMTimes";
-            this.btnSMTimes.Size = new System.Drawing.Size(250, 50);
+            this.btnSMTimes.Size = new System.Drawing.Size(281, 62);
             this.btnSMTimes.TabIndex = 5;
             this.btnSMTimes.Text = "Schedule Movie Times";
             this.btnSMTimes.TextColor = System.Drawing.Color.White;
@@ -113,10 +113,10 @@
             this.btnMTickets.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMTickets.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMTickets.ForeColor = System.Drawing.Color.White;
-            this.btnMTickets.Location = new System.Drawing.Point(16, 246);
-            this.btnMTickets.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMTickets.Location = new System.Drawing.Point(18, 308);
+            this.btnMTickets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnMTickets.Name = "btnMTickets";
-            this.btnMTickets.Size = new System.Drawing.Size(250, 50);
+            this.btnMTickets.Size = new System.Drawing.Size(281, 62);
             this.btnMTickets.TabIndex = 4;
             this.btnMTickets.Text = "Maintain Tickets";
             this.btnMTickets.TextColor = System.Drawing.Color.White;
@@ -134,10 +134,10 @@
             this.btnMSeats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMSeats.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMSeats.ForeColor = System.Drawing.Color.White;
-            this.btnMSeats.Location = new System.Drawing.Point(17, 190);
-            this.btnMSeats.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMSeats.Location = new System.Drawing.Point(19, 238);
+            this.btnMSeats.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnMSeats.Name = "btnMSeats";
-            this.btnMSeats.Size = new System.Drawing.Size(250, 50);
+            this.btnMSeats.Size = new System.Drawing.Size(281, 62);
             this.btnMSeats.TabIndex = 3;
             this.btnMSeats.Text = "Maintain Seats";
             this.btnMSeats.TextColor = System.Drawing.Color.White;
@@ -155,10 +155,10 @@
             this.btnMGenres.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMGenres.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMGenres.ForeColor = System.Drawing.Color.White;
-            this.btnMGenres.Location = new System.Drawing.Point(17, 132);
-            this.btnMGenres.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMGenres.Location = new System.Drawing.Point(19, 165);
+            this.btnMGenres.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnMGenres.Name = "btnMGenres";
-            this.btnMGenres.Size = new System.Drawing.Size(250, 50);
+            this.btnMGenres.Size = new System.Drawing.Size(281, 62);
             this.btnMGenres.TabIndex = 2;
             this.btnMGenres.Text = "Maintain Genres";
             this.btnMGenres.TextColor = System.Drawing.Color.White;
@@ -176,10 +176,10 @@
             this.btnMTheatres.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMTheatres.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMTheatres.ForeColor = System.Drawing.Color.White;
-            this.btnMTheatres.Location = new System.Drawing.Point(17, 74);
-            this.btnMTheatres.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMTheatres.Location = new System.Drawing.Point(19, 92);
+            this.btnMTheatres.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnMTheatres.Name = "btnMTheatres";
-            this.btnMTheatres.Size = new System.Drawing.Size(250, 50);
+            this.btnMTheatres.Size = new System.Drawing.Size(281, 62);
             this.btnMTheatres.TabIndex = 1;
             this.btnMTheatres.Text = "Maintain Theatres";
             this.btnMTheatres.TextColor = System.Drawing.Color.White;
@@ -197,10 +197,10 @@
             this.btnMMovies.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMMovies.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMMovies.ForeColor = System.Drawing.Color.White;
-            this.btnMMovies.Location = new System.Drawing.Point(17, 16);
-            this.btnMMovies.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMMovies.Location = new System.Drawing.Point(19, 20);
+            this.btnMMovies.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnMMovies.Name = "btnMMovies";
-            this.btnMMovies.Size = new System.Drawing.Size(250, 50);
+            this.btnMMovies.Size = new System.Drawing.Size(281, 62);
             this.btnMMovies.TabIndex = 0;
             this.btnMMovies.Text = "Maintain Movies";
             this.btnMMovies.TextColor = System.Drawing.Color.White;
@@ -209,11 +209,11 @@
             // 
             // HomeAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.ClientSize = new System.Drawing.Size(1422, 962);
             this.Controls.Add(this.btnRReports);
             this.Controls.Add(this.btnSTickets);
             this.Controls.Add(this.btnSMTimes);
@@ -223,8 +223,8 @@
             this.Controls.Add(this.btnMTheatres);
             this.Controls.Add(this.btnMMovies);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(1280, 800);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(1437, 986);
             this.Name = "HomeAdmin";
             this.Text = "HomeAdmin";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
