@@ -34,6 +34,7 @@
             this.btnNew = new MovieTopia.Controls.BTN();
             this.btnDelete = new MovieTopia.Controls.BTN();
             this.btnEdit = new MovieTopia.Controls.BTN();
+            this.btnReturn = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGenres)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,21 +43,19 @@
             this.dgvGenres.AllowUserToAddRows = false;
             this.dgvGenres.AllowUserToDeleteRows = false;
             this.dgvGenres.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvGenres.Location = new System.Drawing.Point(76, 97);
-            this.dgvGenres.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvGenres.Location = new System.Drawing.Point(57, 79);
             this.dgvGenres.MultiSelect = false;
             this.dgvGenres.Name = "dgvGenres";
             this.dgvGenres.ReadOnly = true;
             this.dgvGenres.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvGenres.Size = new System.Drawing.Size(547, 354);
+            this.dgvGenres.Size = new System.Drawing.Size(410, 288);
             this.dgvGenres.TabIndex = 10;
             // 
             // lblName
             // 
             this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(70, 36);
-            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblName.Location = new System.Drawing.Point(52, 29);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(109, 31);
             this.lblName.TabIndex = 9;
@@ -73,10 +72,9 @@
             this.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNew.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.btnNew.Location = new System.Drawing.Point(76, 514);
-            this.btnNew.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNew.Location = new System.Drawing.Point(57, 418);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(180, 50);
+            this.btnNew.Size = new System.Drawing.Size(135, 41);
             this.btnNew.TabIndex = 13;
             this.btnNew.Text = "New";
             this.btnNew.TextColor = System.Drawing.Color.MidnightBlue;
@@ -94,10 +92,9 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.DarkRed;
-            this.btnDelete.Location = new System.Drawing.Point(471, 514);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Location = new System.Drawing.Point(353, 418);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(180, 50);
+            this.btnDelete.Size = new System.Drawing.Size(135, 41);
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextColor = System.Drawing.Color.DarkRed;
@@ -115,28 +112,49 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnEdit.Location = new System.Drawing.Point(272, 514);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEdit.Location = new System.Drawing.Point(204, 418);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(180, 50);
+            this.btnEdit.Size = new System.Drawing.Size(135, 41);
             this.btnEdit.TabIndex = 11;
             this.btnEdit.Text = "Edit";
             this.btnEdit.TextColor = System.Drawing.Color.DarkGreen;
             this.btnEdit.UseVisualStyleBackColor = false;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
+            // btnReturn
+            // 
+            this.btnReturn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BorderColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.BorderRadius = 30;
+            this.btnReturn.BorderSize = 2;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReturn.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.Location = new System.Drawing.Point(494, 418);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(135, 41);
+            this.btnReturn.TabIndex = 14;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
             // MaintainGenres
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.ClientSize = new System.Drawing.Size(948, 618);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.dgvGenres);
             this.Controls.Add(this.lblName);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1280, 800);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(964, 657);
             this.Name = "MaintainGenres";
             this.Text = "MaintainGenres";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -153,5 +171,6 @@
         private Controls.BTN btnEdit;
         private System.Windows.Forms.DataGridView dgvGenres;
         private System.Windows.Forms.Label lblName;
+        private Controls.BTN btnReturn;
     }
 }

@@ -35,10 +35,12 @@ namespace MovieTopia
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
             btnDaiplaySeat.Left = btnDelete.Left + btnEdit.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
             btnDaiplaySeat.Top = (this.ClientSize.Height - btnDaiplaySeat.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             cbTeater_Name.Left = (this.ClientSize.Width - cbTeater_Name.Width - padding * 2);
             cbTeater_Name.Top = lblTheater_num.Top + lblTheater_num.Height;
@@ -253,6 +255,11 @@ namespace MovieTopia
             this.Hide();
             avalible_Seats.ShowDialog();
             this.Show();
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
     

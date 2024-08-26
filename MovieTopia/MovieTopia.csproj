@@ -139,6 +139,11 @@
     <Compile Include="MaintainTickets.Designer.cs">
       <DependentUpon>MaintainTickets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ScheduleMovies.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,14 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include=".env" />
     <None Include=".env.example" />
     <None Include="packages.config" />
@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Booked.png" />
+    <None Include="Resources\errorIcon.ico" />
     <Content Include="Resources\Not_booked.png" />
     <Content Include="Resources\Seat_Booking\Screenshot 2024-08-18 224911.png" />
     <Content Include="Resources\Selected_seat.png" />

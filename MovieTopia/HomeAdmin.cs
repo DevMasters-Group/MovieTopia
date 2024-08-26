@@ -17,6 +17,8 @@ namespace MovieTopia
         {
             InitializeComponent();
 
+            this.Resize += Form_Resize;
+
             btnMMovies.BackColor = HexToColor("#36455D");
             btnMTheatres.BackColor = HexToColor("#4B5C9C");
             btnMGenres.BackColor = HexToColor("#6A80ED");
@@ -25,11 +27,18 @@ namespace MovieTopia
             btnSMTimes.BackColor = HexToColor("#5A79B6");
             btnSTickets.BackColor = HexToColor("#8660A8");
             btnRReports.BackColor = HexToColor("#B54A99");
+            btnReturnHome.BackColor = HexToColor("#36455D");
         }
 
         public Color HexToColor(string hex)
         {
             return ColorTranslator.FromHtml(hex);
+        }
+
+        private void Form_Resize(Object sender, EventArgs e)
+        {
+            btnReturnHome.Left = this.ClientSize.Width - btnReturnHome.Width - btnMMovies.Left;
+            btnReturnHome.Top = btnMMovies.Top;
         }
 
         /// <summary>
@@ -118,6 +127,11 @@ namespace MovieTopia
         private void btnRReports_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
