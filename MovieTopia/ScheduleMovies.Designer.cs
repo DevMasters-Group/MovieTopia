@@ -98,7 +98,7 @@
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(13, 25);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(235, 31);
+            this.lblName.Size = new System.Drawing.Size(292, 39);
             this.lblName.TabIndex = 3;
             this.lblName.Text = "Schedule Movies";
             // 
@@ -127,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.ClientSize = new System.Drawing.Size(1262, 753);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnNew);

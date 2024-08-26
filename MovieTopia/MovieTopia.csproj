@@ -225,12 +225,14 @@
   <ItemGroup>
     <None Include="Resources\logoFullLight.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Booked.png" />
     <Content Include="Resources\Not_booked.png" />
     <Content Include="Resources\Seat_Booking\Screenshot 2024-08-18 224911.png" />
     <Content Include="Resources\Selected_seat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logoFullDark1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
