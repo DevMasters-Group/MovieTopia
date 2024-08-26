@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
+
+
 
 namespace MovieTopia
 {
@@ -57,6 +60,7 @@ namespace MovieTopia
 
                         pnlReport.Visible = true;
                         cbxDesc.Checked = false;
+                        btnSave.Visible = true;
                     }
                     else if (cbxDesc.Checked)
                     {
@@ -66,6 +70,7 @@ namespace MovieTopia
 
                         pnlReport.Visible = true;
                         cbxAsc.Checked = false;
+                        btnSave.Visible = true;
                     }
 
                     populateDGV();
@@ -97,6 +102,7 @@ namespace MovieTopia
                         lblGenDate.Text = "Generation date of report: " + DateTime.Today.ToShortDateString();
 
                         pnlReport.Visible = true;
+                        btnSave.Visible = true;
 
 
                     }
@@ -107,42 +113,13 @@ namespace MovieTopia
                         lblGenDate.Text = "Generation date of report: " + DateTime.Today.ToShortDateString();
 
                         pnlReport.Visible = true;
+                        btnSave.Visible = true;
                     }
 
                     populateDGV();
 
                 }
                
-
-                //lblReportType.Text = reportType;
-                //lblTimePeriod.Text = "For time period: " + startDate.ToShortDateString() + " to " + endDate.ToShortDateString();
-
-                //while (!(cbxAsc.Checked) && !(cbxDesc.Checked))
-                //{
-                //    MessageBox.Show("Please select either Ascending or Descending");
-                //    break;
-                //}
-
-                //if (cbxAsc.Checked)
-                //{
-                //    lblAscDesc.Text = "Ascending Order";
-                //    lblGenDate.Text = "Generation date of report: " + DateTime.Today.ToShortDateString();
-                //    ascDesc = "ASC";
-
-                //    pnlReport.Visible = true;
-                //    cbxDesc.Checked = false;
-                //}
-                //else if (cbxDesc.Checked)
-                //{
-                //    lblAscDesc.Text = "Descending Order";
-                //    lblGenDate.Text = "Generation date of report: " + DateTime.Today.ToShortDateString();
-                //    ascDesc = "DESC";
-
-                //    pnlReport.Visible = true;
-                //    cbxAsc.Checked = false;
-                //}
-
-                //populateDGV();
             }
             catch (Exception ex)
             {
@@ -293,6 +270,55 @@ namespace MovieTopia
                 pnlTop10.Visible = false;
                 btnGenerate.Visible = false;
             }
+        }
+
+        private Bitmap CapturePanel(Panel panel)
+        {
+            Bitmap bitmap = new Bitmap(panel.Width, panel.Height);
+
+            panel.DrawToBitmap(bitmap, new Rectangle(0, 0, panel.Width, panel.Height));
+
+            return bitmap;
+        }
+
+       
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            PrintDocument printDoc = new PrintDocument();
+            try
+            {
+                //Set up the print event handler
+                printDoc.PrintPage += (sndr, args) =>
+                {
+                    Bitmap panelImage = CapturePanel(pnlReport);
+                    args.Graphics.DrawImage(panelImage, args.MarginBounds);
+                };
+                //set up the print dialog
+                PrintDialog printDialog = new PrintDialog
+                {
+                    Document = printDoc,
+                    UseEXDialog = true
+                };
+
+                //Show the print dialog and allow the user to choose "Microsoft Print to PDF"
+                if (printDialog.ShowDialog() == DialogResult.OK)
+                {
+                    printDoc.PrinterSettings = printDialog.PrinterSettings;
+                    printDoc.Print();
+
+                    this.Activate();
+                }
+
+                MessageBox.Show("Report saved as PDF");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error saving file: " + ex.Message);
+            }
+            
+
+            
         }
     }
 }
