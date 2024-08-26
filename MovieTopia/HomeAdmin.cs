@@ -96,7 +96,10 @@ namespace MovieTopia
 
         private void btnMSeats_Click(object sender, EventArgs e)
         {
-
+            MaintainSeats maintainSeatsForm = new MaintainSeats();
+            this.Hide();
+            maintainSeatsForm.ShowDialog();
+            this.Show();
         }
 
         private void btnMTickets_Click(object sender, EventArgs e)
