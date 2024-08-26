@@ -28,26 +28,26 @@ namespace MovieTopia
         }
         private void Form_Resize(Object sender, EventArgs e)
         {
-            
-            // Keep the other controls as they are
-            lblTheater_num.Left = (this.ClientSize.Width - lblTheater_num.Width) / 2;
+
+            // set buttons and labels accordingly for form resizing
+            lblName.Top = padding / 2;
+            lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
             btnDaiplaySeat.Left = btnDelete.Left + btnEdit.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
             btnDaiplaySeat.Top = (this.ClientSize.Height - btnDaiplaySeat.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             cbTeater_Name.Left = (this.ClientSize.Width - cbTeater_Name.Width - padding * 2);
-            cbTeater_Name.Top = lblTheater_num.Top + lblTheater_num.Height;
+            cbTeater_Name.Top = lblName.Top + lblName.Height;
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
-
-
-
 
         private void LoadData()
         {
@@ -215,6 +215,9 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvSeat.SelectedRows[0];
 
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.No) return;
+
                 string sql = @"
                         DELETE FROM 
                             Seat
@@ -237,6 +240,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Deleted Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show($"\"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\" cannot be deleted because it is being referenced by 1 or more Tickets for movies on display, or up-and-coming movies.", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -253,6 +260,11 @@ namespace MovieTopia
             this.Hide();
             avalible_Seats.ShowDialog();
             this.Show();
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
     

@@ -92,7 +92,7 @@ namespace MovieTopia
             HomeAdmin homeAdmin = new HomeAdmin();
             this.Hide();
             homeAdmin.ShowDialog();
-            this.Close();
+            this.Show();
             
         }
     }
