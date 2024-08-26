@@ -282,7 +282,7 @@ namespace MovieTopia
                             Font = new Font("Arial", 10, FontStyle.Regular),
                         };
                         control.Validating += (sender, e) => {
-                            ValidateNumericUpDown((NumericUpDown)sender, e);
+                            ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
                         };
                     }
                 }
@@ -300,7 +300,7 @@ namespace MovieTopia
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                     control.Validating += (sender, e) => {
-                        ValidateNumericUpDown((NumericUpDown)sender, e);
+                        ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
                     };
                 }
                 else if (dataType == "datetime")  // Handle datetime
@@ -319,7 +319,7 @@ namespace MovieTopia
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                     control.Validating += (sender, e) => {
-                        ValidateDateTimePicker((DateTimePicker)sender, e);
+                        ValidateDateTimePicker((DateTimePicker)sender, e);  // invoke error provider for validation checks
                     };
                 }
                 else  // Handle textboxes for other data types
@@ -344,7 +344,7 @@ namespace MovieTopia
                     };
                     control.Height *= requiredHeightMultiplier;
                     control.Validating += (sender, e) => {
-                        ValidateNotEmpty((TextBox)sender, e);
+                        ValidateNotEmpty((TextBox)sender, e);  // invoke error provider for validation checks
                     };
                     
 
@@ -380,6 +380,11 @@ namespace MovieTopia
             AddButtons(y);
         }
 
+        /// <summary>
+        /// Validates the TextBox value to prevent blank or whitespace entries
+        /// </summary>
+        /// <param name="textBox">The TextBox control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
         private void ValidateNotEmpty(TextBox textBox, CancelEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
@@ -394,6 +399,11 @@ namespace MovieTopia
             }
         }
 
+        /// <summary>
+        /// Validates the NumericUpDown value to prevent invalid number entries
+        /// </summary>
+        /// <param name="numericUpDown">The NumericUpDown control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
         private void ValidateNumericUpDown(NumericUpDown numericUpDown, CancelEventArgs e)
         {
             if (numericUpDown.Value <= numericUpDown.Minimum)
@@ -410,6 +420,11 @@ namespace MovieTopia
             }
         }
 
+        /// <summary>
+        /// Validates the DateTimePicker value to prevent invalid dates entries
+        /// </summary>
+        /// <param name="dateTimePicker">The DateTimePicker control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
         private void ValidateDateTimePicker(DateTimePicker dateTimePicker, CancelEventArgs e)
         {
             if (dateTimePicker.Value == dateTimePicker.MinDate)
@@ -425,8 +440,6 @@ namespace MovieTopia
                 errorProvider1.SetError(dateTimePicker, "");
             }
         }
-
-
 
         /// <summary>
         /// Updates the character count label based on the content of the TextBox.
@@ -483,9 +496,6 @@ namespace MovieTopia
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // TODO - Validation checks
-
-            // dialog result to handle data grid reload
             this.Close();
         }
 
