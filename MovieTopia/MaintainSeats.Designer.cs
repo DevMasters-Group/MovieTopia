@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblTheater_num = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
             this.cbTeater_Name = new System.Windows.Forms.ComboBox();
             this.dgvSeat = new System.Windows.Forms.DataGridView();
             this.btnDaiplaySeat = new MovieTopia.Controls.BTN();
@@ -39,21 +39,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSeat)).BeginInit();
             this.SuspendLayout();
             // 
-            // lblTheater_num
+            // lblName
             // 
-            this.lblTheater_num.AutoSize = true;
-            this.lblTheater_num.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTheater_num.Location = new System.Drawing.Point(20, 6);
-            this.lblTheater_num.Name = "lblTheater_num";
-            this.lblTheater_num.Size = new System.Drawing.Size(115, 31);
-            this.lblTheater_num.TabIndex = 0;
-            this.lblTheater_num.Text = "Theater";
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(20, 6);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(89, 31);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "Seats";
             // 
             // cbTeater_Name
             // 
             this.cbTeater_Name.FormattingEnabled = true;
             this.cbTeater_Name.Location = new System.Drawing.Point(483, 49);
-            this.cbTeater_Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbTeater_Name.Margin = new System.Windows.Forms.Padding(2);
             this.cbTeater_Name.Name = "cbTeater_Name";
             this.cbTeater_Name.Size = new System.Drawing.Size(110, 21);
             this.cbTeater_Name.TabIndex = 94;
@@ -85,7 +85,7 @@
             this.btnDaiplaySeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDaiplaySeat.ForeColor = System.Drawing.Color.DarkTurquoise;
             this.btnDaiplaySeat.Location = new System.Drawing.Point(462, 384);
-            this.btnDaiplaySeat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnDaiplaySeat.Margin = new System.Windows.Forms.Padding(2);
             this.btnDaiplaySeat.Name = "btnDaiplaySeat";
             this.btnDaiplaySeat.Size = new System.Drawing.Size(121, 40);
             this.btnDaiplaySeat.TabIndex = 95;
@@ -190,7 +190,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnNew);
-            this.Controls.Add(this.lblTheater_num);
+            this.Controls.Add(this.lblName);
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MinimumSize = new System.Drawing.Size(963, 655);
             this.Name = "MaintainSeats";
@@ -204,7 +204,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblTheater_num;
+        private System.Windows.Forms.Label lblName;
         private Controls.BTN btnNew;
         private Controls.BTN btnEdit;
         private Controls.BTN btnDelete;

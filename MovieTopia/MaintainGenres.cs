@@ -31,6 +31,7 @@ namespace MovieTopia
 
         private void Form_Resize(Object sender, EventArgs e)
         {
+            lblName.Top = padding / 2;
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
@@ -191,6 +192,9 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvGenres.SelectedRows[0];
 
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["GenreName"].Value}\"?", "Delete Genre", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.No) return;
+
                 string sql = @"
                         DELETE FROM 
                             Genre
@@ -212,6 +216,10 @@ namespace MovieTopia
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Deleted Successfully", "Success");
+                    }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show($"\"{selectedRow.Cells["GenreName"].Value}\" cannot be deleted because of 1 or more Movies that are dependent on this Genre. Please delete the corresponding records before attempting to delete this Genre.", "Error");
                     }
                     catch (Exception ex)
                     {
