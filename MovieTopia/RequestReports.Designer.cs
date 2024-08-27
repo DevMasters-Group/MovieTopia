@@ -55,85 +55,103 @@
             this.cbbYear = new System.Windows.Forms.ComboBox();
             this.btnSave = new MovieTopia.Controls.BTN();
             this.btnGenerate = new MovieTopia.Controls.BTN();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pnlReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).BeginInit();
             this.pnlTop10.SuspendLayout();
             this.pnlTicketSales.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSelectReport
             // 
             this.lblSelectReport.AutoSize = true;
-            this.lblSelectReport.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectReport.Location = new System.Drawing.Point(30, 13);
+            this.lblSelectReport.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectReport.Location = new System.Drawing.Point(32, 24);
+            this.lblSelectReport.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSelectReport.Name = "lblSelectReport";
-            this.lblSelectReport.Size = new System.Drawing.Size(90, 16);
+            this.lblSelectReport.Size = new System.Drawing.Size(121, 16);
             this.lblSelectReport.TabIndex = 0;
             this.lblSelectReport.Text = "Select Report Type:";
             // 
             // cbbReportType
             // 
             this.cbbReportType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbReportType.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbbReportType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbReportType.FormattingEnabled = true;
             this.cbbReportType.Items.AddRange(new object[] {
             "Top 10 Movies",
             "Top 10 Genres",
             "Ticket Sales"});
-            this.cbbReportType.Location = new System.Drawing.Point(143, 13);
+            this.cbbReportType.Location = new System.Drawing.Point(213, 21);
+            this.cbbReportType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbReportType.Name = "cbbReportType";
-            this.cbbReportType.Size = new System.Drawing.Size(121, 24);
+            this.cbbReportType.Size = new System.Drawing.Size(160, 24);
             this.cbbReportType.TabIndex = 1;
             this.cbbReportType.SelectedIndexChanged += new System.EventHandler(this.cbbReportType_SelectedIndexChanged);
             // 
             // lblSelectDate
             // 
             this.lblSelectDate.AutoSize = true;
-            this.lblSelectDate.Location = new System.Drawing.Point(12, 14);
+            this.lblSelectDate.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectDate.Location = new System.Drawing.Point(16, 17);
+            this.lblSelectDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSelectDate.Name = "lblSelectDate";
-            this.lblSelectDate.Size = new System.Drawing.Size(89, 16);
+            this.lblSelectDate.Size = new System.Drawing.Size(121, 16);
             this.lblSelectDate.TabIndex = 2;
             this.lblSelectDate.Text = "Select Time Period:";
             // 
             // lblStart
             // 
             this.lblStart.AutoSize = true;
-            this.lblStart.Location = new System.Drawing.Point(125, 14);
+            this.lblStart.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStart.Location = new System.Drawing.Point(16, 50);
+            this.lblStart.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStart.Name = "lblStart";
-            this.lblStart.Size = new System.Drawing.Size(26, 16);
+            this.lblStart.Size = new System.Drawing.Size(41, 16);
             this.lblStart.TabIndex = 3;
-            this.lblStart.Text = "Start";
+            this.lblStart.Text = "From:";
             // 
             // lblEnd
             // 
             this.lblEnd.AutoSize = true;
-            this.lblEnd.Location = new System.Drawing.Point(125, 75);
+            this.lblEnd.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEnd.Location = new System.Drawing.Point(16, 85);
+            this.lblEnd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEnd.Name = "lblEnd";
             this.lblEnd.Size = new System.Drawing.Size(24, 16);
             this.lblEnd.TabIndex = 4;
-            this.lblEnd.Text = "End";
+            this.lblEnd.Text = "To:";
             // 
             // dtStart
             // 
-            this.dtStart.Location = new System.Drawing.Point(123, 41);
+            this.dtStart.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtStart.Location = new System.Drawing.Point(96, 50);
+            this.dtStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtStart.Name = "dtStart";
-            this.dtStart.Size = new System.Drawing.Size(200, 21);
+            this.dtStart.Size = new System.Drawing.Size(311, 22);
             this.dtStart.TabIndex = 5;
             this.dtStart.ValueChanged += new System.EventHandler(this.dtStart_ValueChanged);
             // 
             // dtEnd
             // 
-            this.dtEnd.Location = new System.Drawing.Point(123, 104);
+            this.dtEnd.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtEnd.Location = new System.Drawing.Point(96, 80);
+            this.dtEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtEnd.Name = "dtEnd";
-            this.dtEnd.Size = new System.Drawing.Size(200, 21);
+            this.dtEnd.Size = new System.Drawing.Size(311, 22);
             this.dtEnd.TabIndex = 6;
             // 
             // cbxAsc
             // 
             this.cbxAsc.AutoSize = true;
-            this.cbxAsc.Location = new System.Drawing.Point(15, 158);
+            this.cbxAsc.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxAsc.Location = new System.Drawing.Point(8, 22);
+            this.cbxAsc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxAsc.Name = "cbxAsc";
-            this.cbxAsc.Size = new System.Drawing.Size(70, 20);
+            this.cbxAsc.Size = new System.Drawing.Size(87, 20);
             this.cbxAsc.TabIndex = 7;
             this.cbxAsc.Text = "Ascending";
             this.cbxAsc.UseVisualStyleBackColor = true;
@@ -142,9 +160,11 @@
             // cbxDesc
             // 
             this.cbxDesc.AutoSize = true;
-            this.cbxDesc.Location = new System.Drawing.Point(123, 158);
+            this.cbxDesc.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxDesc.Location = new System.Drawing.Point(178, 22);
+            this.cbxDesc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxDesc.Name = "cbxDesc";
-            this.cbxDesc.Size = new System.Drawing.Size(75, 20);
+            this.cbxDesc.Size = new System.Drawing.Size(94, 20);
             this.cbxDesc.TabIndex = 8;
             this.cbxDesc.Text = "Descending";
             this.cbxDesc.UseVisualStyleBackColor = true;
@@ -164,9 +184,10 @@
             this.pnlReport.Controls.Add(this.lblTimePeriod);
             this.pnlReport.Controls.Add(this.lblReportType);
             this.pnlReport.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlReport.Location = new System.Drawing.Point(383, 13);
+            this.pnlReport.Location = new System.Drawing.Point(16, 357);
+            this.pnlReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlReport.Name = "pnlReport";
-            this.pnlReport.Size = new System.Drawing.Size(964, 559);
+            this.pnlReport.Size = new System.Drawing.Size(1219, 662);
             this.pnlReport.TabIndex = 10;
             this.pnlReport.Visible = false;
             // 
@@ -174,7 +195,8 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(455, 521);
+            this.label2.Location = new System.Drawing.Point(607, 641);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(115, 20);
             this.label2.TabIndex = 7;
@@ -183,7 +205,8 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 508);
+            this.label1.Location = new System.Drawing.Point(112, 625);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(784, 16);
             this.label1.TabIndex = 6;
@@ -193,15 +216,17 @@
             // 
             this.dgvReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvReport.Location = new System.Drawing.Point(87, 177);
+            this.dgvReport.Location = new System.Drawing.Point(116, 218);
+            this.dgvReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvReport.Name = "dgvReport";
-            this.dgvReport.Size = new System.Drawing.Size(781, 306);
+            this.dgvReport.Size = new System.Drawing.Size(1041, 377);
             this.dgvReport.TabIndex = 5;
             // 
             // lblLine1
             // 
             this.lblLine1.AutoSize = true;
-            this.lblLine1.Location = new System.Drawing.Point(84, 137);
+            this.lblLine1.Location = new System.Drawing.Point(112, 169);
+            this.lblLine1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLine1.Name = "lblLine1";
             this.lblLine1.Size = new System.Drawing.Size(784, 16);
             this.lblLine1.TabIndex = 4;
@@ -211,7 +236,8 @@
             // 
             this.lblGenDate.AutoSize = true;
             this.lblGenDate.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGenDate.Location = new System.Drawing.Point(4, 104);
+            this.lblGenDate.Location = new System.Drawing.Point(5, 128);
+            this.lblGenDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGenDate.Name = "lblGenDate";
             this.lblGenDate.Size = new System.Drawing.Size(45, 20);
             this.lblGenDate.TabIndex = 3;
@@ -221,7 +247,8 @@
             // 
             this.lblAscDesc.AutoSize = true;
             this.lblAscDesc.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAscDesc.Location = new System.Drawing.Point(474, 76);
+            this.lblAscDesc.Location = new System.Drawing.Point(632, 94);
+            this.lblAscDesc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAscDesc.Name = "lblAscDesc";
             this.lblAscDesc.Size = new System.Drawing.Size(45, 20);
             this.lblAscDesc.TabIndex = 2;
@@ -231,7 +258,8 @@
             // 
             this.lblTimePeriod.AutoSize = true;
             this.lblTimePeriod.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTimePeriod.Location = new System.Drawing.Point(474, 40);
+            this.lblTimePeriod.Location = new System.Drawing.Point(632, 49);
+            this.lblTimePeriod.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTimePeriod.Name = "lblTimePeriod";
             this.lblTimePeriod.Size = new System.Drawing.Size(45, 20);
             this.lblTimePeriod.TabIndex = 1;
@@ -241,7 +269,8 @@
             // 
             this.lblReportType.AutoSize = true;
             this.lblReportType.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReportType.Location = new System.Drawing.Point(474, 7);
+            this.lblReportType.Location = new System.Drawing.Point(632, 9);
+            this.lblReportType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblReportType.Name = "lblReportType";
             this.lblReportType.Size = new System.Drawing.Size(45, 20);
             this.lblReportType.TabIndex = 0;
@@ -250,47 +279,51 @@
             // lblYear
             // 
             this.lblYear.AutoSize = true;
-            this.lblYear.Location = new System.Drawing.Point(18, 22);
+            this.lblYear.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblYear.Location = new System.Drawing.Point(16, 17);
+            this.lblYear.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(59, 16);
+            this.lblYear.Size = new System.Drawing.Size(78, 16);
             this.lblYear.TabIndex = 11;
             this.lblYear.Text = "Select Year:";
             // 
             // pnlTop10
             // 
+            this.pnlTop10.Controls.Add(this.groupBox1);
             this.pnlTop10.Controls.Add(this.lblSelectDate);
             this.pnlTop10.Controls.Add(this.lblStart);
             this.pnlTop10.Controls.Add(this.dtStart);
             this.pnlTop10.Controls.Add(this.lblEnd);
-            this.pnlTop10.Controls.Add(this.cbxDesc);
             this.pnlTop10.Controls.Add(this.dtEnd);
-            this.pnlTop10.Controls.Add(this.cbxAsc);
             this.pnlTop10.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlTop10.Location = new System.Drawing.Point(12, 54);
+            this.pnlTop10.Location = new System.Drawing.Point(16, 66);
+            this.pnlTop10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlTop10.Name = "pnlTop10";
-            this.pnlTop10.Size = new System.Drawing.Size(346, 206);
+            this.pnlTop10.Size = new System.Drawing.Size(1219, 190);
             this.pnlTop10.TabIndex = 12;
             this.pnlTop10.Visible = false;
             // 
             // pnlTicketSales
             // 
-            this.pnlTicketSales.Controls.Add(this.cbxQuarterly);
-            this.pnlTicketSales.Controls.Add(this.cbxMonthly);
+            this.pnlTicketSales.Controls.Add(this.groupBox2);
             this.pnlTicketSales.Controls.Add(this.cbbYear);
             this.pnlTicketSales.Controls.Add(this.lblYear);
             this.pnlTicketSales.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlTicketSales.Location = new System.Drawing.Point(9, 51);
+            this.pnlTicketSales.Location = new System.Drawing.Point(16, 66);
+            this.pnlTicketSales.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlTicketSales.Name = "pnlTicketSales";
-            this.pnlTicketSales.Size = new System.Drawing.Size(346, 206);
+            this.pnlTicketSales.Size = new System.Drawing.Size(1219, 190);
             this.pnlTicketSales.TabIndex = 13;
             this.pnlTicketSales.Visible = false;
             // 
             // cbxQuarterly
             // 
             this.cbxQuarterly.AutoSize = true;
-            this.cbxQuarterly.Location = new System.Drawing.Point(131, 134);
+            this.cbxQuarterly.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxQuarterly.Location = new System.Drawing.Point(7, 69);
+            this.cbxQuarterly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxQuarterly.Name = "cbxQuarterly";
-            this.cbxQuarterly.Size = new System.Drawing.Size(65, 20);
+            this.cbxQuarterly.Size = new System.Drawing.Size(79, 20);
             this.cbxQuarterly.TabIndex = 14;
             this.cbxQuarterly.Text = "Quarterly";
             this.cbxQuarterly.UseVisualStyleBackColor = true;
@@ -299,9 +332,11 @@
             // cbxMonthly
             // 
             this.cbxMonthly.AutoSize = true;
-            this.cbxMonthly.Location = new System.Drawing.Point(21, 134);
+            this.cbxMonthly.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbxMonthly.Location = new System.Drawing.Point(7, 35);
+            this.cbxMonthly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbxMonthly.Name = "cbxMonthly";
-            this.cbxMonthly.Size = new System.Drawing.Size(60, 20);
+            this.cbxMonthly.Size = new System.Drawing.Size(72, 20);
             this.cbxMonthly.TabIndex = 13;
             this.cbxMonthly.Text = "Monthly";
             this.cbxMonthly.UseVisualStyleBackColor = true;
@@ -310,10 +345,12 @@
             // cbbYear
             // 
             this.cbbYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbYear.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbYear.FormattingEnabled = true;
-            this.cbbYear.Location = new System.Drawing.Point(131, 22);
+            this.cbbYear.Location = new System.Drawing.Point(197, 14);
+            this.cbbYear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cbbYear.Name = "cbbYear";
-            this.cbbYear.Size = new System.Drawing.Size(121, 24);
+            this.cbbYear.Size = new System.Drawing.Size(160, 24);
             this.cbbYear.TabIndex = 12;
             // 
             // btnSave
@@ -321,15 +358,16 @@
             this.btnSave.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnSave.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnSave.BorderRadius = 40;
+            this.btnSave.BorderRadius = 30;
             this.btnSave.BorderSize = 0;
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(19, 532);
+            this.btnSave.Location = new System.Drawing.Point(1035, 281);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(150, 40);
+            this.btnSave.Size = new System.Drawing.Size(200, 49);
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Save as PDF";
             this.btnSave.TextColor = System.Drawing.Color.White;
@@ -342,15 +380,16 @@
             this.btnGenerate.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnGenerate.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.btnGenerate.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnGenerate.BorderRadius = 40;
+            this.btnGenerate.BorderRadius = 30;
             this.btnGenerate.BorderSize = 0;
             this.btnGenerate.FlatAppearance.BorderSize = 0;
             this.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerate.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenerate.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerate.ForeColor = System.Drawing.Color.White;
-            this.btnGenerate.Location = new System.Drawing.Point(19, 284);
+            this.btnGenerate.Location = new System.Drawing.Point(16, 281);
+            this.btnGenerate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(150, 40);
+            this.btnGenerate.Size = new System.Drawing.Size(200, 49);
             this.btnGenerate.TabIndex = 9;
             this.btnGenerate.Text = "Generate Report";
             this.btnGenerate.TextColor = System.Drawing.Color.White;
@@ -358,13 +397,37 @@
             this.btnGenerate.Visible = false;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cbxAsc);
+            this.groupBox1.Controls.Add(this.cbxDesc);
+            this.groupBox1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(19, 118);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(342, 56);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Sorting";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbxMonthly);
+            this.groupBox2.Controls.Add(this.cbxQuarterly);
+            this.groupBox2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(19, 56);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(338, 112);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Period";
+            // 
             // RequestReports
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1359, 584);
+            this.ClientSize = new System.Drawing.Size(1264, 761);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pnlTicketSales);
             this.Controls.Add(this.pnlTop10);
@@ -372,11 +435,12 @@
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.cbbReportType);
             this.Controls.Add(this.lblSelectReport);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "RequestReports";
             this.Text = "RequestReports";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.RequestReports_Load_1);
             this.pnlReport.ResumeLayout(false);
             this.pnlReport.PerformLayout();
@@ -385,6 +449,10 @@
             this.pnlTop10.PerformLayout();
             this.pnlTicketSales.ResumeLayout(false);
             this.pnlTicketSales.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -418,5 +486,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private Controls.BTN btnSave;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
