@@ -19,18 +19,20 @@ namespace MovieTopia
         SqlDataAdapter adapter;
         SqlDataReader reader;
 
-        public Avalible_seats()
+        private int ScheduleID = 2;
+
+        public Avalible_seats(int scheduleID)
         {
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
             InitializeComponent();
-            loadSeats();
-            
+            ScheduleID = scheduleID;
+            loadSeats(scheduleID);
 
         }
 
-        
 
-        private void loadSeats()
+
+        private void loadSeats(int ScheduleId)
         {
             int rows = 0;
             int columns = 0;
@@ -41,19 +43,30 @@ namespace MovieTopia
                 adapter = new SqlDataAdapter();
                 ds = new DataSet();
 
+                // Retrieve the TheatreID from the MovieSchedule table using the ScheduleId
+                string sqlMovieSchedule = @"
+                SELECT
+                    TheatreID
+                FROM
+                    MovieSchedule
+                WHERE
+                    MovieScheduleID = @MovieScheduleID";
+                adapter.SelectCommand = new SqlCommand(sqlMovieSchedule, conn);
+                adapter.SelectCommand.Parameters.AddWithValue("@MovieScheduleID", ScheduleId);
+                adapter.Fill(ds, "MovieSchedule");
+
+                int theatreID = Convert.ToInt32(ds.Tables["MovieSchedule"].Rows[0]["TheatreID"]);
+
+                // Retrieve theatre details using the TheatreID
                 string sqlTheatre = @"
-                    SELECT
-                        NumRows, NumCols, TheatreName, Active
-                    FROM
-                        Theatre
-                    WHERE
-                        TheatreID = @TheatreID";
+                SELECT
+                    NumRows, NumCols, TheatreName, Active
+                FROM
+                    Theatre
+                WHERE
+                    TheatreID = @TheatreID";
                 adapter.SelectCommand = new SqlCommand(sqlTheatre, conn);
-                //
-                //logic to get the theatre id
-                //
-                int thearterID = 1;
-                adapter.SelectCommand.Parameters.AddWithValue("@TheatreID", thearterID);
+                adapter.SelectCommand.Parameters.AddWithValue("@TheatreID", theatreID);
                 adapter.Fill(ds, "Theatre");
 
                 // Values to use in the loop to display seats
@@ -67,6 +80,7 @@ namespace MovieTopia
                 MarkOccupiedSeats(conn, rows, columns);
             }
         }
+
 
         private void DisplaySeats(int rows, int columns)
         {
@@ -157,7 +171,7 @@ namespace MovieTopia
             //
             //logic to get the movie schedule id
             //
-            int movieScheduleID = 1;
+            int movieScheduleID = ScheduleID;
             command.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -245,7 +259,7 @@ namespace MovieTopia
                 //
                 // Logic to get the movie schedule ID
                 //
-                int movieScheduleID = 1;
+                int movieScheduleID = ScheduleID;
                 command.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -258,6 +272,8 @@ namespace MovieTopia
                 }
 
                 reader.Close();
+
+                List<string> selectedSeats = new List<string>();
 
                 foreach (Control control in this.Controls)
                 {
@@ -294,7 +310,7 @@ namespace MovieTopia
                             insertCommand.Parameters.AddWithValue("@CustomerPhoneNumber", "0740504642");
 
                             insertCommand.ExecuteNonQuery();
-                            MessageBox.Show($"Seat {seat.Name} has been successfully booked.");
+                            selectedSeats.Add(seatName);
                         }
 
                         else
@@ -303,6 +319,12 @@ namespace MovieTopia
                         }
                         
                     }
+                }
+                if (selectedSeats.Count > 0)
+                {
+                    FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
+                    finalBookingsForm.ShowDialog();
+                    this.Close();
                 }
             }
             this.Close();

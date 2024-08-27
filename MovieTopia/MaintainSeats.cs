@@ -256,7 +256,7 @@ namespace MovieTopia
 
         private void btnDisplaySeat_Click(object sender, EventArgs e)
         {
-            Avalible_seats avalible_Seats = new Avalible_seats();
+            Avalible_seats avalible_Seats = new Avalible_seats(1);
             this.Hide();
             avalible_Seats.ShowDialog();
             this.Show();
