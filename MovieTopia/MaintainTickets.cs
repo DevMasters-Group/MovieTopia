@@ -35,13 +35,16 @@ namespace MovieTopia
         private void Form_Resize(Object sender, EventArgs e)
         {
             // position controls
+            lblName.Top = padding / 2;
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -66,8 +69,9 @@ namespace MovieTopia
                             t.CustomerLastName, 
                             t.CustomerPhoneNumber, 
                             m.Title, 
-                            th.TheatreName, 
-                            s.SeatRow
+                            th.TheatreName,
+                            ms.DateTime,
+                            CONCAT(s.SeatColumn, s.SeatRow) as Seat
                         FROM
                             Ticket t
                         LEFT JOIN
@@ -117,13 +121,30 @@ namespace MovieTopia
                 return;
 
             // Set DataGridView column text
-            //dgvSchedules.Columns["MovieScheduleID"].HeaderText = "ID";
+            dgvSchedules.Columns["TicketID"].HeaderText = "Ticket ID";
+            dgvSchedules.Columns["PurchaseDateTime"].HeaderText = "Purchased on";
+            dgvSchedules.Columns["CustomerFirstName"].HeaderText = "Customer First Name";
+            dgvSchedules.Columns["CustomerLastName"].HeaderText = "Customer Last Name";
+            dgvSchedules.Columns["Title"].HeaderText = "Movie";
+            dgvSchedules.Columns["TheatreName"].HeaderText = "Theatre";
+            dgvSchedules.Columns["DateTime"].HeaderText = "Movie Time";
+
 
             // Set DataGridView column widths
-            //dgvSchedules.Columns["MovieScheduleID"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["TicketID"].Width = (int)(dgvSchedules.Width * 0.07);
+            dgvSchedules.Columns["Price"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["PurchaseDateTime"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["CustomerFirstName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["CustomerLastName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["CustomerPhoneNumber"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Title"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["TheatreName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["DateTime"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Seat"].Width = (int)(dgvSchedules.Width * 0.1);
 
             // optionally set specific columns to hidden
-            //dgvSchedules.Columns["GenreID"].Visible = false;
+            dgvSchedules.Columns["MovieScheduleID"].Visible = false;
+            dgvSchedules.Columns["SeatID"].Visible = false;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -298,6 +319,11 @@ namespace MovieTopia
 
                 LoadData();
             }
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 
