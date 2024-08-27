@@ -88,7 +88,7 @@ namespace MovieTopia
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre";
                 string sqlMovieSchedule = "SELECT * FROM MovieSchedule";
-                string sqlSeats = "SELECT * FROM Seat";
+                string sqlSeats = "SELECT SeatID,CONCAT(SeatColumn, SeatRow) AS seat FROM Seat";
 
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlTicket, conn); ;
@@ -152,7 +152,7 @@ namespace MovieTopia
             Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
             foreignKeySchemaNames["MovieID"] = "Title";
             foreignKeySchemaNames["TheatreID"] = "TheatreName";
-            foreignKeySchemaNames["SeatID"] = "SeatRow";
+            foreignKeySchemaNames["SeatID"] = "seat";
 
             DetailsForm detailsForm = new DetailsForm("Ticket", ds, null, foreignKeySchemaNames);
             DialogResult result = detailsForm.ShowDialog();

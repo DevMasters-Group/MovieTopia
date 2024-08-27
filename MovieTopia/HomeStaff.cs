@@ -173,12 +173,10 @@ namespace MovieTopia
 
                 int movieScheduleID = Convert.ToInt32(selectedRow.Cells[0].Value);
 
-                MessageBox.Show(movieScheduleID.ToString());
-
-                //Seats SeatForm = new Seats(int movieScheduleID);
-                //this.Hide();
-                //homeAdmin.ShowDialog();
-                //this.Close();
+                Avalible_seats SeatForm = new Avalible_seats(movieScheduleID);
+                this.Hide();
+                SeatForm.ShowDialog();
+                this.Close();
             }
         }
 
