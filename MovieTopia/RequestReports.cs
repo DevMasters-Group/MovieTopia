@@ -49,7 +49,8 @@ namespace MovieTopia
                     while (!(cbxAsc.Checked) && !(cbxDesc.Checked))
                     {
                         MessageBox.Show("Please select either Ascending or Descending");
-                        break;
+                        cbxAsc.Focus();
+                        return;
                     }
 
                     if (cbxAsc.Checked)
@@ -77,12 +78,14 @@ namespace MovieTopia
                 }
                 else if(cbbReportType.SelectedIndex == 2)
                 {
+                    
                     lblReportType.Text = reportType;
 
                     while (cbbYear.SelectedIndex == -1)
                     {
                         MessageBox.Show("Please select a year.");
-                        break;
+                        cbbYear.Focus();
+                        return;  
                     }
 
                     year = cbbYear.SelectedItem.ToString();
@@ -91,7 +94,9 @@ namespace MovieTopia
                     while(!(cbxMonthly.Checked) && !(cbxQuarterly.Checked))
                     {
                         MessageBox.Show("Please select either monthly or quarterly");
-                        break;
+                        cbxMonthly.Focus();
+                        cbxQuarterly.Focus();
+                        return;
 
                     }
 
@@ -260,8 +265,8 @@ namespace MovieTopia
             }
             else if(cbbReportType.SelectedIndex == 2)
             {
-                pnlTop10.Visible = false;
                 pnlTicketSales.Visible = true;
+                pnlTop10.Visible = false;
                 btnGenerate.Visible = true;
             }
             else if(cbbReportType.SelectedIndex == -1)
@@ -319,6 +324,30 @@ namespace MovieTopia
             
 
             
+        }
+
+        private void cbxMonthly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbxMonthly.Checked)
+            {
+                cbxQuarterly.Checked = false;
+            }
+            else if(cbxQuarterly.Checked)
+            {
+                cbxMonthly.Checked = false;
+            }
+        }
+
+        private void cbxQuarterly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbxQuarterly.Checked)
+            {
+                cbxMonthly.Checked = false;
+            }
+            else if (cbxQuarterly.Checked)
+            {
+                cbxMonthly.Checked = false;
+            }
         }
     }
 }
