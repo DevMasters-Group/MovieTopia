@@ -36,12 +36,12 @@ namespace MovieTopia
         {
             // position controls
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
-            btnEdit.Left = (this.ClientSize.Width / 2) + padding / 2;
-            btnNew.Left = (this.ClientSize.Width / 2) - btnNew.Width - padding / 2;
-            //btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
+            btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
+            btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
-            //btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -84,7 +84,7 @@ namespace MovieTopia
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre";
                 string sqlMovieSchedule = "SELECT * FROM MovieSchedule";
-                string sqlSeats = "SELECT * FROM Seat";
+                string sqlSeats = "SELECT SeatID,CONCAT(SeatColumn, SeatRow) AS seat FROM Seat";
 
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlTicket, conn); ;
@@ -131,7 +131,7 @@ namespace MovieTopia
             Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
             foreignKeySchemaNames["MovieID"] = "Title";
             foreignKeySchemaNames["TheatreID"] = "TheatreName";
-            foreignKeySchemaNames["SeatID"] = "SeatRow";
+            foreignKeySchemaNames["SeatID"] = "seat";
 
             DetailsForm detailsForm = new DetailsForm("Ticket", ds, null, foreignKeySchemaNames);
             DialogResult result = detailsForm.ShowDialog();

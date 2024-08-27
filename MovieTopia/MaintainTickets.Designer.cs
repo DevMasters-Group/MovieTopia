@@ -128,14 +128,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1262, 753);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.dgvSchedules);
             this.Controls.Add(this.lblName);
+            this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "MaintainTickets";
             this.Text = "MaintainTickets";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

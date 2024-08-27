@@ -32,13 +32,13 @@
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSelectMovie = new MovieTopia.Controls.BTN();
-            this.btnCancel = new MovieTopia.Controls.BTN();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
+            this.btnCancel = new MovieTopia.Controls.BTN();
+            this.btnSelectMovie = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -72,50 +72,11 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Controls.Add(this.picLogo);
-            this.panel1.Location = new System.Drawing.Point(1, 2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1436, 100);
+            this.panel1.Size = new System.Drawing.Size(1438, 100);
             this.panel1.TabIndex = 2;
-            // 
-            // btnSelectMovie
-            // 
-            this.btnSelectMovie.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSelectMovie.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSelectMovie.BorderColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSelectMovie.BorderRadius = 40;
-            this.btnSelectMovie.BorderSize = 0;
-            this.btnSelectMovie.FlatAppearance.BorderSize = 0;
-            this.btnSelectMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSelectMovie.ForeColor = System.Drawing.Color.Black;
-            this.btnSelectMovie.Location = new System.Drawing.Point(496, 671);
-            this.btnSelectMovie.Name = "btnSelectMovie";
-            this.btnSelectMovie.Size = new System.Drawing.Size(168, 50);
-            this.btnSelectMovie.TabIndex = 3;
-            this.btnSelectMovie.Text = "Select Movie";
-            this.btnSelectMovie.TextColor = System.Drawing.Color.Black;
-            this.btnSelectMovie.UseVisualStyleBackColor = false;
-            this.btnSelectMovie.Click += new System.EventHandler(this.btnSelectMovie_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCancel.BackgroundColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnCancel.BorderRadius = 40;
-            this.btnCancel.BorderSize = 0;
-            this.btnCancel.FlatAppearance.BorderSize = 0;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnCancel.Location = new System.Drawing.Point(806, 671);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(168, 50);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.TextColor = System.Drawing.Color.Black;
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // gbxFiltering
             // 
@@ -168,6 +129,46 @@
             this.cbxGenre.TabIndex = 0;
             this.cbxGenre.Text = "* Please Select *";
             this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BackgroundColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderRadius = 40;
+            this.btnCancel.BorderSize = 0;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel.Location = new System.Drawing.Point(806, 671);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(168, 50);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextColor = System.Drawing.Color.Black;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSelectMovie
+            // 
+            this.btnSelectMovie.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSelectMovie.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSelectMovie.BorderColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSelectMovie.BorderRadius = 40;
+            this.btnSelectMovie.BorderSize = 0;
+            this.btnSelectMovie.FlatAppearance.BorderSize = 0;
+            this.btnSelectMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSelectMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectMovie.ForeColor = System.Drawing.Color.Black;
+            this.btnSelectMovie.Location = new System.Drawing.Point(496, 671);
+            this.btnSelectMovie.Name = "btnSelectMovie";
+            this.btnSelectMovie.Size = new System.Drawing.Size(168, 50);
+            this.btnSelectMovie.TabIndex = 3;
+            this.btnSelectMovie.Text = "Select Movie";
+            this.btnSelectMovie.TextColor = System.Drawing.Color.Black;
+            this.btnSelectMovie.UseVisualStyleBackColor = false;
+            this.btnSelectMovie.Click += new System.EventHandler(this.btnSelectMovie_Click);
             // 
             // HomeStaff
             // 
