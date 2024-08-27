@@ -61,11 +61,31 @@ namespace MovieTopia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon errorIcon {
+            get {
+                object obj = ResourceManager.GetObject("errorIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logoFullDark {
             get {
                 object obj = ResourceManager.GetObject("logoFullDark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logoFullDark1 {
+            get {
+                object obj = ResourceManager.GetObject("logoFullDark1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

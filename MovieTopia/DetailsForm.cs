@@ -23,6 +23,7 @@ namespace MovieTopia
         private Label[] charCountLabels;
         DataSet ds;
         SqlDataAdapter adapter;
+        //private ErrorProvider errorProvider = new ErrorProvider();
 
         /// <summary>
         /// This form automatically builds itself based on the parameters passed into it. See <see cref="DetailsForm"/> for more.
@@ -280,6 +281,9 @@ namespace MovieTopia
                             Width = 200,
                             Font = new Font("Arial", 10, FontStyle.Regular),
                         };
+                        control.Validating += (sender, e) => {
+                            ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
+                        };
                     }
                 }
                 else if (dataType == "smallmoney")  // Handle currency
@@ -295,6 +299,9 @@ namespace MovieTopia
                         Width = 200,
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
+                    control.Validating += (sender, e) => {
+                        ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
+                    };
                 }
                 else if (dataType == "datetime")  // Handle datetime
                 {
@@ -302,6 +309,7 @@ namespace MovieTopia
                     {
                         //Value = (DateTime)fieldData[schemaColumnName],
                         Value = newRecord ? DateTime.Now : (DateTime)fieldData[schemaColumnName],
+                        MinDate = DateTime.Now,
                         Top = y,
                         Left = label.Width + padding,
                         Width = 200,
@@ -309,6 +317,9 @@ namespace MovieTopia
                         Format = DateTimePickerFormat.Custom,
                         CustomFormat = "yyyy-MM-dd HH:mm",
                         Font = new Font("Arial", 10, FontStyle.Regular),
+                    };
+                    control.Validating += (sender, e) => {
+                        ValidateDateTimePicker((DateTimePicker)sender, e);  // invoke error provider for validation checks
                     };
                 }
                 else  // Handle textboxes for other data types
@@ -332,6 +343,9 @@ namespace MovieTopia
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                     control.Height *= requiredHeightMultiplier;
+                    control.Validating += (sender, e) => {
+                        ValidateNotEmpty((TextBox)sender, e);  // invoke error provider for validation checks
+                    };
                     
 
                     // Create and configure the character count Label
@@ -367,6 +381,67 @@ namespace MovieTopia
         }
 
         /// <summary>
+        /// Validates the TextBox value to prevent blank or whitespace entries
+        /// </summary>
+        /// <param name="textBox">The TextBox control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void ValidateNotEmpty(TextBox textBox, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text) || string.IsNullOrEmpty(textBox.Text))
+            {
+                errorProvider1.SetIconPadding(textBox, padding);
+                errorProvider1.SetError(textBox, "This field is required.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider1.SetError(textBox, "");
+            }
+        }
+
+        /// <summary>
+        /// Validates the NumericUpDown value to prevent invalid number entries
+        /// </summary>
+        /// <param name="numericUpDown">The NumericUpDown control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void ValidateNumericUpDown(NumericUpDown numericUpDown, CancelEventArgs e)
+        {
+            if (numericUpDown.Value <= numericUpDown.Minimum)
+            {
+                // Set the error message
+                errorProvider1.SetIconPadding(numericUpDown, padding);
+                errorProvider1.SetError(numericUpDown, $"This field requires a valid number (between {numericUpDown.Minimum} and {numericUpDown.Maximum})");
+                e.Cancel = true;
+            }
+            else
+            {
+                // Clear the error
+                errorProvider1.SetError(numericUpDown, "");
+            }
+        }
+
+        /// <summary>
+        /// Validates the DateTimePicker value to prevent invalid dates entries
+        /// </summary>
+        /// <param name="dateTimePicker">The DateTimePicker control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void ValidateDateTimePicker(DateTimePicker dateTimePicker, CancelEventArgs e)
+        {
+            if (dateTimePicker.Value == dateTimePicker.MinDate)
+            {
+                // Set the error message
+                errorProvider1.SetIconPadding(dateTimePicker, padding);
+                errorProvider1.SetError(dateTimePicker, "Please select a valid date.");
+                e.Cancel = true;
+            }
+            else
+            {
+                // Clear the error
+                errorProvider1.SetError(dateTimePicker, "");
+            }
+        }
+
+        /// <summary>
         /// Updates the character count label based on the content of the TextBox.
         /// </summary>
         /// <param name="textBox">The TextBox control.</param>
@@ -396,6 +471,7 @@ namespace MovieTopia
                 BackgroundColor = Color.DodgerBlue,
                 BorderColor = Color.MediumBlue,
                 BorderSize = 1,
+                CausesValidation = true,
             };
             saveButton.Click += SaveButton_Click;
 
@@ -410,6 +486,7 @@ namespace MovieTopia
                 BackgroundColor = Color.Red,
                 BorderColor = Color.DarkRed,
                 BorderSize = 1,
+                CausesValidation = false,
             };
             cancelButton.Click += CancelButton_Click;
 
@@ -419,9 +496,6 @@ namespace MovieTopia
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // TODO - Validation checks
-
-            // dialog result to handle data grid reload
             this.Close();
         }
 

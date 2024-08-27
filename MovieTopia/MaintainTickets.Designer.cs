@@ -42,7 +42,7 @@
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(12, 35);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(227, 31);
+            this.lblName.Size = new System.Drawing.Size(279, 39);
             this.lblName.TabIndex = 4;
             this.lblName.Text = "Maintain Tickets";
             // 

@@ -102,7 +102,7 @@
             this.lblName.Location = new System.Drawing.Point(10, 20);
             this.lblName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(235, 31);
+            this.lblName.Size = new System.Drawing.Size(292, 39);
             this.lblName.TabIndex = 3;
             this.lblName.Text = "Schedule Movies";
             // 
@@ -130,7 +130,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(948, 618);
+            this.ClientSize = new System.Drawing.Size(1262, 753);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnNew);
