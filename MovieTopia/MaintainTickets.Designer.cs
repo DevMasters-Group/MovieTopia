@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaintainTickets));
             this.lblName = new System.Windows.Forms.Label();
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
+            this.btnReturn = new MovieTopia.Controls.BTN();
             this.btnNew = new MovieTopia.Controls.BTN();
             this.btnDelete = new MovieTopia.Controls.BTN();
             this.btnEdit = new MovieTopia.Controls.BTN();
@@ -42,7 +44,7 @@
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblName.Location = new System.Drawing.Point(12, 35);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(279, 39);
+            this.lblName.Size = new System.Drawing.Size(227, 31);
             this.lblName.TabIndex = 4;
             this.lblName.Text = "Maintain Tickets";
             // 
@@ -60,6 +62,27 @@
             this.dgvSchedules.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSchedules.Size = new System.Drawing.Size(465, 227);
             this.dgvSchedules.TabIndex = 5;
+            // 
+            // btnReturn
+            // 
+            this.btnReturn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BorderColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.BorderRadius = 30;
+            this.btnReturn.BorderSize = 2;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReturn.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.Location = new System.Drawing.Point(573, 339);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(180, 50);
+            this.btnReturn.TabIndex = 15;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // btnNew
             // 
@@ -128,14 +151,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.dgvSchedules);
             this.Controls.Add(this.lblName);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "MaintainTickets";
             this.Text = "MaintainTickets";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -149,5 +176,6 @@
         private Controls.BTN btnNew;
         private Controls.BTN btnDelete;
         private Controls.BTN btnEdit;
+        private Controls.BTN btnReturn;
     }
 }
