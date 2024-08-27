@@ -11,92 +11,108 @@ using System.Windows.Forms;
 
 namespace MovieTopia
 {
-    public partial class MaintainTheatres : Form
+    public partial class MaintainSeats : Form
     {
         private string DATABASE_URL;
         private int padding = 20;
         DataSet ds;
         SqlDataAdapter adapter;
-
-        public MaintainTheatres()
+        SqlDataReader thereader;
+        public MaintainSeats()
         {
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
-
             InitializeComponent();
-
             this.Resize += Form_Resize;
 
             LoadData();
         }
-
         private void Form_Resize(Object sender, EventArgs e)
         {
+
+            // set buttons and labels accordingly for form resizing
             lblName.Top = padding / 2;
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnDaiplaySeat.Left = btnDelete.Left + btnEdit.Width + padding;
             btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnDaiplaySeat.Top = (this.ClientSize.Height - btnDaiplaySeat.Height - padding * 2);
             btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
+            cbTeater_Name.Left = (this.ClientSize.Width - cbTeater_Name.Width - padding * 2);
+            cbTeater_Name.Top = lblName.Top + lblName.Height;
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
 
         private void LoadData()
         {
+            
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
+                conn.Open();
+                adapter= new SqlDataAdapter();
                 ds = new DataSet();
-                adapter = new SqlDataAdapter();
-
-                string sql = @"
-                            SELECT
-                                t.TheatreID, t.TheatreName, t.Active, t.NumRows, t.NumCols
-                            FROM
-                                Theatre t;";
-
-                adapter.SelectCommand = new SqlCommand(sql, conn); ;
+                string sqlTheatres = "SELECT * FROM Theatre";
+                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
                 adapter.Fill(ds, "Theatre");
 
-                dgvData.DataSource = ds;
-                dgvData.DataMember = "Theatre";
+                // Bind the ComboBox to display theater names
+                cbTeater_Name.DataSource = ds.Tables["Theatre"];
+                cbTeater_Name.DisplayMember = "TheatreName";
+                cbTeater_Name.ValueMember = "TheatreID";
+
+                string sqlseats = @"
+                            Select
+                                s.SeatID, s.SeatRow, s.SeatColumn
+                            From
+                                Seat s";
+
+                adapter.SelectCommand = new SqlCommand(sqlseats, conn);
+                adapter.Fill(ds, "Seat");
+
+                dgvSeat.DataSource = ds;
+                dgvSeat.DataMember = "Seat";
+
+
+                
             }
         }
-
         private void AdjustDataGridViewSize()
         {
-            dgvData.Width = this.ClientSize.Width - (2 * padding);
-            dgvData.Height = this.ClientSize.Height - (10 * padding);
-            dgvData.Location = new Point(padding, padding * 3);
+            dgvSeat.Width = this.ClientSize.Width - (2 * padding);
+            dgvSeat.Height = this.ClientSize.Height - (10 * padding);
+            dgvSeat.Location = new Point(padding, padding * 3);
         }
-
         private void AdjustColumnWidths()
         {
-            if (dgvData.Columns.Count == 0)
+            if (dgvSeat.Columns.Count == 0)
                 return;
 
-            dgvData.Columns["TheatreID"].HeaderText = "Theatre ID";
-            dgvData.Columns["TheatreName"].HeaderText = "Theatre Name";
-            dgvData.Columns["NumRows"].HeaderText = "Number of Rows";
-            dgvData.Columns["NumCols"].HeaderText = "Number of Cols";
+            dgvSeat.Columns["SeatID"].HeaderText = "Seat ID";
+            dgvSeat.Columns["SeatRow"].HeaderText = "Seat Row";
+            dgvSeat.Columns["SeatColumn"].HeaderText = "Seat Column";
 
-            dgvData.Columns["TheatreID"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.377);
-            dgvData.Columns["Active"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["NumRows"].Width = (int)(dgvData.Width * 0.2);
-            dgvData.Columns["NumCols"].Width = (int)(dgvData.Width * 0.2);
+            dgvSeat.Columns["SeatID"].Width = (int)(dgvSeat.Width * 0.2);
+            dgvSeat.Columns["SeatRow"].Width = (int)(dgvSeat.Width * 0.2);
+            dgvSeat.Columns["SeatColumn"].Width = (int)(dgvSeat.Width * 0.2);
 
             // optionally set specific columns to hidden
-            //dgvData.Columns["GenreID"].Visible = false;
+            //dgvGenres.Columns["GenreID"].Visible = false;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            DetailsForm detailsForm = new DetailsForm("Theatre", ds, null, null);
+            DetailsForm detailsForm = new DetailsForm("Seat", null, null, null);
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -104,18 +120,12 @@ namespace MovieTopia
 
                 string sql = @"
                     INSERT INTO 
-                        Theatre (
-                            TheatreName,
-                            Active,
-                            NumRows,
-                            NumCols
+                        Seat (
+                            SeatRow, SeatColumn
                         )
                         VALUES
                         (
-                            @TheatreName,
-                            @Active,
-                            @NumRows,
-                            @NumCols
+                            @SeatRow, @SeatColumn
                         );";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -126,10 +136,8 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
-                    command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
-                    command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
-                    command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
+                    command.Parameters.AddWithValue("@SeatRow", ((NumericUpDown)data["SeatRow"]).Value);
+                    command.Parameters.AddWithValue("@SeatColumn", ((TextBox)data["SeatColumn"]).Text);
 
                     try
                     {
@@ -149,11 +157,14 @@ namespace MovieTopia
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dgvData.SelectedRows.Count == 1)
+            if (dgvSeat.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvSeat.SelectedRows[0];
 
-                DetailsForm detailsForm = new DetailsForm("Theatre", ds, selectedRow, null);
+                Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
+                foreignKeySchemaNames["SeatID"] = "SeatRow" + "SeatColumn";
+
+                DetailsForm detailsForm = new DetailsForm("Seat", ds, selectedRow, foreignKeySchemaNames);
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -161,14 +172,12 @@ namespace MovieTopia
 
                     string sql = @"
                         UPDATE 
-                            Theatre
+                            Seat
                         SET 
-                            TheatreName = @TheatreName,
-                            Active = @Active,
-                            NumRows = @NumRows,
-                            NumCols = @NumCols
+                            SeatRow = @SeatRow
+                            SeatColumn = @SeatColumn
                         WHERE
-                            TheatreID = @TheatreID;
+                            SeatID = @SeatID;
                         ";
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -179,11 +188,9 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@TheatreID", ((TextBox)data["TheatreID"]).Text);
-                        command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
-                        command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
-                        command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
-                        command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
+                        command.Parameters.AddWithValue("@SeatID", ((TextBox)data["SeatID"]).Text);
+                        command.Parameters.AddWithValue("@SeatRow", ((NumericUpDown)data["SeatRow"]).Value);
+                        command.Parameters.AddWithValue("@SeatColumn", ((TextBox)data["SeatColumn"]).Text);
 
                         try
                         {
@@ -204,18 +211,18 @@ namespace MovieTopia
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvData.SelectedRows.Count == 1)
+            if (dgvSeat.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvSeat.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["TheatreName"].Value}\"?", "Delete Theatre", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"
                         DELETE FROM 
-                            Theatre
+                            Seat
                         WHERE
-                            TheatreID = @TheatreID;";
+                            GenreID = @SeatID;";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
@@ -225,7 +232,7 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@TheatreID", selectedRow.Cells["TheatreID"].Value);
+                    command.Parameters.AddWithValue("@SeatID", selectedRow.Cells["SeatID"].Value);
 
                     try
                     {
@@ -235,7 +242,7 @@ namespace MovieTopia
                     }
                     catch (SqlException)
                     {
-                        MessageBox.Show($"\"{selectedRow.Cells["TheatreName"].Value}\" cannot be deleted because of 1 or more Scheduled Movies that are dependent on this Theatre. Please delete the corresponding records before attempting to delete this Theatre.", "Error");
+                        MessageBox.Show($"\"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\" cannot be deleted because it is being referenced by 1 or more Tickets for movies on display, or up-and-coming movies.", "Error");
                     }
                     catch (Exception ex)
                     {
@@ -247,9 +254,18 @@ namespace MovieTopia
             }
         }
 
+        private void btnDisplaySeat_Click(object sender, EventArgs e)
+        {
+            Avalible_seats avalible_Seats = new Avalible_seats();
+            this.Hide();
+            avalible_Seats.ShowDialog();
+            this.Show();
+        }
+
         private void btnReturn_Click(object sender, EventArgs e)
         {
             this.Close();
         }
     }
+    
 }

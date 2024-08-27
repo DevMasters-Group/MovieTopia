@@ -36,12 +36,39 @@
     <Reference Include="dotenv.net, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\dotenv.net.3.2.0\lib\netstandard2.0\dotenv.net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.5.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.5.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.5.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -49,9 +76,16 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,8 +97,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avalible_seats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Avalible_seats.Designer.cs">
+      <DependentUpon>Avalible_seats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BTN.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LBL.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LBL.Designer.cs">
+      <DependentUpon>LBL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PBX.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PBX.Designer.cs">
+      <DependentUpon>PBX.cs</DependentUpon>
     </Compile>
     <Compile Include="DetailsForm.cs">
       <SubType>Form</SubType>
@@ -102,6 +154,12 @@
     <Compile Include="MaintainMovies.Designer.cs">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
     </Compile>
+    <Compile Include="MaintainSeats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaintainSeats.Designer.cs">
+      <DependentUpon>MaintainSeats.cs</DependentUpon>
+    </Compile>
     <Compile Include="MaintainTheatres.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +172,17 @@
     <Compile Include="MaintainTickets.Designer.cs">
       <DependentUpon>MaintainTickets.cs</DependentUpon>
     </Compile>
+    <Compile Include="RequestReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RequestReports.Designer.cs">
+      <DependentUpon>RequestReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ScheduleMovies.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +191,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Avalible_seats.resx">
+      <DependentUpon>Avalible_seats.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DetailsForm.resx">
       <DependentUpon>DetailsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -141,25 +213,26 @@
     <EmbeddedResource Include="MaintainMovies.resx">
       <DependentUpon>MaintainMovies.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MaintainSeats.resx">
+      <DependentUpon>MaintainSeats.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MaintainTheatres.resx">
       <DependentUpon>MaintainTheatres.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MaintainTickets.resx">
       <DependentUpon>MaintainTickets.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RequestReports.resx">
+      <DependentUpon>RequestReports.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScheduleMovies.resx">
       <DependentUpon>ScheduleMovies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include=".env" />
     <None Include=".env.example" />
     <None Include="packages.config" />
@@ -193,6 +266,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logoFullLight.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Booked.png" />
+    <None Include="Resources\errorIcon.ico" />
+    <Content Include="Resources\Not_booked.png" />
+    <Content Include="Resources\Seat_Booking\Screenshot 2024-08-18 224911.png" />
+    <Content Include="Resources\Selected_seat.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logoFullDark1.jpg" />
