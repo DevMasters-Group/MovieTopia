@@ -15,6 +15,7 @@ namespace MovieTopia
     {
         private string DATABASE_URL;
         private int padding = 20;
+        private string tblName = "MovieSchedule";
         DataSet ds;
         SqlDataAdapter adapter;
 
@@ -35,13 +36,16 @@ namespace MovieTopia
         private void Form_Resize(Object sender, EventArgs e)
         {
             // position controls
+            lblName.Top = padding / 2;
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -79,43 +83,44 @@ namespace MovieTopia
                 adapter.Fill(ds, "Theatre");
 
                 // fill the datagrid
-                dgvSchedules.DataSource = ds;
-                dgvSchedules.DataMember = "MovieSchedule";
+                //dgvData.DataSource = ds;
+                //dgvData.DataMember = "MovieSchedule";
+                dgvData.DataSource = ds.Tables[tblName].DefaultView;
             }
         }
 
         private void AdjustDataGridViewSize()
         {
-            dgvSchedules.Width = this.ClientSize.Width - (2 * padding);
-            dgvSchedules.Height = this.ClientSize.Height - (10 * padding);
-            dgvSchedules.Location = new Point(padding, padding * 3);
+            dgvData.Width = this.ClientSize.Width - (2 * padding);
+            dgvData.Height = this.ClientSize.Height - (11 * padding);
+            dgvData.Location = new Point(padding, padding * 5);
         }
 
         private void AdjustColumnWidths()
         {
-            if (dgvSchedules.Columns.Count == 0)
+            if (dgvData.Columns.Count == 0)
                 return;
 
             // Set DataGridView column text
-            dgvSchedules.Columns["MovieScheduleID"].HeaderText = "Schedule ID";
-            dgvSchedules.Columns["TheatreName"].HeaderText = "Theatre";
-            dgvSchedules.Columns["PG_Rating"].HeaderText = "PG Rating";
-            dgvSchedules.Columns["GenreName"].HeaderText = "Genre";
-            dgvSchedules.Columns["DateTime"].HeaderText = "Start Time";
+            dgvData.Columns["MovieScheduleID"].HeaderText = "Schedule ID";
+            dgvData.Columns["TheatreName"].HeaderText = "Theatre";
+            dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
+            dgvData.Columns["GenreName"].HeaderText = "Genre";
+            dgvData.Columns["DateTime"].HeaderText = "Start Time";
 
             // Set DataGridView column widths
-            dgvSchedules.Columns["MovieScheduleID"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["Price"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["DateTime"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["Title"].Width = (int)(dgvSchedules.Width * 0.272);
-            dgvSchedules.Columns["Duration"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["PG_Rating"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["TheatreName"].Width = (int)(dgvSchedules.Width * 0.1);
-            dgvSchedules.Columns["GenreName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvData.Columns["MovieScheduleID"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.277);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
 
             // optionally set specific columns to hidden
-            dgvSchedules.Columns["MovieID"].Visible = false;
-            dgvSchedules.Columns["TheatreID"].Visible = false;
+            dgvData.Columns["MovieID"].Visible = false;
+            dgvData.Columns["TheatreID"].Visible = false;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -124,7 +129,13 @@ namespace MovieTopia
             foreignKeySchemaNames["MovieID"] = "Title";
             foreignKeySchemaNames["TheatreID"] = "TheatreName";
 
-            DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, null, foreignKeySchemaNames);
+            Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+            attributeNameMap["MovieScheduleID"] = "Movie Schedule ID";
+            attributeNameMap["MovieID"] = "Movie";
+            attributeNameMap["TheatreID"] = "Theatre";
+            attributeNameMap["DateTime"] = "Movie Date and Time";
+
+            DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, null, foreignKeySchemaNames, attributeNameMap);
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -154,8 +165,10 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@MovieID", ((ComboBox)data["MovieID"]).SelectedValue);
-                    command.Parameters.AddWithValue("@TheatreID", ((ComboBox)data["TheatreID"]).SelectedValue);
+                    var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                    command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
+                    var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                    command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                     command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                     command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
 
@@ -177,16 +190,22 @@ namespace MovieTopia
 
         private void btnEdit_Click_1(object sender, EventArgs e)
         {
-            if (dgvSchedules.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvSchedules.SelectedRows[0];  // get the selected row
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];  // get the selected row
 
                 // This dictionary is used for mapping certain columns to their values in the child table - i.e. what column data you want to show in the drop down box
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
                 foreignKeySchemaNames["MovieID"] = "Title";  // this will show the Movie title in the drop down
                 foreignKeySchemaNames["TheatreID"] = "TheatreName";
 
-                DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, selectedRow, foreignKeySchemaNames);
+                Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+                attributeNameMap["MovieScheduleID"] = "Movie Schedule ID";
+                attributeNameMap["MovieID"] = "Movie";
+                attributeNameMap["TheatreID"] = "Theatre";
+                attributeNameMap["DateTime"] = "Movie Date and Time";
+
+                DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, selectedRow, foreignKeySchemaNames, attributeNameMap);
                 DialogResult result = detailsForm.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -239,9 +258,9 @@ namespace MovieTopia
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvSchedules.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvSchedules.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
                 string sql = @"
                         DELETE FROM 
@@ -278,6 +297,50 @@ namespace MovieTopia
         private void ScheduleMovies_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = txtFilter.Text;
+            DataTable dt = ds.Tables[tblName];
+
+            if (string.IsNullOrEmpty(filterText))
+            {
+                dt.DefaultView.RowFilter = "";
+            }
+            else
+            {
+                // Construct the filter string
+                var filterConditions = dt.Columns.Cast<DataColumn>()
+                    .Select(c => {
+                        if (c.DataType == typeof(string))
+                        {
+                            return $"{c.ColumnName} LIKE '%{filterText}%'";
+                        }
+                        else if (c.DataType == typeof(int) || c.DataType == typeof(decimal))
+                        {
+                            // Try parsing filterText to avoid applying invalid filter
+                            if (decimal.TryParse(filterText, out _))
+                            {
+                                return $"{c.ColumnName} = {filterText}";
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
+                        return null;
+                    })
+                    .Where(condition => condition != null); // Filter out any null conditions
+
+                // Combine all filter conditions using "OR"
+                dt.DefaultView.RowFilter = string.Join(" OR ", filterConditions);
+            }
         }
     }
 }

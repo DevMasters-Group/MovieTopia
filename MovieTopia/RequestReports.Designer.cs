@@ -78,6 +78,7 @@
             // 
             // cbbReportType
             // 
+            this.cbbReportType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbReportType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbReportType.FormattingEnabled = true;
             this.cbbReportType.Items.AddRange(new object[] {
@@ -326,6 +327,7 @@
             this.cbxQuarterly.TabIndex = 14;
             this.cbxQuarterly.Text = "Quarterly";
             this.cbxQuarterly.UseVisualStyleBackColor = true;
+            this.cbxQuarterly.CheckedChanged += new System.EventHandler(this.cbxQuarterly_CheckedChanged);
             // 
             // cbxMonthly
             // 
@@ -338,9 +340,11 @@
             this.cbxMonthly.TabIndex = 13;
             this.cbxMonthly.Text = "Monthly";
             this.cbxMonthly.UseVisualStyleBackColor = true;
+            this.cbxMonthly.CheckedChanged += new System.EventHandler(this.cbxMonthly_CheckedChanged);
             // 
             // cbbYear
             // 
+            this.cbbYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbYear.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbYear.FormattingEnabled = true;
             this.cbbYear.Location = new System.Drawing.Point(197, 14);
