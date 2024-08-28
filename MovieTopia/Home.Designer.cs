@@ -39,7 +39,7 @@
             this.btnCStaff.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.btnCStaff.BorderColor = System.Drawing.Color.DarkSlateBlue;
             this.btnCStaff.BorderRadius = 40;
-            this.btnCStaff.BorderSize = 2;
+            this.btnCStaff.BorderSize = 1;
             this.btnCStaff.FlatAppearance.BorderSize = 0;
             this.btnCStaff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCStaff.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -60,7 +60,7 @@
             this.btnCAdmin.BackgroundColor = System.Drawing.Color.DarkOrchid;
             this.btnCAdmin.BorderColor = System.Drawing.Color.DarkViolet;
             this.btnCAdmin.BorderRadius = 40;
-            this.btnCAdmin.BorderSize = 2;
+            this.btnCAdmin.BorderSize = 1;
             this.btnCAdmin.FlatAppearance.BorderSize = 0;
             this.btnCAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCAdmin.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
