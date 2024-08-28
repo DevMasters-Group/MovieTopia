@@ -18,6 +18,7 @@ namespace MovieTopia
         private int padding = 20;
         private DataGridViewRow selectedDGVR;
         public List<int> selectedSeatIDs = new List<int>();
+        public Dictionary<int, string> selectedSeats = new Dictionary<int, string>();
         DataSet ds;
         SqlDataAdapter adapter;
 
@@ -41,6 +42,11 @@ namespace MovieTopia
             lblScreen.Top = (pnlScreen.Height - lblScreen.Height) / 2;
             pnlLegend.Left = this.ClientSize.Width / 2 - pnlLegend.Width / 2;
             pnlLegend.Top = this.ClientSize.Height - 2 * padding - pnlLegend.Height;
+
+            btnCancel.Top = pnlLegend.Top;
+            btnContinue.Top = pnlLegend.Top;
+            btnCancel.Left = this.ClientSize.Width - btnCancel.Width - padding;
+            btnContinue.Left = btnCancel.Left - padding / 2 - btnContinue.Width;
         }
 
         private void LoadData()
@@ -50,8 +56,10 @@ namespace MovieTopia
                 ds = new DataSet();
                 adapter = new SqlDataAdapter();
 
+                int movieScheduleID = int.Parse(selectedDGVR.Cells["MovieScheduleID"].Value.ToString());
+
                 // select the parent table and join any additional fields from child entities
-                string sqlSeats = @"
+                string sqlSeats = $@"
                     WITH TheatreSeats AS (
                         SELECT 
                             t.TheatreID,
@@ -65,7 +73,7 @@ namespace MovieTopia
                         CROSS JOIN 
                             Seat s
                         WHERE 
-                            t.TheatreID = (SELECT TheatreID FROM MovieSchedule WHERE MovieScheduleID = 12)
+                            t.TheatreID = (SELECT TheatreID FROM MovieSchedule WHERE MovieScheduleID = {movieScheduleID})
                             AND s.SeatRow <= t.NumRows 
                             AND s.SeatColumn <= CHAR(64 + t.NumCols)
                     ),
@@ -82,7 +90,7 @@ namespace MovieTopia
                         FROM 
                             TheatreSeats ts
                         LEFT JOIN 
-                            Ticket tk ON ts.SeatID = tk.SeatID AND tk.MovieScheduleID = 12
+                            Ticket tk ON ts.SeatID = tk.SeatID AND tk.MovieScheduleID = {movieScheduleID}
                     )
                     SELECT
                         SeatID,
@@ -101,7 +109,8 @@ namespace MovieTopia
 
         private void PopulateArray()
         {
-            int pictureBoxSize = 25; // Size of each PictureBox
+            int pictureBoxWidth = 40; // Size of each PictureBox
+            int pictureBoxHeight = 25; // Size of each PictureBox
             int margin = 5; // Space between PictureBoxes
             int startX = pnlScreen.Left;
             int startY = pnlScreen.Bottom + padding; // Starting position for the first PictureBox
@@ -114,8 +123,8 @@ namespace MovieTopia
             int maxRow = ds.Tables["Seats"].AsEnumerable().Max(row => row.Field<int>("SeatRow"));
             int maxCol = ds.Tables["Seats"].AsEnumerable().Max(row => Convert.ToChar(row.Field<string>("SeatColumn")) - 'A' + 1);
 
-            totalWidth = (maxCol * pictureBoxSize) + ((maxCol - 1) * margin);
-            totalHeight = (maxRow * pictureBoxSize) + ((maxRow - 1) * margin);
+            totalWidth = (maxCol * pictureBoxWidth) + ((maxCol - 1) * margin);
+            totalHeight = (maxRow * pictureBoxHeight) + ((maxRow - 1) * margin);
 
             startX = pnlScreen.Left + pnlScreen.Width / 2 - totalWidth / 2;
             startY = pnlScreen.Bottom + padding; // Leave space for the legend
@@ -129,11 +138,11 @@ namespace MovieTopia
                 // Create a new PictureBox
                 PictureBox pb = new PictureBox
                 {
-                    Width = pictureBoxSize,
-                    Height = pictureBoxSize,
+                    Width = pictureBoxWidth,
+                    Height = pictureBoxHeight,
                     BackColor = isBooked ? Color.Gray : Color.LightGray, // Dark grey if booked, light grey if available
-                    Location = new Point(startX + (seatColumn[0] - 'A') * (pictureBoxSize + margin),
-                                 startY + (seatRow - 1) * (pictureBoxSize + margin)),
+                    Location = new Point(startX + (seatColumn[0] - 'A') * (pictureBoxWidth + margin),
+                                 startY + (seatRow - 1) * (pictureBoxHeight + margin)),
                     Tag = new { SeatID = row["SeatID"], SeatRow = seatRow, SeatColumn = seatColumn, IsBooked = isBooked }
                 };
 
@@ -174,10 +183,14 @@ namespace MovieTopia
                 if (selected)
                 {
                     selectedSeatIDs.Add(seatID);
+                    selectedSeats[seatID] = seatInfo.SeatColumn + "" + seatInfo.SeatRow;
+                    btnContinue.Enabled = true;
                 }
                 else
                 {
                     selectedSeatIDs.Remove(seatID);
+                    selectedSeats.Remove(seatID);
+                    if (selectedSeats.Count == 0) btnContinue.Enabled = false;
                 }
             }
             else
@@ -186,20 +199,35 @@ namespace MovieTopia
             }
         }
 
-        private List<int> GetSelectedSeatIDs()
+        //private List<int> GetSelectedSeatIDs()
+        //{
+        //    List<int> selectedSeatIDs = new List<int>();
+
+        //    foreach (Control control in this.Controls)
+        //    {
+        //        if (control is PictureBox pb && pb.BackColor == Color.FromArgb(0, 191, 255)) // Check for selected color
+        //        {
+        //            var seatInfo = (dynamic)pb.Tag;
+        //            selectedSeatIDs.Add(seatInfo.SeatID);
+        //        }
+        //    }
+
+        //    return selectedSeatIDs;
+        //}
+
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            List<int> selectedSeatIDs = new List<int>();
-
-            foreach (Control control in this.Controls)
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel your booking?", "Cancel", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                if (control is PictureBox pb && pb.BackColor == Color.FromArgb(0, 191, 255)) // Check for selected color
-                {
-                    var seatInfo = (dynamic)pb.Tag;
-                    selectedSeatIDs.Add(seatInfo.SeatID);
-                }
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
             }
+        }
 
-            return selectedSeatIDs;
+        private void btnContinue_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

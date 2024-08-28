@@ -28,23 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SellTickets));
             this.lblMovieDate = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.lblGenre = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
-            this.dgvAvailableMovies = new System.Windows.Forms.DataGridView();
+            this.dgvData = new System.Windows.Forms.DataGridView();
             this.lblAvailableMovies = new System.Windows.Forms.Label();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelect = new MovieTopia.Controls.BTN();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableMovies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
             // lblMovieDate
             // 
             this.lblMovieDate.AutoSize = true;
             this.lblMovieDate.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMovieDate.Location = new System.Drawing.Point(9, 60);
+            this.lblMovieDate.Location = new System.Drawing.Point(9, 61);
             this.lblMovieDate.Name = "lblMovieDate";
             this.lblMovieDate.Size = new System.Drawing.Size(130, 17);
             this.lblMovieDate.TabIndex = 7;
@@ -53,11 +56,12 @@
             // dtpDate
             // 
             this.dtpDate.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpDate.Location = new System.Drawing.Point(219, 54);
+            this.dtpDate.Location = new System.Drawing.Point(219, 55);
             this.dtpDate.MinDate = new System.DateTime(2024, 8, 18, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(251, 24);
             this.dtpDate.TabIndex = 6;
+            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
             // lblGenre
             // 
@@ -78,20 +82,45 @@
             this.cbxGenre.Name = "cbxGenre";
             this.cbxGenre.Size = new System.Drawing.Size(251, 25);
             this.cbxGenre.TabIndex = 4;
+            this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
             // 
-            // dgvAvailableMovies
+            // dgvData
             // 
-            this.dgvAvailableMovies.AllowUserToAddRows = false;
-            this.dgvAvailableMovies.AllowUserToDeleteRows = false;
-            this.dgvAvailableMovies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAvailableMovies.Location = new System.Drawing.Point(12, 137);
-            this.dgvAvailableMovies.MultiSelect = false;
-            this.dgvAvailableMovies.Name = "dgvAvailableMovies";
-            this.dgvAvailableMovies.ReadOnly = true;
-            this.dgvAvailableMovies.RowTemplate.Height = 24;
-            this.dgvAvailableMovies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAvailableMovies.Size = new System.Drawing.Size(811, 415);
-            this.dgvAvailableMovies.TabIndex = 16;
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvData.Location = new System.Drawing.Point(12, 137);
+            this.dgvData.MultiSelect = false;
+            this.dgvData.Name = "dgvData";
+            this.dgvData.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvData.RowTemplate.Height = 24;
+            this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvData.Size = new System.Drawing.Size(811, 415);
+            this.dgvData.TabIndex = 16;
             // 
             // lblAvailableMovies
             // 
@@ -109,10 +138,10 @@
             this.btnCancel.BackgroundColor = System.Drawing.Color.IndianRed;
             this.btnCancel.BorderColor = System.Drawing.Color.DarkRed;
             this.btnCancel.BorderRadius = 30;
-            this.btnCancel.BorderSize = 2;
+            this.btnCancel.BorderSize = 1;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.DarkRed;
             this.btnCancel.Location = new System.Drawing.Point(659, 573);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
@@ -130,10 +159,10 @@
             this.btnSelect.BackgroundColor = System.Drawing.Color.LightGreen;
             this.btnSelect.BorderColor = System.Drawing.Color.DarkGreen;
             this.btnSelect.BorderRadius = 30;
-            this.btnSelect.BorderSize = 2;
+            this.btnSelect.BorderSize = 1;
             this.btnSelect.FlatAppearance.BorderSize = 0;
             this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelect.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelect.ForeColor = System.Drawing.Color.DarkGreen;
             this.btnSelect.Location = new System.Drawing.Point(460, 573);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(4);
@@ -153,7 +182,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.lblAvailableMovies);
-            this.Controls.Add(this.dgvAvailableMovies);
+            this.Controls.Add(this.dgvData);
             this.Controls.Add(this.lblMovieDate);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.lblGenre);
@@ -163,7 +192,7 @@
             this.Name = "SellTickets";
             this.Text = "SellTickets";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAvailableMovies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,7 +204,7 @@
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label lblGenre;
         private System.Windows.Forms.ComboBox cbxGenre;
-        private System.Windows.Forms.DataGridView dgvAvailableMovies;
+        private System.Windows.Forms.DataGridView dgvData;
         private System.Windows.Forms.Label lblAvailableMovies;
         private Controls.BTN btnCancel;
         private Controls.BTN btnSelect;

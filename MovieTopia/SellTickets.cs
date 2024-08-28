@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieTopia.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MovieTopia
 {
@@ -15,6 +17,7 @@ namespace MovieTopia
     {
         private string DATABASE_URL;
         private int padding = 20;
+        private string tblName = "MovieSchedule";
         DataSet ds;
         SqlDataAdapter adapter;
 
@@ -39,6 +42,9 @@ namespace MovieTopia
             lblMovieDate.Left = padding;
             lblAvailableMovies.Left = padding;
 
+            cbxGenre.Top = padding;
+            dtpDate.Top = padding * 3;
+
             btnSelect.Left = (this.ClientSize.Width / 2) - btnSelect.Width - padding;
             btnCancel.Left = btnSelect.Left + btnSelect.Width + padding;
             btnSelect.Top = (this.ClientSize.Height - btnSelect.Height - padding * 2);
@@ -50,24 +56,38 @@ namespace MovieTopia
 
         private void AdjustDataGridViewSize()
         {
-            dgvAvailableMovies.Width = this.ClientSize.Width - (2 * padding);
-            dgvAvailableMovies.Height = this.ClientSize.Height - (12 * padding);
-            dgvAvailableMovies.Location = new Point(padding, padding * 7);
+            dgvData.Width = this.ClientSize.Width - (2 * padding);
+            dgvData.Height = this.ClientSize.Height - (12 * padding);
+            dgvData.Location = new Point(padding, padding * 7);
         }
 
         private void AdjustColumnWidths()
         {
-            if (dgvAvailableMovies.Columns.Count == 0)
+            if (dgvData.Columns.Count == 0)
                 return;
 
-            //dgvGenres.Columns["GenreID"].HeaderText = "Genre ID";
-            //dgvGenres.Columns["GenreName"].HeaderText = "Genre Name";
+            dgvData.Columns["Duration"].HeaderText = "Duration (minutes)";
+            dgvData.Columns["DateTime"].HeaderText = "Date & Time";
+            dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
+            dgvData.Columns["TheatreName"].HeaderText = "Theatre";
+            dgvData.Columns["GenreName"].HeaderText = "Genre";
+            dgvData.Columns["TotalSeats"].HeaderText = "Total Seats";
+            dgvData.Columns["BookedSeats"].HeaderText = "Booked Seats";
+            dgvData.Columns["AvailableSeats"].HeaderText = "Available Seats";
 
-            //dgvGenres.Columns["GenreID"].Width = (int)(dgvGenres.Width * 0.2);
-            //dgvGenres.Columns["GenreName"].Width = (int)(dgvGenres.Width * 0.8);
+            dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.147);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["TotalSeats"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["BookedSeats"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["AvailableSeats"].Width = (int)(dgvData.Width * 0.09);
 
             // optionally set specific columns to hidden
-            //dgvGenres.Columns["GenreID"].Visible = false;
+            dgvData.Columns["MovieScheduleID"].Visible = false;
         }
 
         private void LoadData()
@@ -118,10 +138,11 @@ namespace MovieTopia
                 //display only movie data that is still yet to be played
 
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn); ;
-                adapter.Fill(ds, "MovieSchedules");
+                adapter.Fill(ds, "MovieSchedule");
 
-                dgvAvailableMovies.DataSource = ds;
-                dgvAvailableMovies.DataMember = "MovieSchedules";
+                //dgvData.DataSource = ds;
+                //dgvData.DataMember = "MovieSchedules";
+                dgvData.DataSource = ds.Tables[tblName].DefaultView;
             }
         }
 
@@ -129,41 +150,28 @@ namespace MovieTopia
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
-                ds = new DataSet();
                 adapter = new SqlDataAdapter();
 
                 // select the parent table and join any additional fields from child entities
                 string sqlGenre = @"SELECT * FROM Genre;";
 
-                // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
-                //string sqlMovies = "SELECT * FROM Movie";
-                //string sqlMovieSchedule = "SELECT * FROM MovieSchedule";
-
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlGenre, conn); ;
                 adapter.Fill(ds, "Genre");
-                //adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
-                //adapter.Fill(ds, "Movie");
-                //adapter.SelectCommand = new SqlCommand(sqlMovieSchedule, conn); ;
-                //adapter.Fill(ds, "MovieSchedule");
 
                 cbxGenre.Items.Clear();
 
-                List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
                 foreach (DataRow row in ds.Tables["Genre"].Rows)
                 {
-                    items.Add(new KeyValuePair<string, string>(row["GenreID"].ToString(), row["GenreName"].ToString()));
+                    int id = (int)row["GenreID"];
+                    string name = row["GenreName"].ToString();
+                    cbxGenre.Items.Add(new KeyValuePair<int, string>(id, name));
                 }
-                cbxGenre.DataSource = items;
+                cbxGenre.Items.Add(new KeyValuePair<int, string>(0, "--ALL--"));
+
                 cbxGenre.ValueMember = "Key";
                 cbxGenre.DisplayMember = "Value";
-
-                // Loop through the Genre DataTable and add each genre to the ComboBox
-                //foreach (DataRow row in ds.Tables["Genre"].Rows)
-                //{
-                //    string genreItem = row["GenreID"].ToString() + " " + row["GenreName"].ToString();
-                //    cbxGenre.Items.Add(genreItem);
-                //}
+                //cbxGenre.SelectedIndex = -1;
             }
         }
 
@@ -174,22 +182,116 @@ namespace MovieTopia
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            if (dgvAvailableMovies.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvAvailableMovies.SelectedRows[0];  // get the selected row
-
-                // This dictionary is used for mapping certain columns to their values in the child table - i.e. what column data you want to show in the drop down box
-                //Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-                //foreignKeySchemaNames["MovieID"] = "Title";  // this will show the Movie title in the drop down
-                //foreignKeySchemaNames["TheatreID"] = "TheatreName";
-
-                //DetailsForm detailsForm = new DetailsForm("MovieSchedule", ds, selectedRow, foreignKeySchemaNames);
-                //DialogResult result = detailsForm.ShowDialog();
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];  // get the selected row
 
                 SeatArray seatArray = new SeatArray(selectedRow);
                 DialogResult result = seatArray.ShowDialog();
+                if (result == DialogResult.Cancel) { return; }
 
+                Dictionary<int, string> selectedSeats = seatArray.selectedSeats;
+
+                BookingConfirmation bookingConfirmation = new BookingConfirmation(selectedRow, selectedSeats);
+                DialogResult bookingResult = bookingConfirmation.ShowDialog();
+                if (bookingResult == DialogResult.Cancel) { return; }
+
+                string sql = @"
+                        INSERT INTO 
+                            Ticket (
+                                MovieScheduleID,
+                                SeatID,
+                                Price,
+                                PurchaseDateTime,
+                                CustomerFirstName,
+                                CustomerLastName,
+                                CustomerPhoneNumber
+                            )
+                            VALUES
+                            (
+                                @MovieScheduleID,
+                                @SeatID,
+                                @Price,
+                                @PurchaseDateTime,
+                                @CustomerFirstName,
+                                @CustomerLastName,
+                                @CustomerPhoneNumber
+                            );";
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+                    {
+                        connection.Open();
+
+                        foreach (var item in selectedSeats)
+                        {
+                            SqlCommand command = new SqlCommand(sql, connection);
+
+                            command.Parameters.AddWithValue("@MovieScheduleID", selectedRow.Cells["MovieScheduleID"].Value);
+                            command.Parameters.AddWithValue("@SeatID", item.Key);
+                            command.Parameters.AddWithValue("@Price", selectedRow.Cells["Price"].Value);
+                            command.Parameters.AddWithValue("@PurchaseDateTime", DateTime.Now);
+                            command.Parameters.AddWithValue("@CustomerFirstName", bookingConfirmation.txtFName.Text);
+                            command.Parameters.AddWithValue("@CustomerLastName", bookingConfirmation.txtLName.Text);
+                            command.Parameters.AddWithValue("@CustomerPhoneNumber", bookingConfirmation.txtPhoneNumber.Text);
+
+                            command.ExecuteNonQuery();
+                        }
+                        connection.Close();
+                    }
+                    MessageBox.Show("Tickets booked Successfully", "Success");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
             }
+            LoadData();
+        }
+
+        private void cbxGenre_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string filterText = cbxGenre.Text;
+            DataTable dt = ds.Tables[tblName];
+
+            string columnToFilter = "GenreName";
+
+            if (string.IsNullOrEmpty(filterText) || filterText == "--ALL--")
+            {
+                dt.DefaultView.RowFilter = "";
+            }
+            else
+            {
+                DataColumn column = dt.Columns[columnToFilter];
+                if (column != null)
+                {
+                    string filterCondition = string.Empty;
+
+                    if (column.DataType == typeof(string))
+                    {
+                        filterCondition = $"{columnToFilter} LIKE '%{filterText}%'";
+                    }
+
+                    dt.DefaultView.RowFilter = filterCondition;
+                }
+            }
+        }
+
+        private void dtpDate_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime selectedDate = dtpDate.Value.Date; // Get the selected date
+            DataTable dt = ds.Tables[tblName]; // Assuming you're working with the first table in the DataSet
+
+            // Specify the column you want to filter on
+            string dateTimeColumn = "DateTime"; // Replace with your DateTime column name
+
+            MessageBox.Show("Functionality coming soon");
+            //if (dt.Columns.Contains(dateTimeColumn))
+            //{
+            //    // Filter based on the selected date
+            //    string filterCondition = $"{dateTimeColumn} LIKE '{selectedDate.ToString("yyyy-MM-dd")}%'";
+            //    dt.DefaultView.RowFilter = filterCondition;
+            //}
         }
     }
 }

@@ -32,12 +32,14 @@
             this.pnlScreen = new System.Windows.Forms.Panel();
             this.lblScreen = new System.Windows.Forms.Label();
             this.pnlLegend = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnCancel = new MovieTopia.Controls.BTN();
+            this.btnContinue = new MovieTopia.Controls.BTN();
             this.pnlScreen.SuspendLayout();
             this.pnlLegend.SuspendLayout();
             this.SuspendLayout();
@@ -72,28 +74,32 @@
             this.pnlLegend.Controls.Add(this.label3);
             this.pnlLegend.Location = new System.Drawing.Point(449, 554);
             this.pnlLegend.Name = "pnlLegend";
-            this.pnlLegend.Size = new System.Drawing.Size(425, 38);
+            this.pnlLegend.Size = new System.Drawing.Size(420, 40);
             this.pnlLegend.TabIndex = 1;
             // 
-            // label3
+            // panel5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(56, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 17);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Available";
+            this.panel5.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.panel5.Location = new System.Drawing.Point(293, 7);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(20, 20);
+            this.panel5.TabIndex = 3;
             // 
-            // label2
+            // panel4
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(326, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Selected";
+            this.panel4.BackColor = System.Drawing.Color.Gray;
+            this.panel4.Location = new System.Drawing.Point(167, 7);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(20, 20);
+            this.panel4.TabIndex = 3;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.LightGray;
+            this.panel3.Location = new System.Drawing.Point(24, 7);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(20, 20);
+            this.panel3.TabIndex = 2;
             // 
             // label4
             // 
@@ -105,35 +111,77 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Booked";
             // 
-            // panel3
+            // label2
             // 
-            this.panel3.BackColor = System.Drawing.Color.LightGray;
-            this.panel3.Location = new System.Drawing.Point(24, 7);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(20, 20);
-            this.panel3.TabIndex = 2;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(326, 10);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Selected";
             // 
-            // panel4
+            // label3
             // 
-            this.panel4.BackColor = System.Drawing.Color.Gray;
-            this.panel4.Location = new System.Drawing.Point(167, 7);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(20, 20);
-            this.panel4.TabIndex = 3;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(56, 10);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 17);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Available";
             // 
-            // panel5
+            // btnCancel
             // 
-            this.panel5.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.panel5.Location = new System.Drawing.Point(293, 7);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(20, 20);
-            this.panel5.TabIndex = 3;
+            this.btnCancel.BackColor = System.Drawing.Color.IndianRed;
+            this.btnCancel.BackgroundColor = System.Drawing.Color.IndianRed;
+            this.btnCancel.BorderColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.BorderRadius = 30;
+            this.btnCancel.BorderSize = 1;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.Location = new System.Drawing.Point(1051, 554);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(150, 40);
+            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextColor = System.Drawing.Color.DarkRed;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnContinue
+            // 
+            this.btnContinue.BackColor = System.Drawing.Color.LightGreen;
+            this.btnContinue.BackgroundColor = System.Drawing.Color.LightGreen;
+            this.btnContinue.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.BorderRadius = 30;
+            this.btnContinue.BorderSize = 1;
+            this.btnContinue.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnContinue.Enabled = false;
+            this.btnContinue.FlatAppearance.BorderSize = 0;
+            this.btnContinue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnContinue.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.Location = new System.Drawing.Point(911, 554);
+            this.btnContinue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnContinue.Name = "btnContinue";
+            this.btnContinue.Size = new System.Drawing.Size(150, 40);
+            this.btnContinue.TabIndex = 11;
+            this.btnContinue.Text = "Continue";
+            this.btnContinue.TextColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.UseVisualStyleBackColor = false;
+            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
             // SeatArray
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.pnlLegend);
             this.Controls.Add(this.pnlScreen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -160,5 +208,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private Controls.BTN btnCancel;
+        private Controls.BTN btnContinue;
     }
 }
