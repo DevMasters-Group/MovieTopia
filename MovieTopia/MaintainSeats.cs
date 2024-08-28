@@ -15,6 +15,7 @@ namespace MovieTopia
     {
         private string DATABASE_URL;
         private int padding = 20;
+        private string tblName = "Seat";
         DataSet ds;
         SqlDataAdapter adapter;
         SqlDataReader thereader;
@@ -35,16 +36,15 @@ namespace MovieTopia
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) / 2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
-            btnDaiplaySeat.Left = btnDelete.Left + btnEdit.Width + padding;
             btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
             btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
-            btnDaiplaySeat.Top = (this.ClientSize.Height - btnDaiplaySeat.Height - padding * 2);
             btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
 
-            cbTeater_Name.Left = (this.ClientSize.Width - cbTeater_Name.Width - padding * 2);
-            cbTeater_Name.Top = lblName.Top + lblName.Height;
+            lblFilter.Location = new Point(padding, 3 * padding);
+            txtFilter.Location = new Point(lblFilter.Left + lblFilter.Width + padding, 3 * padding);
+
             AdjustDataGridViewSize();
             AdjustColumnWidths();
         }
@@ -61,11 +61,6 @@ namespace MovieTopia
                 adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
                 adapter.Fill(ds, "Theatre");
 
-                // Bind the ComboBox to display theater names
-                cbTeater_Name.DataSource = ds.Tables["Theatre"];
-                cbTeater_Name.DisplayMember = "TheatreName";
-                cbTeater_Name.ValueMember = "TheatreID";
-
                 string sqlseats = @"
                             Select
                                 s.SeatID, s.SeatRow, s.SeatColumn
@@ -75,31 +70,29 @@ namespace MovieTopia
                 adapter.SelectCommand = new SqlCommand(sqlseats, conn);
                 adapter.Fill(ds, "Seat");
 
-                dgvSeat.DataSource = ds;
-                dgvSeat.DataMember = "Seat";
-
-
-                
+                //dgvData.DataSource = ds;
+                //dgvData.DataMember = "Seat";
+                dgvData.DataSource = ds.Tables[tblName].DefaultView;
             }
         }
         private void AdjustDataGridViewSize()
         {
-            dgvSeat.Width = this.ClientSize.Width - (2 * padding);
-            dgvSeat.Height = this.ClientSize.Height - (10 * padding);
-            dgvSeat.Location = new Point(padding, padding * 3);
+            dgvData.Width = this.ClientSize.Width - (2 * padding);
+            dgvData.Height = this.ClientSize.Height - (11 * padding);
+            dgvData.Location = new Point(padding, padding * 5);
         }
         private void AdjustColumnWidths()
         {
-            if (dgvSeat.Columns.Count == 0)
+            if (dgvData.Columns.Count == 0)
                 return;
 
-            dgvSeat.Columns["SeatID"].HeaderText = "Seat ID";
-            dgvSeat.Columns["SeatRow"].HeaderText = "Seat Row";
-            dgvSeat.Columns["SeatColumn"].HeaderText = "Seat Column";
+            dgvData.Columns["SeatID"].HeaderText = "Seat ID";
+            dgvData.Columns["SeatRow"].HeaderText = "Seat Row";
+            dgvData.Columns["SeatColumn"].HeaderText = "Seat Column";
 
-            dgvSeat.Columns["SeatID"].Width = (int)(dgvSeat.Width * 0.2);
-            dgvSeat.Columns["SeatRow"].Width = (int)(dgvSeat.Width * 0.2);
-            dgvSeat.Columns["SeatColumn"].Width = (int)(dgvSeat.Width * 0.2);
+            dgvData.Columns["SeatID"].Width = (int)(dgvData.Width * 0.2);
+            dgvData.Columns["SeatRow"].Width = (int)(dgvData.Width * 0.388);
+            dgvData.Columns["SeatColumn"].Width = (int)(dgvData.Width * 0.389);
 
             // optionally set specific columns to hidden
             //dgvGenres.Columns["GenreID"].Visible = false;
@@ -112,7 +105,12 @@ namespace MovieTopia
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            DetailsForm detailsForm = new DetailsForm("Seat", null, null, null);
+            Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+            attributeNameMap["SeatID"] = "Seat ID";
+            attributeNameMap["SeatRow"] = "Seat Row";
+            attributeNameMap["SeatColumn"] = "Seat Column";
+
+            DetailsForm detailsForm = new DetailsForm("Seat", null, null, null, attributeNameMap);
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -157,14 +155,16 @@ namespace MovieTopia
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dgvSeat.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvSeat.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
-                foreignKeySchemaNames["SeatID"] = "SeatRow" + "SeatColumn";
+                Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+                attributeNameMap["SeatID"] = "Seat ID";
+                attributeNameMap["SeatRow"] = "Seat Row";
+                attributeNameMap["SeatColumn"] = "Seat Column";
 
-                DetailsForm detailsForm = new DetailsForm("Seat", ds, selectedRow, foreignKeySchemaNames);
+                DetailsForm detailsForm = new DetailsForm("Seat", ds, selectedRow, null, attributeNameMap);
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -211,9 +211,9 @@ namespace MovieTopia
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvSeat.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvSeat.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
                 DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.No) return;
@@ -222,7 +222,7 @@ namespace MovieTopia
                         DELETE FROM 
                             Seat
                         WHERE
-                            GenreID = @SeatID;";
+                            SeatID = @SeatID;";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
@@ -265,6 +265,45 @@ namespace MovieTopia
         private void btnReturn_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = txtFilter.Text;
+            DataTable dt = ds.Tables[tblName];
+
+            if (string.IsNullOrEmpty(filterText))
+            {
+                dt.DefaultView.RowFilter = "";
+            }
+            else
+            {
+                // Construct the filter string
+                var filterConditions = dt.Columns.Cast<DataColumn>()
+                    .Select(c => {
+                        if (c.DataType == typeof(string))
+                        {
+                            return $"{c.ColumnName} LIKE '%{filterText}%'";
+                        }
+                        else if (c.DataType == typeof(int) || c.DataType == typeof(decimal))
+                        {
+                            // Try parsing filterText to avoid applying invalid filter
+                            if (decimal.TryParse(filterText, out _))
+                            {
+                                return $"{c.ColumnName} = {filterText}";
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
+                        return null;
+                    })
+                    .Where(condition => condition != null); // Filter out any null conditions
+
+                // Combine all filter conditions using "OR"
+                dt.DefaultView.RowFilter = string.Join(" OR ", filterConditions);
+            }
         }
     }
     
