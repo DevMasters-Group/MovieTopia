@@ -31,20 +31,25 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.txtSurname = new System.Windows.Forms.TextBox();
             this.txtCellNum = new System.Windows.Forms.TextBox();
+            this.txtSurname = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtMovie = new System.Windows.Forms.TextBox();
-            this.txtTheatre = new System.Windows.Forms.TextBox();
             this.rchSeats = new System.Windows.Forms.RichTextBox();
+            this.txtTheatre = new System.Windows.Forms.TextBox();
+            this.txtMovie = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnGoBack = new MovieTopia.Controls.BTN();
             this.btnSave = new MovieTopia.Controls.BTN();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -58,7 +63,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(942, 100);
+            this.panel1.Size = new System.Drawing.Size(1122, 100);
             this.panel1.TabIndex = 0;
             // 
             // pictureBox1
@@ -83,20 +88,45 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(48, 137);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(843, 225);
+            this.groupBox1.Size = new System.Drawing.Size(1021, 225);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ticket Holder Information";
             // 
-            // label1
+            // txtCellNum
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(21, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(249, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Enter the Ticket holder\'s First name: ";
+            this.txtCellNum.Location = new System.Drawing.Point(304, 162);
+            this.txtCellNum.MaxLength = 10;
+            this.txtCellNum.Name = "txtCellNum";
+            this.txtCellNum.Size = new System.Drawing.Size(237, 22);
+            this.txtCellNum.TabIndex = 5;
+            this.txtCellNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCellNum_KeyPress);
+            // 
+            // txtSurname
+            // 
+            this.txtSurname.Location = new System.Drawing.Point(304, 104);
+            this.txtSurname.MaxLength = 25;
+            this.txtSurname.Name = "txtSurname";
+            this.txtSurname.Size = new System.Drawing.Size(237, 22);
+            this.txtSurname.TabIndex = 4;
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(304, 47);
+            this.txtName.MaxLength = 25;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(237, 22);
+            this.txtName.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(21, 165);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(255, 18);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Enter the Ticket holder\'s cell number: ";
             // 
             // label2
             // 
@@ -109,44 +139,23 @@
             this.label2.Text = "Enter the Ticket holder\'s Surname: ";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // label3
+            // label1
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(21, 165);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(255, 18);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Enter the Ticket holder\'s cell number: ";
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(304, 47);
-            this.txtName.MaxLength = 25;
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(237, 22);
-            this.txtName.TabIndex = 3;
-            // 
-            // txtSurname
-            // 
-            this.txtSurname.Location = new System.Drawing.Point(304, 104);
-            this.txtSurname.MaxLength = 25;
-            this.txtSurname.Name = "txtSurname";
-            this.txtSurname.Size = new System.Drawing.Size(237, 22);
-            this.txtSurname.TabIndex = 4;
-            // 
-            // txtCellNum
-            // 
-            this.txtCellNum.Location = new System.Drawing.Point(304, 162);
-            this.txtCellNum.MaxLength = 10;
-            this.txtCellNum.Name = "txtCellNum";
-            this.txtCellNum.Size = new System.Drawing.Size(237, 22);
-            this.txtCellNum.TabIndex = 5;
-            this.txtCellNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCellNum_KeyPress);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(21, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(249, 18);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Enter the Ticket holder\'s First name: ";
             // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.LightPink;
+            this.groupBox2.Controls.Add(this.txtTotal);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.txtPrice);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.rchSeats);
             this.groupBox2.Controls.Add(this.txtTheatre);
             this.groupBox2.Controls.Add(this.txtMovie);
@@ -155,20 +164,48 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(48, 393);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(843, 367);
+            this.groupBox2.Size = new System.Drawing.Size(1021, 443);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Movie Information";
             // 
-            // label4
+            // rchSeats
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(21, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 18);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Selected Movie:";
+            this.rchSeats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rchSeats.Location = new System.Drawing.Point(196, 203);
+            this.rchSeats.Name = "rchSeats";
+            this.rchSeats.ReadOnly = true;
+            this.rchSeats.Size = new System.Drawing.Size(524, 192);
+            this.rchSeats.TabIndex = 7;
+            this.rchSeats.Text = "The seats you have selected are as follows:\n";
+            // 
+            // txtTheatre
+            // 
+            this.txtTheatre.Location = new System.Drawing.Point(196, 91);
+            this.txtTheatre.MaxLength = 100;
+            this.txtTheatre.Name = "txtTheatre";
+            this.txtTheatre.ReadOnly = true;
+            this.txtTheatre.Size = new System.Drawing.Size(237, 22);
+            this.txtTheatre.TabIndex = 6;
+            // 
+            // txtMovie
+            // 
+            this.txtMovie.Location = new System.Drawing.Point(196, 37);
+            this.txtMovie.MaxLength = 100;
+            this.txtMovie.Name = "txtMovie";
+            this.txtMovie.ReadOnly = true;
+            this.txtMovie.Size = new System.Drawing.Size(237, 22);
+            this.txtMovie.TabIndex = 5;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(21, 203);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(111, 18);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Selected Seats:";
             // 
             // label5
             // 
@@ -180,56 +217,47 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "Selected Theatre:";
             // 
-            // label6
+            // label4
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(21, 145);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(111, 18);
-            this.label6.TabIndex = 2;
-            this.label6.Text = "Selected Seats:";
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(21, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(113, 18);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Selected Movie:";
             // 
-            // txtMovie
+            // btnGoBack
             // 
-            this.txtMovie.Location = new System.Drawing.Point(196, 37);
-            this.txtMovie.MaxLength = 100;
-            this.txtMovie.Name = "txtMovie";
-            this.txtMovie.ReadOnly = true;
-            this.txtMovie.Size = new System.Drawing.Size(237, 22);
-            this.txtMovie.TabIndex = 5;
-            // 
-            // txtTheatre
-            // 
-            this.txtTheatre.Location = new System.Drawing.Point(196, 91);
-            this.txtTheatre.MaxLength = 100;
-            this.txtTheatre.Name = "txtTheatre";
-            this.txtTheatre.ReadOnly = true;
-            this.txtTheatre.Size = new System.Drawing.Size(237, 22);
-            this.txtTheatre.TabIndex = 6;
-            // 
-            // rchSeats
-            // 
-            this.rchSeats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rchSeats.Location = new System.Drawing.Point(196, 145);
-            this.rchSeats.Name = "rchSeats";
-            this.rchSeats.ReadOnly = true;
-            this.rchSeats.Size = new System.Drawing.Size(381, 192);
-            this.rchSeats.TabIndex = 7;
-            this.rchSeats.Text = "The seats you have selected are as follows:\n";
+            this.btnGoBack.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.btnGoBack.BackgroundColor = System.Drawing.Color.PaleVioletRed;
+            this.btnGoBack.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnGoBack.BorderRadius = 40;
+            this.btnGoBack.BorderSize = 0;
+            this.btnGoBack.FlatAppearance.BorderSize = 0;
+            this.btnGoBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGoBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoBack.ForeColor = System.Drawing.Color.White;
+            this.btnGoBack.Location = new System.Drawing.Point(576, 870);
+            this.btnGoBack.Name = "btnGoBack";
+            this.btnGoBack.Size = new System.Drawing.Size(169, 53);
+            this.btnGoBack.TabIndex = 4;
+            this.btnGoBack.Text = "Go Back";
+            this.btnGoBack.TextColor = System.Drawing.Color.White;
+            this.btnGoBack.UseVisualStyleBackColor = false;
             // 
             // btnSave
             // 
-            this.btnSave.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnSave.BackgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnSave.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.btnSave.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
             this.btnSave.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnSave.BorderRadius = 40;
             this.btnSave.BorderSize = 0;
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(352, 792);
+            this.btnSave.Location = new System.Drawing.Point(353, 870);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(169, 53);
             this.btnSave.TabIndex = 3;
@@ -238,15 +266,57 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(196, 145);
+            this.txtPrice.MaxLength = 100;
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.ReadOnly = true;
+            this.txtPrice.Size = new System.Drawing.Size(237, 22);
+            this.txtPrice.TabIndex = 9;
+            this.txtPrice.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(21, 148);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 18);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Price Per Ticket:";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // txtTotal
+            // 
+            this.txtTotal.Location = new System.Drawing.Point(597, 145);
+            this.txtTotal.MaxLength = 100;
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(237, 22);
+            this.txtTotal.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(491, 148);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(83, 18);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Total Price:";
+            // 
             // FinalBookings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(942, 857);
+            this.ClientSize = new System.Drawing.Size(1122, 946);
+            this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
+            this.MinimumSize = new System.Drawing.Size(1140, 904);
             this.Name = "FinalBookings";
             this.Text = "FinalBookings";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -280,5 +350,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private Controls.BTN btnSave;
+        private Controls.BTN btnGoBack;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.TextBox txtTotal;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
