@@ -61,7 +61,7 @@ namespace MovieTopia
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
                             SELECT
-                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
+                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
                             FROM
                                 MovieSchedule ms
                             JOIN
@@ -107,11 +107,13 @@ namespace MovieTopia
             dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
             dgvData.Columns["GenreName"].HeaderText = "Genre";
             dgvData.Columns["DateTime"].HeaderText = "Start Time";
+            dgvData.Columns["EndDateTime"].HeaderText = "End Time";
 
             // Set DataGridView column widths
-            dgvData.Columns["MovieScheduleID"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["MovieScheduleID"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["EndDateTime"].Width = (int)(dgvData.Width * 0.09);
             dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.277);
             dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
@@ -141,6 +143,12 @@ namespace MovieTopia
             {
                 Dictionary<string, Control> data = detailsForm.controlsDict;
 
+                var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                var dateTime = ((DateTimePicker)data["DateTime"]).Text;
+
+                if (!isValidScheduleTime(selectedTheatre.Key, DateTime.Parse(dateTime))) return;
+
                 string sql = @"
                         INSERT INTO 
                             MovieSchedule (
@@ -165,12 +173,11 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                    
                     command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
-                    var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
                     command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                     command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                    command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
+                    command.Parameters.AddWithValue("@DateTime", dateTime);
 
                     try
                     {
@@ -233,8 +240,10 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@MovieID", ((ComboBox)data["MovieID"]).SelectedValue);
-                        command.Parameters.AddWithValue("@TheatreID", ((ComboBox)data["TheatreID"]).SelectedValue);
+                        var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                        command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
+                        var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                        command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                         command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                         command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
                         command.Parameters.AddWithValue("@MovieScheduleID", ((TextBox)data["MovieScheduleID"]).Text);
@@ -254,6 +263,139 @@ namespace MovieTopia
                     LoadData();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a Movie Schedule to edit.");
+            }
+        }
+
+        private bool canScheduleAfterExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies)
+        {
+            DateTime mostRecentSchedule = datetime;
+            string movie = string.Empty;
+            int movieDuration = 0;
+            string theatreName = string.Empty;
+
+            string sql = @"
+                SELECT
+                    TOP 1 ms.*, m.Duration, m.Title, t.TheatreName
+                FROM
+                    MovieSchedule ms
+                JOIN
+                    Movie m ON m.MovieID = ms.MovieID
+                JOIN
+                    Theatre t on t.TheatreID = ms.TheatreID 
+                WHERE
+                    ms.TheatreID = @TheatreID AND ms.DateTime <= @DateTime
+                ORDER BY DateTime DESC;";
+
+            using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+            {
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                command.Parameters.AddWithValue("@TheatreID", theatreID);
+                command.Parameters.AddWithValue("@DateTime", datetime);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        mostRecentSchedule = reader.GetDateTime(reader.GetOrdinal("DateTime"));
+                        movie = reader.GetString(reader.GetOrdinal("Title"));
+                        movieDuration = reader.GetInt32(reader.GetOrdinal("Duration"));
+                        theatreName = reader.GetString(reader.GetOrdinal("TheatreName"));
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            }
+
+            MessageBox.Show($"after existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing: {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            bool scheduleAfterExisting = mostRecentSchedule.AddMinutes(movieDuration + minutesBetweenMovies) <= datetime;
+            if (!scheduleAfterExisting)
+            {
+                MessageBox.Show($"The '{theatreName}' theatre is not available at the specified time due to a clash with another schedule for this theatre. The selected theatre is booked out from {mostRecentSchedule} to {mostRecentSchedule.AddMinutes(movieDuration + minutesBetweenMovies)} for '{movie}'.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool canScheduleBeforeExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies)
+        {
+            DateTime mostRecentSchedule = datetime;
+            string movie = string.Empty;
+            int movieDuration = 0;
+            string theatreName = string.Empty;
+
+            string sql = @"
+                SELECT
+                    TOP 1 ms.*, m.Duration, m.Title, t.TheatreName
+                FROM
+                    MovieSchedule ms
+                JOIN
+                    Movie m ON m.MovieID = ms.MovieID
+                JOIN
+                    Theatre t on t.TheatreID = ms.TheatreID 
+                WHERE
+                    ms.TheatreID = @TheatreID AND ms.DateTime >= @DateTime
+                ORDER BY DateTime ASC;";
+
+            using (SqlConnection connection = new SqlConnection(DATABASE_URL))
+            {
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                command.Parameters.AddWithValue("@TheatreID", theatreID);
+                command.Parameters.AddWithValue("@DateTime", datetime);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        mostRecentSchedule = reader.GetDateTime(reader.GetOrdinal("DateTime"));
+                        movie = reader.GetString(reader.GetOrdinal("Title"));
+                        movieDuration = reader.GetInt32(reader.GetOrdinal("Duration"));
+                        theatreName = reader.GetString(reader.GetOrdinal("TheatreName"));
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            }
+
+            MessageBox.Show($"before existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            bool scheduleBeforeExisting = mostRecentSchedule >= datetime.AddMinutes(movieDuration + minutesBetweenMovies);
+            if (!scheduleBeforeExisting)
+            {
+                MessageBox.Show($"The '{theatreName}' theatre is not available at the specified time due to a clash with another schedule for this theatre. The selected theatre is booked out from {mostRecentSchedule} to {mostRecentSchedule.AddMinutes(movieDuration + minutesBetweenMovies)} for '{movie}'.");
+                return false;
+            }
+            return true;
+        }
+
+        private bool isValidScheduleTime(int theatreID, DateTime dateTime)
+        {
+            int minutesBetweenMovies = 30;
+            if (!canScheduleAfterExistingDate(dateTime, theatreID, minutesBetweenMovies)) return false;
+            if (!canScheduleBeforeExistingDate(dateTime, theatreID, minutesBetweenMovies)) return false;
+
+            return true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -261,6 +403,9 @@ namespace MovieTopia
             if (dgvData.SelectedRows.Count == 1)
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
+
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.No) return;
 
                 string sql = @"
                         DELETE FROM 
@@ -284,6 +429,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Deleted Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show($"The selected Movie Schedule cannot be deleted because of 1 or more Tickets that are dependent on this Schedule. Please delete the corresponding records before attempting to delete this Schedule.", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -291,6 +440,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please select a Movie Schedule to delete.");
             }
         }
 

@@ -75,7 +75,7 @@ namespace MovieTopia
                             m.Title, 
                             th.TheatreName,
                             ms.DateTime,
-                            CONCAT(s.SeatColumn, s.SeatRow) as Seat
+                            CONCAT(s.SeatColumn, s.SeatRow) as CSeat
                         FROM
                             Ticket t
                         LEFT JOIN
@@ -92,15 +92,16 @@ namespace MovieTopia
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre";
                 string sqlMovieSchedule = "SELECT ms.*, CONCAT(m.Title, ' - ', ms.DateTime) as MovieSchedule FROM MovieSchedule ms JOIN Movie m ON ms.MovieID = m.MovieID;";
-                string sqlSeats = "SELECT * ,CONCAT(SeatColumn, SeatRow) AS Seat FROM Seat";
+                string sqlSeats = "SELECT * ,CONCAT(SeatColumn, SeatRow) AS CSeat FROM Seat";
+                
 
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlTicket, conn); ;
                 adapter.Fill(ds, "Ticket");
-                adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
-                adapter.Fill(ds, "Movie");
-                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn); ;
-                adapter.Fill(ds, "Theatre");
+                //adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
+                //adapter.Fill(ds, "Movie");
+                //adapter.SelectCommand = new SqlCommand(sqlTheatres, conn); ;
+                //adapter.Fill(ds, "Theatre");
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedule, conn); ;
                 adapter.Fill(ds, "MovieSchedule");
                 adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
@@ -133,19 +134,20 @@ namespace MovieTopia
             dgvData.Columns["Title"].HeaderText = "Movie";
             dgvData.Columns["TheatreName"].HeaderText = "Theatre";
             dgvData.Columns["DateTime"].HeaderText = "Movie Time";
+            dgvData.Columns["CSeat"].HeaderText = "Seat Number";
 
 
             // Set DataGridView column widths
-            dgvData.Columns["TicketID"].Width = (int)(dgvData.Width * 0.07);
+            dgvData.Columns["TicketID"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["PurchaseDateTime"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["CustomerFirstName"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["CustomerLastName"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["CustomerPhoneNumber"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.112);
             dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["Seat"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["CSeat"].Width = (int)(dgvData.Width * 0.1);
 
             // optionally set specific columns to hidden
             dgvData.Columns["MovieScheduleID"].Visible = false;
@@ -156,7 +158,7 @@ namespace MovieTopia
         {
             Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
             foreignKeySchemaNames["MovieScheduleID"] = "MovieSchedule";
-            foreignKeySchemaNames["SeatID"] = "Seat";
+            foreignKeySchemaNames["SeatID"] = "CSeat";
 
             Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
             attributeNameMap["TicketID"] = "Ticket ID";
@@ -219,6 +221,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -238,7 +244,7 @@ namespace MovieTopia
                 // This dictionary is used for mapping certain columns to their values in the child table - i.e. what column data you want to show in the drop down box
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
                 foreignKeySchemaNames["MovieScheduleID"] = "MovieSchedule";  // this will show the Movie title in the drop down
-                foreignKeySchemaNames["SeatID"] = "Seat";
+                foreignKeySchemaNames["SeatID"] = "CSeat";
 
                 Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
                 attributeNameMap["TicketID"] = "Ticket ID";
@@ -297,6 +303,10 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
@@ -305,9 +315,10 @@ namespace MovieTopia
 
                     LoadData();
                 }
-            } else
+            }
+            else
             {
-                MessageBox.Show("Please select a Ticket to edit!");
+                MessageBox.Show("Please select a Ticket to edit.");
             }
         }
 
@@ -349,9 +360,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
-            } else
+            }
+            else
             {
-                MessageBox.Show("Please select a ticket to delete!");
+                MessageBox.Show("Please select a ticket to delete.");
             }
         }
 

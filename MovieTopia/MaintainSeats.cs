@@ -143,6 +143,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("The entered Seat already exits", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -198,6 +202,10 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Seat already exits", "Error");
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
@@ -206,6 +214,10 @@ namespace MovieTopia
 
                     LoadData();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a Seat to edit.");
             }
         }
 
@@ -251,6 +263,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please select a Seat to delete.");
             }
         }
 

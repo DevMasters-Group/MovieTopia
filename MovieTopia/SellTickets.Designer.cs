@@ -40,6 +40,8 @@
             this.lblAvailableMovies = new System.Windows.Forms.Label();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelect = new MovieTopia.Controls.BTN();
+            this.lblName = new System.Windows.Forms.Label();
+            this.btnClearFilter = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,16 +49,17 @@
             // 
             this.lblMovieDate.AutoSize = true;
             this.lblMovieDate.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMovieDate.Location = new System.Drawing.Point(9, 61);
+            this.lblMovieDate.Location = new System.Drawing.Point(9, 120);
             this.lblMovieDate.Name = "lblMovieDate";
             this.lblMovieDate.Size = new System.Drawing.Size(130, 17);
             this.lblMovieDate.TabIndex = 7;
             this.lblMovieDate.Text = "Movie display date:";
+            this.lblMovieDate.Click += new System.EventHandler(this.lblMovieDate_Click);
             // 
             // dtpDate
             // 
             this.dtpDate.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpDate.Location = new System.Drawing.Point(219, 55);
+            this.dtpDate.Location = new System.Drawing.Point(219, 114);
             this.dtpDate.MinDate = new System.DateTime(2024, 8, 18, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(251, 24);
@@ -67,18 +70,19 @@
             // 
             this.lblGenre.AutoSize = true;
             this.lblGenre.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGenre.Location = new System.Drawing.Point(12, 22);
+            this.lblGenre.Location = new System.Drawing.Point(12, 81);
             this.lblGenre.Name = "lblGenre";
             this.lblGenre.Size = new System.Drawing.Size(107, 17);
             this.lblGenre.TabIndex = 5;
             this.lblGenre.Text = "Filter by Genre:";
+            this.lblGenre.Click += new System.EventHandler(this.lblGenre_Click);
             // 
             // cbxGenre
             // 
             this.cbxGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxGenre.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxGenre.FormattingEnabled = true;
-            this.cbxGenre.Location = new System.Drawing.Point(219, 19);
+            this.cbxGenre.Location = new System.Drawing.Point(219, 78);
             this.cbxGenre.Name = "cbxGenre";
             this.cbxGenre.Size = new System.Drawing.Size(251, 25);
             this.cbxGenre.TabIndex = 4;
@@ -105,7 +109,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvData.Location = new System.Drawing.Point(12, 137);
+            this.dgvData.Location = new System.Drawing.Point(12, 202);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
@@ -119,18 +123,19 @@
             this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvData.RowTemplate.Height = 24;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(811, 415);
+            this.dgvData.Size = new System.Drawing.Size(811, 350);
             this.dgvData.TabIndex = 16;
             // 
             // lblAvailableMovies
             // 
             this.lblAvailableMovies.AutoSize = true;
             this.lblAvailableMovies.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvailableMovies.Location = new System.Drawing.Point(12, 105);
+            this.lblAvailableMovies.Location = new System.Drawing.Point(12, 164);
             this.lblAvailableMovies.Name = "lblAvailableMovies";
             this.lblAvailableMovies.Size = new System.Drawing.Size(118, 17);
             this.lblAvailableMovies.TabIndex = 17;
             this.lblAvailableMovies.Text = "Available Movies:";
+            this.lblAvailableMovies.Click += new System.EventHandler(this.lblAvailableMovies_Click);
             // 
             // btnCancel
             // 
@@ -174,11 +179,45 @@
             this.btnSelect.UseVisualStyleBackColor = false;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(535, 22);
+            this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(173, 32);
+            this.lblName.TabIndex = 20;
+            this.lblName.Text = "Ticket Sales";
+            // 
+            // btnClearFilter
+            // 
+            this.btnClearFilter.BackColor = System.Drawing.Color.LightGray;
+            this.btnClearFilter.BackgroundColor = System.Drawing.Color.LightGray;
+            this.btnClearFilter.BorderColor = System.Drawing.Color.Gray;
+            this.btnClearFilter.BorderRadius = 10;
+            this.btnClearFilter.BorderSize = 1;
+            this.btnClearFilter.FlatAppearance.BorderSize = 0;
+            this.btnClearFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearFilter.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearFilter.ForeColor = System.Drawing.Color.Gray;
+            this.btnClearFilter.Location = new System.Drawing.Point(528, 102);
+            this.btnClearFilter.Margin = new System.Windows.Forms.Padding(4);
+            this.btnClearFilter.Name = "btnClearFilter";
+            this.btnClearFilter.Size = new System.Drawing.Size(150, 30);
+            this.btnClearFilter.TabIndex = 21;
+            this.btnClearFilter.Text = "Clear Filter";
+            this.btnClearFilter.TextColor = System.Drawing.Color.Gray;
+            this.btnClearFilter.UseVisualStyleBackColor = false;
+            this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
+            // 
             // SellTickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.btnClearFilter);
+            this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.lblAvailableMovies);
@@ -192,6 +231,7 @@
             this.Name = "SellTickets";
             this.Text = "SellTickets";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.SellTickets_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -208,5 +248,7 @@
         private System.Windows.Forms.Label lblAvailableMovies;
         private Controls.BTN btnCancel;
         private Controls.BTN btnSelect;
+        private System.Windows.Forms.Label lblName;
+        private Controls.BTN btnClearFilter;
     }
 }

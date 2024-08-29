@@ -185,12 +185,21 @@ namespace MovieTopia
                     selectedSeatIDs.Add(seatID);
                     selectedSeats[seatID] = seatInfo.SeatColumn + "" + seatInfo.SeatRow;
                     btnContinue.Enabled = true;
+                    btnContinue.ForeColor = Color.DarkGreen;
+                    btnContinue.BorderColor = Color.DarkGreen;
+                    btnContinue.BackColor = Color.LightGreen;
                 }
                 else
                 {
                     selectedSeatIDs.Remove(seatID);
                     selectedSeats.Remove(seatID);
-                    if (selectedSeats.Count == 0) btnContinue.Enabled = false;
+                    if (selectedSeats.Count == 0)
+                    {
+                        btnContinue.Enabled = false;
+                        btnContinue.ForeColor = Color.Gray;
+                        btnContinue.BorderColor = Color.Gray;
+                        btnContinue.BackColor = Color.LightGray;
+                    }
                 }
             }
             else

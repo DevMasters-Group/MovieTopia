@@ -154,9 +154,9 @@
             // 
             // btnContinue
             // 
-            this.btnContinue.BackColor = System.Drawing.Color.LightGreen;
-            this.btnContinue.BackgroundColor = System.Drawing.Color.LightGreen;
-            this.btnContinue.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.BackColor = System.Drawing.Color.LightGray;
+            this.btnContinue.BackgroundColor = System.Drawing.Color.LightGray;
+            this.btnContinue.BorderColor = System.Drawing.Color.Gray;
             this.btnContinue.BorderRadius = 30;
             this.btnContinue.BorderSize = 1;
             this.btnContinue.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -164,14 +164,14 @@
             this.btnContinue.FlatAppearance.BorderSize = 0;
             this.btnContinue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnContinue.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.ForeColor = System.Drawing.Color.Gray;
             this.btnContinue.Location = new System.Drawing.Point(911, 554);
             this.btnContinue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnContinue.Name = "btnContinue";
             this.btnContinue.Size = new System.Drawing.Size(150, 40);
             this.btnContinue.TabIndex = 11;
             this.btnContinue.Text = "Continue";
-            this.btnContinue.TextColor = System.Drawing.Color.DarkGreen;
+            this.btnContinue.TextColor = System.Drawing.Color.Gray;
             this.btnContinue.UseVisualStyleBackColor = false;
             this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 

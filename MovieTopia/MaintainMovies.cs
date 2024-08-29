@@ -46,6 +46,7 @@ namespace MovieTopia
 
             lblFilter.Location = new Point(padding, 3 * padding);
             txtFilter.Location = new Point(lblFilter.Left + lblFilter.Width + padding, 3 * padding);
+            btnHelp.Location = new Point(btnReturn.Left, lblFilter.Top - padding / 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -166,6 +167,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("The entered Movie already exits", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -230,6 +235,10 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Movie already exits", "Error");
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
@@ -238,6 +247,10 @@ namespace MovieTopia
 
                     LoadData();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a Movie to edit.");
             }
         }
 
@@ -285,6 +298,10 @@ namespace MovieTopia
 
                 LoadData();
             }
+            else
+            {
+                MessageBox.Show("Please select a Movie to delete.");
+            }
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
@@ -329,6 +346,12 @@ namespace MovieTopia
                 // Combine all filter conditions using "OR"
                 dt.DefaultView.RowFilter = string.Join(" OR ", filterConditions);
             }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.ShowDialog();
         }
     }
 }

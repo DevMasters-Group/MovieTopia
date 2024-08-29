@@ -130,6 +130,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("The entered Genre already exits", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -184,6 +188,10 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Genre already exits", "Error");
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
@@ -192,6 +200,10 @@ namespace MovieTopia
 
                     LoadData();
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a Genre to edit.");
             }
         }
 
@@ -237,6 +249,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please select a Genre to delete.");
             }
         }
 
