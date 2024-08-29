@@ -35,15 +35,21 @@ namespace MovieTopia
 
         private void Form_Resize(Object sender, EventArgs e)
         {
-            lblGenre.Top = padding;
-            lblMovieDate.Top = padding * 3;
-            lblAvailableMovies.Top = padding * 5;
+            lblName.Top = padding / 2;
+            lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
+
+            lblGenre.Top = padding * 3;
+            lblMovieDate.Top = padding * 5;
+            lblAvailableMovies.Top = padding * 7;
             lblGenre.Left = padding;
             lblMovieDate.Left = padding;
             lblAvailableMovies.Left = padding;
 
-            cbxGenre.Top = padding;
-            dtpDate.Top = padding * 3;
+            cbxGenre.Top = padding * 3;
+            dtpDate.Top = padding * 5;
+
+            btnClearFilter.Top = dtpDate.Top;
+            btnClearFilter.Left = dtpDate.Left + dtpDate.Width + padding * 2;
 
             btnSelect.Left = (this.ClientSize.Width / 2) - btnSelect.Width - padding;
             btnCancel.Left = btnSelect.Left + btnSelect.Width + padding;
@@ -57,8 +63,8 @@ namespace MovieTopia
         private void AdjustDataGridViewSize()
         {
             dgvData.Width = this.ClientSize.Width - (2 * padding);
-            dgvData.Height = this.ClientSize.Height - (12 * padding);
-            dgvData.Location = new Point(padding, padding * 7);
+            dgvData.Height = this.ClientSize.Height - (15 * padding);
+            dgvData.Location = new Point(padding, padding * 9);
         }
 
         private void AdjustColumnWidths()
@@ -251,47 +257,84 @@ namespace MovieTopia
 
         private void cbxGenre_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string filterText = cbxGenre.Text;
-            DataTable dt = ds.Tables[tblName];
-
-            string columnToFilter = "GenreName";
-
-            if (string.IsNullOrEmpty(filterText) || filterText == "--ALL--")
-            {
-                dt.DefaultView.RowFilter = "";
-            }
-            else
-            {
-                DataColumn column = dt.Columns[columnToFilter];
-                if (column != null)
-                {
-                    string filterCondition = string.Empty;
-
-                    if (column.DataType == typeof(string))
-                    {
-                        filterCondition = $"{columnToFilter} LIKE '%{filterText}%'";
-                    }
-
-                    dt.DefaultView.RowFilter = filterCondition;
-                }
-            }
+            ApplyFilters();
         }
 
         private void dtpDate_ValueChanged(object sender, EventArgs e)
         {
-            DateTime selectedDate = dtpDate.Value.Date; // Get the selected date
-            DataTable dt = ds.Tables[tblName]; // Assuming you're working with the first table in the DataSet
+            ApplyFilters();
+        }
 
-            // Specify the column you want to filter on
-            string dateTimeColumn = "DateTime"; // Replace with your DateTime column name
+        private void ApplyFilters()
+        {
+            DataTable dt = ds.Tables[tblName];
 
-            MessageBox.Show("Functionality coming soon");
-            //if (dt.Columns.Contains(dateTimeColumn))
-            //{
-            //    // Filter based on the selected date
-            //    string filterCondition = $"{dateTimeColumn} LIKE '{selectedDate.ToString("yyyy-MM-dd")}%'";
-            //    dt.DefaultView.RowFilter = filterCondition;
-            //}
+            // Genre filter
+            string genreFilter = string.Empty;
+            string genreText = cbxGenre.Text;
+            string genreColumn = "GenreName";
+
+            if (!string.IsNullOrEmpty(genreText) && genreText != "--ALL--")
+            {
+                genreFilter = $"{genreColumn} LIKE '%{genreText}%'";
+            }
+
+            // Date filter
+            string dateFilter = string.Empty;
+            string dateTimeColumn = "DateTime";
+            DateTime selectedDate = dtpDate.Value.Date;
+
+            if (dt.Columns.Contains(dateTimeColumn))
+            {
+                DateTime endOfDay = selectedDate.AddDays(1).AddTicks(-1);
+                dateFilter = $"{dateTimeColumn} >= '{selectedDate:yyyy-MM-dd HH:mm:ss}' AND {dateTimeColumn} <= '{endOfDay:yyyy-MM-dd HH:mm:ss}'";
+            }
+
+            // Combine filters
+            string combinedFilter = string.Empty;
+
+            if (!string.IsNullOrEmpty(genreFilter) && !string.IsNullOrEmpty(dateFilter))
+            {
+                combinedFilter = $"{genreFilter} AND {dateFilter}";
+            }
+            else if (!string.IsNullOrEmpty(genreFilter))
+            {
+                combinedFilter = genreFilter;
+            }
+            else if (!string.IsNullOrEmpty(dateFilter))
+            {
+                combinedFilter = dateFilter;
+            }
+
+            dt.DefaultView.RowFilter = combinedFilter;
+        }
+
+        private void lblAvailableMovies_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SellTickets_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblMovieDate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGenre_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClearFilter_Click(object sender, EventArgs e)
+        {
+            cbxGenre.SelectedIndex = -1;
+
+            DataTable dt = ds.Tables[tblName];
+            dt.DefaultView.RowFilter = "";
         }
     }
 }
