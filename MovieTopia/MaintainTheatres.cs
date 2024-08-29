@@ -148,6 +148,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("The entered Theatre name already exits", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -207,6 +211,10 @@ namespace MovieTopia
                             connection.Open();
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
+                        }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Theatre name already exits", "Error");
                         }
                         catch (Exception ex)
                         {

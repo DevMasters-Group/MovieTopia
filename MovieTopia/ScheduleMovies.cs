@@ -233,8 +233,10 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@MovieID", ((ComboBox)data["MovieID"]).SelectedValue);
-                        command.Parameters.AddWithValue("@TheatreID", ((ComboBox)data["TheatreID"]).SelectedValue);
+                        var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                        command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
+                        var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                        command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                         command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                         command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
                         command.Parameters.AddWithValue("@MovieScheduleID", ((TextBox)data["MovieScheduleID"]).Text);
@@ -262,6 +264,9 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo);
+                if (confirm == DialogResult.No) return;
+
                 string sql = @"
                         DELETE FROM 
                             MovieSchedule
@@ -283,6 +288,10 @@ namespace MovieTopia
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Deleted Successfully", "Success");
+                    }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show($"The selected Movie Schedule cannot be deleted because of 1 or more Tickets that are dependent on this Schedule. Please delete the corresponding records before attempting to delete this Schedule.", "Error");
                     }
                     catch (Exception ex)
                     {
