@@ -175,27 +175,66 @@ namespace MovieTopia
                 }
                 else if(reportType == "Ticket Sales")
                 {
-                    
-                    sql = $@"IF @GroupingOption = 'Monthly'
-                             BEGIN
-                                SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
-                                       COUNT(t.TicketID) AS TicketsSold
-                                FROM Ticket t
-                                WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                                GROUP BY MONTH(t.PurchaseDateTime), DATENAME(MONTH, t.PurchaseDateTime)
-                                ORDER BY MONTH(t.PurchaseDateTime)
-                             END
-                             ELSE IF @GroupingOption = 'Quarterly'
-                             BEGIN
-                                SELECT 'Q' + CAST(DATEPART(QUARTER, t.PurchaseDateTime) AS VARCHAR) AS [Period],
-                                       COUNT(t.TicketID) AS TicketsSold
-                                FROM Ticket t
-                                WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                                GROUP BY DATEPART(QUARTER, t.PurchaseDateTime)
-                                ORDER BY DATEPART(QUARTER, t.PurchaseDateTime)
-                             END";
 
-                    
+                    //sql = $@"IF @GroupingOption = 'Monthly'
+                    //         BEGIN
+                    //            SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
+                    //                   COUNT(t.TicketID) AS TicketsSold
+                    //            FROM Ticket t
+                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                    //            GROUP BY MONTH(t.PurchaseDateTime), DATENAME(MONTH, t.PurchaseDateTime)
+                    //            ORDER BY MONTH(t.PurchaseDateTime)
+
+                    //            UNION ALL
+
+                    //            SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
+                    //            FROM Ticket t
+                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                    //         END
+                    //         ELSE IF @GroupingOption = 'Quarterly'
+                    //         BEGIN
+                    //            SELECT 'Q' + CAST(DATEPART(QUARTER, t.PurchaseDateTime) AS VARCHAR) AS [Period],
+                    //                   COUNT(t.TicketID) AS TicketsSold
+                    //            FROM Ticket t
+                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                    //            GROUP BY DATEPART(QUARTER, t.PurchaseDateTime)
+                    //            ORDER BY DATEPART(QUARTER, t.PurchaseDateTime)
+
+                    //            UNION ALL
+
+                    //            SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
+                    //            FROM Ticket t
+                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                    //         END";
+
+                    if (grouping == "Monthly")
+                    {
+                        sql = $@"SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
+                               COUNT(t.TicketID) AS TicketsSold
+                        FROM Ticket t
+                        WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                        GROUP BY MONTH(t.PurchaseDateTime), DATENAME(MONTH, t.PurchaseDateTime)
+                        ORDER BY MONTH(t.PurchaseDateTime);
+
+                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
+                        FROM Ticket t
+                        WHERE YEAR(t.PurchaseDateTime) = @SelectedYear;";
+                    }
+                    else if (grouping == "Quarterly")
+                    {
+                        sql = $@"SELECT 'Q' + CAST(DATEPART(QUARTER, t.PurchaseDateTime) AS VARCHAR) AS [Period],
+                               COUNT(t.TicketID) AS TicketsSold
+                        FROM Ticket t
+                        WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
+                        GROUP BY DATEPART(QUARTER, t.PurchaseDateTime)
+                        ORDER BY DATEPART(QUARTER, t.PurchaseDateTime);
+
+                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
+                        FROM Ticket t
+                        WHERE YEAR(t.PurchaseDateTime) = @SelectedYear;";
+                    }
+
+
                 }
 
                 SqlCommand comm = new SqlCommand(sql, conn);
@@ -217,6 +256,15 @@ namespace MovieTopia
 
                 dgvReport.DataSource = ds;
                 dgvReport.DataMember = "Data";
+
+                if (reportType == "Ticket Sales" && ds.Tables.Count > 1)
+                {
+                    DataRow totalRow = ds.Tables[1].Rows[0];
+                    DataRow newRow = ds.Tables[0].NewRow();
+                    newRow["Period"] = totalRow["Period"];
+                    newRow["TicketsSold"] = totalRow["Tickets Sold"];
+                    ds.Tables[0].Rows.Add(newRow);
+                }
 
             }
         }
