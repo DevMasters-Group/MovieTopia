@@ -46,6 +46,7 @@ namespace MovieTopia
 
             lblFilter.Location = new Point(padding, 3 * padding);
             txtFilter.Location = new Point(lblFilter.Left + lblFilter.Width + padding, 3 * padding);
+            btnHelp.Location = new Point(btnReturn.Left, lblFilter.Top - padding / 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -337,6 +338,12 @@ namespace MovieTopia
                 // Combine all filter conditions using "OR"
                 dt.DefaultView.RowFilter = string.Join(" OR ", filterConditions);
             }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.ShowDialog();
         }
     }
 }
