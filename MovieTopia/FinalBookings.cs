@@ -157,6 +157,7 @@ namespace MovieTopia
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Boolean saved = false;
             if (txtName.Text.Length > 0)
             {
                 if (txtSurname.Text.Length > 0)
@@ -238,7 +239,8 @@ namespace MovieTopia
                                     try
                                     {
                                         command.ExecuteNonQuery();
-                                        MessageBox.Show("Your tickets have been booked", "Success");
+                                        //MessageBox.Show("Your tickets have been booked", "Success");
+                                        saved = true;
                                     }
                                     catch (Exception ex)
                                     {
@@ -246,6 +248,18 @@ namespace MovieTopia
                                     }
                                 }
                             }
+                            
+                        }
+                        if (saved)
+                        {
+                            string result = string.Join(", ", SeatNames);
+                            MessageBox.Show("Your tickets for the following have been booked: \n\n" +
+                                txtName.Text + " " + txtSurname.Text + "\n" +
+                                "Cell number: " + txtCellNum.Text + "\n\n" +
+                                "Movie Name: " + txtMovie.Text + "\n" +
+                                "Theatre: " + txtTheatre.Text + "\n" +
+                                "At R" + txtPrice.Text + " per ticket\n" +
+                                "For seats: " + result, "Ticket Confirmation");
                         }
                     }
                     else
@@ -276,6 +290,24 @@ namespace MovieTopia
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnGoBack_Click(object sender, EventArgs e)
+        {
+            // Show a message box with Yes and No buttons
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel the ticket?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Check which button was clicked
+            if (result == DialogResult.Yes)
+            {
+                // Close the form if No was clicked
+                this.Close();
+            }
+            else if (result == DialogResult.No)
+            {
+                // Exit the method if Yes was clicked
+                return;
+            }
         }
     }
 }
