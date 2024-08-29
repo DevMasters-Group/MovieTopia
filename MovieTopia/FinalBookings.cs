@@ -18,6 +18,7 @@ namespace MovieTopia
         SqlDataAdapter adapter;
 
         private int MovieScheduleID;
+        private int priceT = 0;
         private List<string> SeatNames;
 
         public FinalBookings(List<string> selectedSeats, int movieScheduleID)
@@ -42,7 +43,8 @@ namespace MovieTopia
             SELECT
                 ms.MovieID,
                 ms.TheatreID,
-                ms.DateTime
+                ms.DateTime,
+                ms.Price
             FROM
                 MovieSchedule ms
             WHERE
@@ -55,6 +57,7 @@ namespace MovieTopia
 
                 int movieID = 0;
                 int theatreID = 0;
+                int price = 0;
                 DateTime scheduleDateTime;
 
                 if (reader.Read())
@@ -62,6 +65,8 @@ namespace MovieTopia
                     movieID = Convert.ToInt32(reader["MovieID"]);
                     theatreID = Convert.ToInt32(reader["TheatreID"]);
                     scheduleDateTime = Convert.ToDateTime(reader["DateTime"]);
+                    price = Convert.ToInt32(reader["Price"]);
+                    priceT = price;
                 }
                 reader.Close();
 
@@ -98,6 +103,7 @@ namespace MovieTopia
 
                 // Display the theatre name in the textbox - txtTheatre
                 txtTheatre.Text = theatreName;
+                txtPrice.Text = priceT.ToString();
 
                 // Add all the seat names to the richtextbox - rchSeats
                 DisplaySeatsInRichTextBox();
@@ -110,6 +116,7 @@ namespace MovieTopia
             sb.AppendLine("The Seats you have selected are:\n");
             sb.AppendLine("Seat Row\t\tSeat Column");
             sb.AppendLine("========\t\t===========");
+            int count = 0;
 
             foreach (string seatName in SeatNames)
             {
@@ -119,10 +126,12 @@ namespace MovieTopia
                     string seatNumber = seatName.Substring(1); // Remaining characters as the number
 
                     sb.AppendLine($"{seatRow}\t\t\t{seatNumber}");
+                    ++count;
                 }
             }
 
             rchSeats.Text = sb.ToString();
+            txtTotal.Text = (priceT * count).ToString();
         }
 
 
@@ -148,7 +157,102 @@ namespace MovieTopia
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Under Construction - Please be patient");
+            if (txtName.Text.Length > 0)
+            {
+                if (txtSurname.Text.Length > 0)
+                {
+                    if (txtCellNum.Text.Length > 0)
+                    {
+                        foreach (string seatName in SeatNames)
+                        {
+                            if (seatName.Length > 1)
+                            {
+                                string seatRow = seatName.Substring(0, 1); // First character as the row
+                                string seatNumber = seatName.Substring(1); // Remaining characters as the number
+                                using (SqlConnection conn = new SqlConnection(DATABASE_URL))
+                                {
+                                    conn.Open();
+
+                                    string sqlSeat = @"
+                                                SELECT
+                                                    SeatID
+                                                FROM
+                                                    Seat
+                                                WHERE
+                                                    SeatRow = @SeatRow AND
+                                                    SeatColumn = @SeatCol";
+
+                                    SqlCommand command = new SqlCommand(sqlSeat, conn);
+                                    command.Parameters.AddWithValue("@SeatRow", seatRow);
+                                    command.Parameters.AddWithValue("@SeatCol", seatNumber);
+                                    string seatID = command.ExecuteScalar().ToString();
+
+                                    string sqlInsert = @"
+                                                INSERT INTO 
+                                                 Ticket (
+                                                    MovieScheduleID,
+                                                    SeatID,
+                                                    Price,
+                                                    CustomerFirstName,
+                                                    CustomerLastName,
+                                                    CustomerPhoneNumber
+                                                 )
+                                                VALUES
+                                                 (
+                                                    @MovieScheduleID,
+                                                    @SeatID,
+                                                    @Price,
+                                                    @CustomerName,
+                                                    @CustomerSName,
+                                                    @CustomerPNum
+                                                );";
+
+                                    command = new SqlCommand(sqlInsert, conn);
+                                    command.Parameters.AddWithValue("@MovieScheduleID", MovieScheduleID);
+                                    command.Parameters.AddWithValue("@SeatID", seatID);
+                                    command.Parameters.AddWithValue("@Price", priceT);
+                                    command.Parameters.AddWithValue("@CustomerName", txtName.Text);
+                                    command.Parameters.AddWithValue("@CustomerSName", txtSurname.Text);
+                                    command.Parameters.AddWithValue("@CustomerPNum", txtCellNum.Text);
+
+                                    try
+                                    {
+                                        command.ExecuteNonQuery();
+                                        MessageBox.Show("Your tickets have been booked", "Success");
+                                        conn.Close();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show(ex.Message, "Error");
+                                    }
+                                }
+                            }
+                        }
+                    } else
+                    {
+                        MessageBox.Show("Please Enter your cellphone number \ne.g. 0605811652");
+                        txtCellNum.Focus();
+                    }
+                } else
+                {
+                    MessageBox.Show("Please Enter your Surname \ne.g. Chamberlain");
+                    txtSurname.Focus();
+                }
+            } else
+            {
+                MessageBox.Show("Please Enter your First Name \ne.g. John");
+                txtName.Focus();
+            }
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

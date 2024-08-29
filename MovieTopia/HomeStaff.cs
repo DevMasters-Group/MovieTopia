@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace MovieTopia
 {
@@ -17,6 +18,9 @@ namespace MovieTopia
         private int padding = 20;
         DataSet ds;
         SqlDataAdapter adapter;
+        private int inc = 0;
+        private int genre = 0;
+        private string date = "";
         public HomeStaff()
         {
             // get database connection string
@@ -25,67 +29,94 @@ namespace MovieTopia
             InitializeComponent();
 
             // load initial data when form loads
-            LoadData();
+            LoadData(genre, date);
             LoadGenre();
+            dtpDate.MinDate = DateTime.Now;
         }
 
-        private void LoadData()
+        private void LoadData(int GenreID, string dateFilter)
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
             {
                 ds = new DataSet();
                 adapter = new SqlDataAdapter();
 
-                // select the parent table and join any additional fields from child entities
+                // Base SQL query for MovieSchedule with an optional GenreID filter and DateTime filter
                 string sqlMovieSchedules = @"
-                        SELECT
-                            ms.MovieScheduleID AS Code, 
-                            ms.Price, 
-                            ms.DateTime, 
-                            m.Title, 
-                            m.Duration, 
-                            m.PG_Rating, 
-                            t.TheatreName, 
-                            g.GenreName,
-                            t.NumRows * t.NumCols AS TotalSeats, -- Total number of seats in the theatre
-                            COUNT(ticket.SeatID) AS BookedSeats  -- Number of seats already booked
-                        FROM
-                            MovieSchedule ms
-                        JOIN
-                            Movie m ON ms.MovieID = m.MovieID
-                        JOIN
-                            Theatre t ON ms.TheatreID = t.TheatreID
-                        JOIN
-                            Genre g ON m.GenreID = g.GenreID
-                        LEFT JOIN
-                            Ticket ticket ON ms.MovieScheduleID = ticket.MovieScheduleID
-                        --WHERE
-                            --ms.DateTime > GETDATE()
-                        GROUP BY
-                            ms.MovieScheduleID, 
-                            ms.Price, 
-                            ms.DateTime, 
-                            m.Title, 
-                            m.Duration, 
-                            m.PG_Rating, 
-                            t.TheatreName, 
-                            g.GenreName, 
-                            t.NumRows, 
-                            t.NumCols
-                        HAVING
-                            COUNT(ticket.SeatID) < (t.NumRows * t.NumCols)";
-                //display only movie data that is still yet to be played
+                SELECT
+                    ms.MovieScheduleID AS Code,
+                    m.Title AS MovieTitle,
+                    t.TheatreName AS Theatre,
+                    ms.Price, 
+                    CONVERT(VARCHAR(10), ms.DateTime, 101) AS MovieDate,  -- MM/DD/YYYY format for the date
+                    FORMAT(ms.DateTime, 'hh:mm tt') AS MovieTime,         -- HH:MM AM/PM format for the time
+                    m.Duration, 
+                    m.PG_Rating, 
+                    g.GenreName,
+                    t.NumRows * t.NumCols AS TotalSeats, -- Total number of seats in the theatre
+                    COUNT(ticket.SeatID) AS BookedSeats  -- Number of seats already booked
+                FROM
+                    MovieSchedule ms
+                JOIN
+                    Movie m ON ms.MovieID = m.MovieID
+                JOIN
+                    Theatre t ON ms.TheatreID = t.TheatreID
+                JOIN
+                    Genre g ON m.GenreID = g.GenreID
+                LEFT JOIN
+                    Ticket ticket ON ms.MovieScheduleID = ticket.MovieScheduleID
+                WHERE
+                    --ms.DateTime > GETDATE() AND
+                    (@GenreID = 0 OR m.GenreID = @GenreID) AND
+                    (@DateFilter IS NULL OR CAST(ms.DateTime AS DATE) = CAST(@DateFilter AS DATE))
+                GROUP BY
+                    ms.MovieScheduleID, 
+                    m.Title,
+                    t.TheatreName,
+                    ms.Price, 
+                    ms.DateTime, 
+                    m.Duration, 
+                    m.PG_Rating, 
+                    g.GenreName, 
+                    t.NumRows, 
+                    t.NumCols
+                HAVING
+                    COUNT(ticket.SeatID) < (t.NumRows * t.NumCols)";
+                // display only movie data that is still yet to be played
 
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
 
                 // important to name the returned data in the dataset with the entity name
-                adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn); ;
+                adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn);
+                adapter.SelectCommand.Parameters.AddWithValue("@GenreID", GenreID);
+
+                if (string.IsNullOrWhiteSpace(dateFilter))
+                {
+                    adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value); // Use DBNull for empty filter
+                }
+                else
+                {
+                    // Convert string to DateTime for the SQL query
+                    DateTime parsedDate;
+                    if (DateTime.TryParse(dateFilter, out parsedDate))
+                    {
+                        adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", parsedDate);
+                    }
+                    else
+                    {
+                        // Handle invalid date format if necessary
+                        adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value);
+                    }
+                }
+
                 adapter.Fill(ds, "MovieSchedule");
-                adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
+
+                adapter.SelectCommand = new SqlCommand(sqlMovies, conn);
                 adapter.Fill(ds, "Movie");
-                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn); ;
+
+                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
                 adapter.Fill(ds, "Theatre");
 
                 // fill the datagrid
@@ -93,6 +124,7 @@ namespace MovieTopia
                 dgvSchedules.DataMember = "MovieSchedule";
             }
         }
+
 
         private void LoadGenre()
         {
@@ -177,6 +209,9 @@ namespace MovieTopia
                 this.Hide();
                 SeatForm.ShowDialog();
                 this.Close();
+            } else
+            {
+                MessageBox.Show("Please select a movie in the table first!");
             }
         }
 
@@ -186,40 +221,53 @@ namespace MovieTopia
             {
                 MessageBox.Show("Please select a genre to filter by!");
                 return;
-            } else
+            }
+            else
             {
                 // Parse the selected item to get the GenreID
                 string selectedGenre = cbxGenre.SelectedItem.ToString();
-                string[] genreParts = selectedGenre.Split(' '); // Assuming the format is "GenreID GenreName"
-                string selectedGenreName = genreParts[0];
+                string[] genreParts = selectedGenre.Split(' '); // Assuming format is "GenreID-SPACE-GenreName"
+                int selectedGenreID;
 
-                // Get the DataTable for the MovieSchedule
-                DataTable movieScheduleTable = ds.Tables["Movie"];
-
-                // List all column names for debugging
-                StringBuilder sb = new StringBuilder();
-                foreach (DataColumn column in movieScheduleTable.Columns)
+                // Attempt to parse the GenreID
+                if (int.TryParse(genreParts[0], out selectedGenreID))
                 {
-                    sb.AppendLine(column.ColumnName);
+                    // Call LoadData with the parsed GenreID
+                    genre = selectedGenreID;
+                    LoadData(genre, date);
                 }
-                MessageBox.Show("Columns in MovieSchedule DataTable:\n" + sb.ToString());
-
-                // Check if the GenreName column exists
-                if (!movieScheduleTable.Columns.Contains("GenreID"))
+                else
                 {
-                    MessageBox.Show("GenreName column not found in MovieSchedule DataTable.");
-                    return;
+                    MessageBox.Show("Failed to parse GenreID. Please ensure the genre is selected correctly.");
                 }
-
-                // Get the DataView for the MovieSchedule DataTable
-                DataView dv = new DataView(movieScheduleTable);
-
-                // Apply the filter based on the selected GenreID
-                dv.RowFilter = $"GenreID = {selectedGenreName}";
-
-                // Set the filtered DataView as the DataSource for the DataGridView
-                dgvSchedules.DataSource = dv;
             }
+
+        }
+
+        private void dtpDate_ValueChanged(object sender, EventArgs e)
+        {
+            if (inc == 0)
+            {
+                ++inc;
+                return;
+            } else
+            {
+                DateTime selectedDate = dtpDate.Value;
+
+                string formattedDate = selectedDate.ToString("MM/dd/yyyy");
+
+                string savedDate = formattedDate;
+                date = savedDate;
+
+                LoadData(genre, date);
+            }
+        }
+
+        private void btnFilters_Click(object sender, EventArgs e)
+        {
+            genre = 0;
+            date = "";
+            LoadData(genre, date);
         }
     }
 }
