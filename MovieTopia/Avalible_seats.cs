@@ -331,6 +331,13 @@ namespace MovieTopia
             
         }
 
+        private void btnReChoose_Click(object sender, EventArgs e)
+        {
+            HomeStaff SeatForm = new HomeStaff();
+            this.Hide();
+            SeatForm.ShowDialog();
+            this.Close();
+        }
     }
 }
 
