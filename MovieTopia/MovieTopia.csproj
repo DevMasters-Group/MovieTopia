@@ -320,10 +320,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MovieTopiaDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MovieTopiaDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>MovieTopiaDB.mdf</DependentUpon>
     </Content>
     <Content Include="Resources\Booked.png" />
