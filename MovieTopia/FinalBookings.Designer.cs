@@ -38,6 +38,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.rchSeats = new System.Windows.Forms.RichTextBox();
             this.txtTheatre = new System.Windows.Forms.TextBox();
             this.txtMovie = new System.Windows.Forms.TextBox();
@@ -46,10 +50,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnGoBack = new MovieTopia.Controls.BTN();
             this.btnSave = new MovieTopia.Controls.BTN();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtTotal = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -169,6 +169,46 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Movie Information";
             // 
+            // txtTotal
+            // 
+            this.txtTotal.Location = new System.Drawing.Point(597, 145);
+            this.txtTotal.MaxLength = 100;
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.ReadOnly = true;
+            this.txtTotal.Size = new System.Drawing.Size(237, 22);
+            this.txtTotal.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(491, 148);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(83, 18);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Total Price:";
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(196, 145);
+            this.txtPrice.MaxLength = 100;
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.ReadOnly = true;
+            this.txtPrice.Size = new System.Drawing.Size(237, 22);
+            this.txtPrice.TabIndex = 9;
+            this.txtPrice.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(21, 148);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 18);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Price Per Ticket:";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
             // rchSeats
             // 
             this.rchSeats.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -245,6 +285,7 @@
             this.btnGoBack.Text = "Go Back";
             this.btnGoBack.TextColor = System.Drawing.Color.White;
             this.btnGoBack.UseVisualStyleBackColor = false;
+            this.btnGoBack.Click += new System.EventHandler(this.btnGoBack_Click);
             // 
             // btnSave
             // 
@@ -265,46 +306,6 @@
             this.btnSave.TextColor = System.Drawing.Color.White;
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(196, 145);
-            this.txtPrice.MaxLength = 100;
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.ReadOnly = true;
-            this.txtPrice.Size = new System.Drawing.Size(237, 22);
-            this.txtPrice.TabIndex = 9;
-            this.txtPrice.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(21, 148);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(117, 18);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Price Per Ticket:";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // txtTotal
-            // 
-            this.txtTotal.Location = new System.Drawing.Point(597, 145);
-            this.txtTotal.MaxLength = 100;
-            this.txtTotal.Name = "txtTotal";
-            this.txtTotal.ReadOnly = true;
-            this.txtTotal.Size = new System.Drawing.Size(237, 22);
-            this.txtTotal.TabIndex = 11;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(491, 148);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(83, 18);
-            this.label8.TabIndex = 10;
-            this.label8.Text = "Total Price:";
             // 
             // FinalBookings
             // 
