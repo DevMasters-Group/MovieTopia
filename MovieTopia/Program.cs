@@ -20,29 +20,36 @@ namespace MovieTopia
         [STAThread]
         static void Main()
         {
-            // Load environment variables from .env file
-            DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 4, encoding: Encoding.ASCII));
+            try
+            {
+                // Load environment variables from .env file
+                DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: false, probeForEnv: true, probeLevelsToSearch: 4, encoding: Encoding.ASCII));
 
-            // Build the connection string
-            string server = Environment.GetEnvironmentVariable("DB_SERVER");
-            string database = Environment.GetEnvironmentVariable("DB_DATABASE");
+                // Build the connection string
+                string server = Environment.GetEnvironmentVariable("DB_SERVER");
+                string database = Environment.GetEnvironmentVariable("DB_DATABASE");
 
-            string connectionString = $"Server={server};Database={database};Integrated Security=True;TrustServerCertificate=True";
-            //string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|{database}.mdf;Integrated Security=True;";
+                string connectionString = $"Server={server};Database={database};Integrated Security=True;TrustServerCertificate=True";
+                //string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|{database}.mdf;Integrated Security=True;";
 
-            // Optionally, set the connection string as an environment variable (optional)
-            Environment.SetEnvironmentVariable("DATABASE_URL", connectionString);
+                // Optionally, set the connection string as an environment variable (optional)
+                Environment.SetEnvironmentVariable("DATABASE_URL", connectionString);
 
-            // Set the connection string in configuration
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.ConnectionStrings.ConnectionStrings["MovieTopiaDatabase"].ConnectionString = connectionString;
-            config.Save(ConfigurationSaveMode.Modified);
+                // Set the connection string in configuration
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.ConnectionStrings.ConnectionStrings["MovieTopiaDatabase"].ConnectionString = connectionString;
+                config.Save(ConfigurationSaveMode.Modified);
 
-            ConfigurationManager.RefreshSection("connectionStrings");
+                ConfigurationManager.RefreshSection("connectionStrings");
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Home());
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new Home());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Something went wrong with one or more configurations :(\r\nPlease consult the software company for assistance.\r\n{ex.Message}");
+            }
         }
     }
 }
