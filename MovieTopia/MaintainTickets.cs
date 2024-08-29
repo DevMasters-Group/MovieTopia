@@ -315,9 +315,10 @@ namespace MovieTopia
 
                     LoadData();
                 }
-            } else
+            }
+            else
             {
-                MessageBox.Show("Please select a Ticket to edit!");
+                MessageBox.Show("Please select a Ticket to edit.");
             }
         }
 
@@ -359,9 +360,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
-            } else
+            }
+            else
             {
-                MessageBox.Show("Please select a ticket to delete!");
+                MessageBox.Show("Please select a ticket to delete.");
             }
         }
 

@@ -215,6 +215,10 @@ namespace MovieTopia
                     LoadData();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a Seat to edit.");
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -259,6 +263,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please select a Seat to delete.");
             }
         }
 

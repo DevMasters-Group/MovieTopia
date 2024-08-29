@@ -263,6 +263,10 @@ namespace MovieTopia
                     LoadData();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a Movie Schedule to edit.");
+            }
         }
 
         private bool canScheduleAfterExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies)
@@ -436,6 +440,10 @@ namespace MovieTopia
                 }
 
                 LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please select a Movie Schedule to delete.");
             }
         }
 
