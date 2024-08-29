@@ -176,37 +176,6 @@ namespace MovieTopia
                 else if(reportType == "Ticket Sales")
                 {
 
-                    //sql = $@"IF @GroupingOption = 'Monthly'
-                    //         BEGIN
-                    //            SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
-                    //                   COUNT(t.TicketID) AS TicketsSold
-                    //            FROM Ticket t
-                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                    //            GROUP BY MONTH(t.PurchaseDateTime), DATENAME(MONTH, t.PurchaseDateTime)
-                    //            ORDER BY MONTH(t.PurchaseDateTime)
-
-                    //            UNION ALL
-
-                    //            SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
-                    //            FROM Ticket t
-                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                    //         END
-                    //         ELSE IF @GroupingOption = 'Quarterly'
-                    //         BEGIN
-                    //            SELECT 'Q' + CAST(DATEPART(QUARTER, t.PurchaseDateTime) AS VARCHAR) AS [Period],
-                    //                   COUNT(t.TicketID) AS TicketsSold
-                    //            FROM Ticket t
-                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                    //            GROUP BY DATEPART(QUARTER, t.PurchaseDateTime)
-                    //            ORDER BY DATEPART(QUARTER, t.PurchaseDateTime)
-
-                    //            UNION ALL
-
-                    //            SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold]
-                    //            FROM Ticket t
-                    //            WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
-                    //         END";
-
                     if (grouping == "Monthly")
                     {
                         sql = $@"SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
