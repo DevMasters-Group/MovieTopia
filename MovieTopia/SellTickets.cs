@@ -73,7 +73,8 @@ namespace MovieTopia
                 return;
 
             dgvData.Columns["Duration"].HeaderText = "Duration (minutes)";
-            dgvData.Columns["DateTime"].HeaderText = "Date & Time";
+            dgvData.Columns["DateTime"].HeaderText = "Start Time";
+            dgvData.Columns["EndDateTime"].HeaderText = "End Time";
             dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
             dgvData.Columns["TheatreName"].HeaderText = "Theatre";
             dgvData.Columns["GenreName"].HeaderText = "Genre";
@@ -82,15 +83,16 @@ namespace MovieTopia
             dgvData.Columns["AvailableSeats"].HeaderText = "Available Seats";
 
             dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.06);
-            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.147);
-            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["EndDateTime"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.24);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
             dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["TotalSeats"].Width = (int)(dgvData.Width * 0.09);
-            dgvData.Columns["BookedSeats"].Width = (int)(dgvData.Width * 0.09);
-            dgvData.Columns["AvailableSeats"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["TotalSeats"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["BookedSeats"].Width = (int)(dgvData.Width * 0.06);
+            dgvData.Columns["AvailableSeats"].Width = (int)(dgvData.Width * 0.06);
 
             // optionally set specific columns to hidden
             dgvData.Columns["MovieScheduleID"].Visible = false;
@@ -108,7 +110,8 @@ namespace MovieTopia
                         SELECT
                             ms.MovieScheduleID, 
                             ms.Price, 
-                            ms.DateTime, 
+                            ms.DateTime,
+                            DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime,
                             m.Title,
                             m.Duration,
                             m.PG_Rating,
