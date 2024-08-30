@@ -146,9 +146,15 @@ namespace MovieTopia
             lblStage.Top = lblTheater_num.Bottom + 20 + rows * (seatHeight + verticalSpacing) + verticalSpacing;
 
             // Position buttons under the stage label
+            int totalBWidth = btnSelect.Width + btnReChoose.Width + padding;
+
             btnSelect.Top = lblStage.Bottom + padding;
-            btnSelect.Left = (this.ClientSize.Width - btnSelect.Width) / 2;
-            
+            btnReChoose.Top = btnSelect.Top;
+
+            btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
+            btnReChoose.Left = btnSelect.Right + padding;
+
+
         }
 
         private void MarkOccupiedSeats(SqlConnection conn, int rows, int columns)

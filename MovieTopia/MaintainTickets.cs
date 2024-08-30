@@ -158,6 +158,8 @@ namespace MovieTopia
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
+                string sqlCheckSeat = @"
+                        SELECT SeatID FROM Ticket WHERE MovieScheduleID = @MovieScheduleID AND SeatID = @SeatID";
                 Dictionary<string, Control> data = detailsForm.controlsDict;
 
                 string sql = @"
@@ -184,30 +186,51 @@ namespace MovieTopia
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
+                    SqlCommand command = new SqlCommand(sqlCheckSeat, connection);
 
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     command.Parameters.AddWithValue("@MovieScheduleID", ((ComboBox)data["MovieScheduleID"]).SelectedValue);
                     command.Parameters.AddWithValue("@SeatID", ((ComboBox)data["SeatID"]).SelectedValue);
-                    command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                    command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
-                    command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
 
-                    try
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Created Successfully", "Success");
+                        if (reader.HasRows)
+                        {
+                            MessageBox.Show("You can't create that ticket because a ticket for that movie has already been booked for that seat!");
+                        }
+                        else
+                        {
+                            reader.Close();
+
+                            SqlCommand command2 = new SqlCommand(sql, connection);
+                            //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                            //command.Parameters["@ID"].Value = customerID;
+
+                            // Use AddWithValue to assign Demographics.
+                            // SQL Server will implicitly convert strings into XML.
+                            command2.Parameters.AddWithValue("@MovieScheduleID", ((ComboBox)data["MovieScheduleID"]).SelectedValue);
+                            command2.Parameters.AddWithValue("@SeatID", ((ComboBox)data["SeatID"]).SelectedValue);
+                            command2.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                            command2.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
+                            command2.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
+                            command2.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
+                            command2.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
+
+                            try
+                            {
+                                
+                                command2.ExecuteNonQuery();
+                                MessageBox.Show("Created Successfully", "Success");
+                                connection.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Error");
+                                connection.Close();
+                            }
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error");
-                    }
+
                 }
 
                 LoadData();
@@ -224,7 +247,7 @@ namespace MovieTopia
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
                 foreignKeySchemaNames["MovieID"] = "Title";  // this will show the Movie title in the drop down
                 foreignKeySchemaNames["TheatreID"] = "TheatreName";
-                foreignKeySchemaNames["SeatID"] = "SeatRow";
+                foreignKeySchemaNames["SeatID"] = "Seat";
 
                 DetailsForm detailsForm = new DetailsForm("Ticket", ds, selectedRow, foreignKeySchemaNames);
                 DialogResult result = detailsForm.ShowDialog();
