@@ -38,11 +38,15 @@ namespace MovieTopia
         public DetailsForm(string schemaName, DataSet dataSet, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null, Dictionary<string, string> attributeNameMap = null)
         {
             InitializeComponent();
+
             this.FormClosing += DetailsForm_FormClosing;
 
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             if (dataSet == null || selectedDataGridViewRow == null) this.newRecord = true;
+
+            this.Text = newRecord ? $"Create {schemaName}" : $"Edit {schemaName}";
+
             if (attributeNameMap != null) this.attributeNameMap = attributeNameMap;
             QuerySchema(schemaName);
             PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);
@@ -387,7 +391,10 @@ namespace MovieTopia
                             }
                         }
                     };
-
+                    if (schemaColumnName.Contains("SeatColumn"))
+                    {
+                        control.TextChanged += new System.EventHandler(textBox_TextChanged);
+                    }
 
                     // Create and configure the character count Label
                     Label charCountLabel = new Label
@@ -458,6 +465,15 @@ namespace MovieTopia
             {
                 errorProvider1.SetError(tb, "");
             }
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            int cursorPosition = textBox.SelectionStart;
+            // Convert the text to uppercase
+            textBox.Text = textBox.Text.ToUpper();
+            textBox.SelectionStart = cursorPosition;
         }
 
         /// <summary>
