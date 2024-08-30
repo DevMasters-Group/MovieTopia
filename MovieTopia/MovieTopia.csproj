@@ -282,6 +282,7 @@
     <Content Include="Resources\Not_booked.png" />
     <Content Include="Resources\Seat_Booking\Screenshot 2024-08-18 224911.png" />
     <None Include="Resources\Seat_Icon_Main1.png" />
+    <None Include="Resources\Seat_Icon_Main.jpg" />
     <Content Include="Resources\Selected_seat.png" />
   </ItemGroup>
   <ItemGroup>

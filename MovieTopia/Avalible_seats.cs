@@ -122,7 +122,7 @@ namespace MovieTopia
                         Width = seatWidth,
                         Height = seatHeight,
                         Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
-                        Image = Properties.Resources.Seat_Icon_Main, // Default to available seat
+                        Image = Properties.Resources.Seat_Icon_Main1, // Default to available seat
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         BackColor = Color.Purple,
                     };
@@ -228,7 +228,7 @@ namespace MovieTopia
             }
             else if (seat.BackColor == Color.Black)
             {
-                seat.Image = Properties.Resources.Seat_Icon_Main;
+                seat.Image = Properties.Resources.Seat_Icon_Main1;
                 seat.BackColor = Color.Purple;
             }
             else
