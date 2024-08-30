@@ -247,13 +247,18 @@ namespace MovieTopia
 
                                 ComboBox cbx = (ComboBox)control;
                                 cbx.Items.Clear();
+                                int requiredWidth = 200;
 
                                 foreach (DataRow row in foreignEntity.Rows)
                                 {
                                     int id = (int)row[schemaColumnName];
                                     string name = row[foreignKeyRelation].ToString();
+                                    int stringWidth = ((int)name.Length / 17) == 0 ? 200 : 400;
+                                    requiredWidth = (stringWidth > requiredWidth) ? stringWidth : requiredWidth;
                                     cbx.Items.Add(new KeyValuePair<int, string>(id, name));
                                 }
+
+                                cbx.Width = requiredWidth;
 
                                 cbx.ValueMember = "Key";
                                 cbx.DisplayMember = "Value";
@@ -272,9 +277,8 @@ namespace MovieTopia
                                             break;
                                         }
                                     }
-                                    control = cbx;
                                 }
-                               
+                                control = cbx;
                             }
                         }
                         control.Validating += (sender, e) => {
