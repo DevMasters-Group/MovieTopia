@@ -122,7 +122,7 @@ namespace MovieTopia
                         Width = seatWidth,
                         Height = seatHeight,
                         Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
-                        Image = Properties.Resources.logoFullPurple, // Default to available seat
+                        Image = Properties.Resources.Seat_Icon_Main, // Default to available seat
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         BackColor = Color.Purple,
                     };
@@ -222,13 +222,13 @@ namespace MovieTopia
             // Check the current image and switch to the next state
             if (seat.BackColor == Color.Purple)
             {
-                seat.Image = Properties.Resources.logoFullDarkBlackAndWhite;
+                seat.Image = Properties.Resources.logoIconDark;
                 seat.BackColor = Color.Black;
                 //MessageBox.Show(seat.Name);
             }
             else if (seat.BackColor == Color.Black)
             {
-                seat.Image = Properties.Resources.logoFullPurple;
+                seat.Image = Properties.Resources.Seat_Icon_Main;
                 seat.BackColor = Color.Purple;
             }
             else
@@ -319,6 +319,16 @@ namespace MovieTopia
             this.Hide();
             SeatForm.ShowDialog();
             this.Close();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
