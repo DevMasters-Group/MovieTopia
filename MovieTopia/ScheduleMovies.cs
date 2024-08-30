@@ -429,7 +429,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"

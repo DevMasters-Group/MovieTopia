@@ -57,6 +57,7 @@
             // 
             this.dgvData.AllowUserToAddRows = false;
             this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -198,7 +199,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1683, 927);
+            this.ClientSize = new System.Drawing.Size(1540, 845);
             this.Controls.Add(this.dgvData);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.lblFilter);
@@ -211,7 +212,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "ScheduleMovies";
-            this.Text = "MScheduleMovies";
+            this.Text = "Schedule Movies";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.ScheduleMovies_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();

@@ -51,10 +51,12 @@ namespace MovieTopia
             btnClearFilter.Top = dtpDate.Top;
             btnClearFilter.Left = dtpDate.Left + dtpDate.Width + padding * 2;
 
-            btnSelect.Left = (this.ClientSize.Width / 2) - btnSelect.Width - padding;
+            btnSelect.Left = (this.ClientSize.Width / 2) - btnSelect.Width - padding / 2;
             btnCancel.Left = btnSelect.Left + btnSelect.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnSelect.Top = (this.ClientSize.Height - btnSelect.Height - padding * 2);
             btnCancel.Top = (this.ClientSize.Height - btnCancel.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnReturn.Height - padding * 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -336,6 +338,11 @@ namespace MovieTopia
 
             DataTable dt = ds.Tables[tblName];
             dt.DefaultView.RowFilter = "";
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

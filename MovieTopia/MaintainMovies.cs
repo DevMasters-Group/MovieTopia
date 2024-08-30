@@ -260,7 +260,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
                 
 

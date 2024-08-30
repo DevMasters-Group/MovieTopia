@@ -179,7 +179,7 @@ namespace MovieTopia
                         UPDATE 
                             Seat
                         SET 
-                            SeatRow = @SeatRow
+                            SeatRow = @SeatRow,
                             SeatColumn = @SeatColumn
                         WHERE
                             SeatID = @SeatID;
@@ -203,9 +203,9 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
-                        catch (SqlException)
+                        catch (SqlException ex)
                         {
-                            MessageBox.Show("The entered Seat already exits", "Error");
+                            MessageBox.Show("The entered Seat already exits.", "Error");
                         }
                         catch (Exception ex)
                         {
@@ -228,7 +228,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"
