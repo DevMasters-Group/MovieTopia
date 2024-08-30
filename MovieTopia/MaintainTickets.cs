@@ -131,6 +131,7 @@ namespace MovieTopia
             dgvData.Columns["PurchaseDateTime"].HeaderText = "Purchased on";
             dgvData.Columns["CustomerFirstName"].HeaderText = "Customer First Name";
             dgvData.Columns["CustomerLastName"].HeaderText = "Customer Last Name";
+            dgvData.Columns["CustomerPhoneNumber"].HeaderText = "Customer Phone Number";
             dgvData.Columns["Title"].HeaderText = "Movie";
             dgvData.Columns["TheatreName"].HeaderText = "Theatre";
             dgvData.Columns["DateTime"].HeaderText = "Movie Time";
