@@ -66,7 +66,7 @@ namespace MovieTopia
                             FROM
                                 Movie m
                             JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                                Genre g ON m.GenreID = g.GenreID;";
                 string sqlGenres = "SELECT * FROM Genre";
                 string sqlSeats = "SELECT * FROM Seat";
                 //cmd = new SqlCommand(sqlMovies, conn);

@@ -105,14 +105,7 @@ namespace MovieTopia
                 Dictionary<string, Control> data = detailsForm.controlsDict;
 
                 string sql = @"
-                    INSERT INTO 
-                        Genre (
-                            GenreName
-                        )
-                        VALUES
-                        (
-                            @GenreName
-                        );";
+                    INSERT INTO Genre (GenreName) VALUES (@GenreName);";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
@@ -163,13 +156,7 @@ namespace MovieTopia
                     Dictionary<string, Control> data = detailsForm.controlsDict;
 
                     string sql = @"
-                        UPDATE 
-                            Genre
-                        SET 
-                            GenreName = @GenreName
-                        WHERE
-                            GenreID = @GenreID;
-                        ";
+                        UPDATE Genre SET GenreName = @GenreName WHERE GenreID = @GenreID;";
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                     {
@@ -217,10 +204,7 @@ namespace MovieTopia
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"
-                        DELETE FROM 
-                            Genre
-                        WHERE
-                            GenreID = @GenreID;";
+                        DELETE FROM Genre WHERE GenreID = @GenreID;";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {

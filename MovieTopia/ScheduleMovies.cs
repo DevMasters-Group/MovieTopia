@@ -69,7 +69,7 @@ namespace MovieTopia
                             JOIN
                                 Theatre t ON ms.TheatreID = t.TheatreID
                             JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                                Genre g ON m.GenreID = g.GenreID;";
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
@@ -220,6 +220,12 @@ namespace MovieTopia
                     // get the dictionary of controls back from the form to get their values
                     Dictionary<string, Control> data = detailsForm.controlsDict;
 
+                    var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                    var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                    var dateTime = ((DateTimePicker)data["DateTime"]).Text;
+
+                    if (!isValidScheduleTime(selectedTheatre.Key, DateTime.Parse(dateTime))) return;
+
                     string sql = @"
                         UPDATE 
                             MovieSchedule
@@ -240,12 +246,10 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
                         command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
-                        var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
                         command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                         command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                        command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
+                        command.Parameters.AddWithValue("@DateTime", dateTime);
                         command.Parameters.AddWithValue("@MovieScheduleID", ((TextBox)data["MovieScheduleID"]).Text);
 
                         try
@@ -319,7 +323,7 @@ namespace MovieTopia
                 }
             }
 
-            MessageBox.Show($"after existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing: {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            //MessageBox.Show($"after existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing: {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
             bool scheduleAfterExisting = mostRecentSchedule.AddMinutes(movieDuration + minutesBetweenMovies) <= datetime;
             if (!scheduleAfterExisting)
             {
@@ -379,7 +383,7 @@ namespace MovieTopia
                 }
             }
 
-            MessageBox.Show($"before existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            //MessageBox.Show($"before existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
             bool scheduleBeforeExisting = mostRecentSchedule >= datetime.AddMinutes(movieDuration + minutesBetweenMovies);
             if (!scheduleBeforeExisting)
             {

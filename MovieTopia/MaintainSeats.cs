@@ -57,15 +57,16 @@ namespace MovieTopia
                 conn.Open();
                 adapter= new SqlDataAdapter();
                 ds = new DataSet();
-                string sqlTheatres = "SELECT * FROM Theatre";
-                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
-                adapter.Fill(ds, "Theatre");
+
+                //string sqlTheatres = "SELECT * FROM Theatre";
+                //adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
+                //adapter.Fill(ds, "Theatre");
 
                 string sqlseats = @"
-                            Select
-                                s.SeatID, s.SeatRow, s.SeatColumn
-                            From
-                                Seat s";
+                    SELECT
+                        s.SeatID, s.SeatRow, s.SeatColumn
+                    FROM
+                        Seat s;";
 
                 adapter.SelectCommand = new SqlCommand(sqlseats, conn);
                 adapter.Fill(ds, "Seat");

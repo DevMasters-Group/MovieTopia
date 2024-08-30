@@ -67,7 +67,7 @@ namespace MovieTopia
                             t.TicketID, 
                             t.MovieScheduleID, 
                             t.SeatID, 
-                            t.Price, 
+                            ms.Price, 
                             t.PurchaseDateTime, 
                             t.CustomerFirstName, 
                             t.CustomerLastName, 
