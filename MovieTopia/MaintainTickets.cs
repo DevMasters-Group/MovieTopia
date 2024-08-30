@@ -180,7 +180,6 @@ namespace MovieTopia
                             Ticket (
                                 MovieScheduleID,
                                 SeatID,
-                                Price,
                                 PurchaseDateTime,
                                 CustomerFirstName,
                                 CustomerLastName,
@@ -190,7 +189,6 @@ namespace MovieTopia
                             (
                                 @MovieScheduleID,
                                 @SeatID,
-                                @Price,
                                 @PurchaseDateTime,
                                 @CustomerFirstName,
                                 @CustomerLastName,
@@ -209,7 +207,7 @@ namespace MovieTopia
                     command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                     var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                     command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                    command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                    //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                     command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
                     command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                     command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
@@ -269,7 +267,6 @@ namespace MovieTopia
                         SET
                             MovieScheduleID = @MovieScheduleID,
                             SeatID = @SeatID,
-                            Price = @Price,
                             PurchaseDateTime = @PurchaseDateTime,
                             CustomerFirstName = @CustomerFirstName,
                             CustomerLastName = @CustomerLastName,
@@ -290,7 +287,7 @@ namespace MovieTopia
                         command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                         var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                         command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                        command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                        //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                         command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
                         command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                         command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);

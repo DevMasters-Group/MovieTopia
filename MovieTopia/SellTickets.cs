@@ -210,7 +210,6 @@ namespace MovieTopia
                             Ticket (
                                 MovieScheduleID,
                                 SeatID,
-                                Price,
                                 PurchaseDateTime,
                                 CustomerFirstName,
                                 CustomerLastName,
@@ -220,7 +219,6 @@ namespace MovieTopia
                             (
                                 @MovieScheduleID,
                                 @SeatID,
-                                @Price,
                                 @PurchaseDateTime,
                                 @CustomerFirstName,
                                 @CustomerLastName,
@@ -238,7 +236,7 @@ namespace MovieTopia
 
                             command.Parameters.AddWithValue("@MovieScheduleID", selectedRow.Cells["MovieScheduleID"].Value);
                             command.Parameters.AddWithValue("@SeatID", item.Key);
-                            command.Parameters.AddWithValue("@Price", selectedRow.Cells["Price"].Value);
+                            //command.Parameters.AddWithValue("@Price", selectedRow.Cells["Price"].Value);
                             command.Parameters.AddWithValue("@PurchaseDateTime", DateTime.Now);
                             command.Parameters.AddWithValue("@CustomerFirstName", bookingConfirmation.txtFName.Text);
                             command.Parameters.AddWithValue("@CustomerLastName", bookingConfirmation.txtLName.Text);
