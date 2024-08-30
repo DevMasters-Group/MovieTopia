@@ -33,13 +33,13 @@
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
+            this.btnFilters = new MovieTopia.Controls.BTN();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelectMovie = new MovieTopia.Controls.BTN();
-            this.btnFilters = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -94,6 +94,26 @@
             this.gbxFiltering.TabIndex = 5;
             this.gbxFiltering.TabStop = false;
             this.gbxFiltering.Text = "Selection";
+            // 
+            // btnFilters
+            // 
+            this.btnFilters.BackColor = System.Drawing.Color.Crimson;
+            this.btnFilters.BackgroundColor = System.Drawing.Color.Crimson;
+            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnFilters.BorderRadius = 40;
+            this.btnFilters.BorderSize = 0;
+            this.btnFilters.FlatAppearance.BorderSize = 0;
+            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilters.ForeColor = System.Drawing.Color.White;
+            this.btnFilters.Location = new System.Drawing.Point(648, 33);
+            this.btnFilters.Name = "btnFilters";
+            this.btnFilters.Size = new System.Drawing.Size(159, 63);
+            this.btnFilters.TabIndex = 4;
+            this.btnFilters.Text = "Remove Filters";
+            this.btnFilters.TextColor = System.Drawing.Color.White;
+            this.btnFilters.UseVisualStyleBackColor = false;
+            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
             // 
             // label2
             // 
@@ -173,26 +193,6 @@
             this.btnSelectMovie.TextColor = System.Drawing.Color.White;
             this.btnSelectMovie.UseVisualStyleBackColor = false;
             this.btnSelectMovie.Click += new System.EventHandler(this.btnSelectMovie_Click);
-            // 
-            // btnFilters
-            // 
-            this.btnFilters.BackColor = System.Drawing.Color.Crimson;
-            this.btnFilters.BackgroundColor = System.Drawing.Color.Crimson;
-            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnFilters.BorderRadius = 40;
-            this.btnFilters.BorderSize = 0;
-            this.btnFilters.FlatAppearance.BorderSize = 0;
-            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFilters.ForeColor = System.Drawing.Color.White;
-            this.btnFilters.Location = new System.Drawing.Point(648, 33);
-            this.btnFilters.Name = "btnFilters";
-            this.btnFilters.Size = new System.Drawing.Size(159, 63);
-            this.btnFilters.TabIndex = 4;
-            this.btnFilters.Text = "Remove Filters";
-            this.btnFilters.TextColor = System.Drawing.Color.White;
-            this.btnFilters.UseVisualStyleBackColor = false;
-            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
             // 
             // HomeStaff
             // 

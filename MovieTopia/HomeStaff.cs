@@ -122,6 +122,12 @@ namespace MovieTopia
                 // fill the datagrid
                 dgvSchedules.DataSource = ds;
                 dgvSchedules.DataMember = "MovieSchedule";
+
+                dgvSchedules.Columns[0].Width = 60;
+                dgvSchedules.Columns[1].Width = 175;
+                dgvSchedules.Columns[2].Width = 75;
+                dgvSchedules.Columns[3].Width = 75;
+                dgvSchedules.Columns["Price"].DefaultCellStyle.Format = "'R' 0.00";
             }
         }
 
