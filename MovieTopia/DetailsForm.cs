@@ -376,6 +376,17 @@ namespace MovieTopia
                     //    ValidateNotEmpty((TextBox)sender, e);  // invoke error provider for validation checks
                     //};
                     control.Validating += new CancelEventHandler(textBox_Validating);
+                    control.KeyPress += (sender, e) =>
+                    {
+                        if (schemaColumnName.Contains("CustomerPhoneNumber"))
+                        {
+                            // Allow control characters (like backspace) and digits
+                            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                            {
+                                e.Handled = true; // Ignore the key press if it's not a digit or control character
+                            }
+                        }
+                    };
 
 
                     // Create and configure the character count Label
