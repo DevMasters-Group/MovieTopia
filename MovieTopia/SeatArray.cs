@@ -89,8 +89,17 @@ namespace MovieTopia
                         WHERE 
                             t.TheatreID = (SELECT TheatreID FROM MovieSchedule WHERE MovieScheduleID = {movieScheduleID})
                             AND s.SeatRow <= t.NumRows 
+                            AND CAST(
+                                CASE 
+                                    WHEN LEN(s.SeatColumn) = 1 THEN
+                                        ASCII(s.SeatColumn) - ASCII('A') + 1
+                                    WHEN LEN(s.SeatColumn) = 2 THEN
+                                        (ASCII(LEFT(s.SeatColumn, 1)) - ASCII('A')) * 26 + ASCII(RIGHT(s.SeatColumn, 1)) - ASCII('A') + 1
+                                    ELSE
+                                        0 -- Handle cases with more than 2 letters or invalid formats
+                                END AS INT
+                            ) <= t.NumCols
                             
-                            AND s.SeatColumn <= (SELECT MAX(SeatColumn) FROM Seat WHERE TheatreID = t.TheatreID)
                     ),
                     BookedSeats AS (
                         SELECT 
@@ -116,7 +125,10 @@ namespace MovieTopia
                         BookedSeats
                     ORDER BY 
                         SeatRow, SeatColumn;";
+
+                //AND s.SeatColumn <= (SELECT MAX(SeatColumn) FROM Seat WHERE TheatreID = t.TheatreID)
                 //--AND s.SeatColumn <= CHAR(64 + t.NumCols)
+
                 adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
                 adapter.Fill(ds, "Seats");
             }

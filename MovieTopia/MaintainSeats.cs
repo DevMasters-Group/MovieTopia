@@ -64,7 +64,7 @@ namespace MovieTopia
 
                 string sqlseats = @"
                     SELECT
-                        s.SeatID, s.SeatRow, s.SeatColumn
+                        s.SeatID, s.SeatRow, s.SeatColumn, CONCAT(s.SeatColumn, s.SeatRow) as CSeat
                     FROM
                         Seat s;";
 
@@ -88,15 +88,18 @@ namespace MovieTopia
                 return;
 
             dgvData.Columns["SeatID"].HeaderText = "Seat ID";
-            dgvData.Columns["SeatRow"].HeaderText = "Seat Row";
-            dgvData.Columns["SeatColumn"].HeaderText = "Seat Column";
+            //dgvData.Columns["SeatRow"].HeaderText = "Seat Row";
+            //dgvData.Columns["SeatColumn"].HeaderText = "Seat Column";
+            dgvData.Columns["CSeat"].HeaderText = "Seat";
 
             dgvData.Columns["SeatID"].Width = (int)(dgvData.Width * 0.2);
-            dgvData.Columns["SeatRow"].Width = (int)(dgvData.Width * 0.388);
-            dgvData.Columns["SeatColumn"].Width = (int)(dgvData.Width * 0.389);
+            //dgvData.Columns["SeatRow"].Width = (int)(dgvData.Width * 0.388);
+            //dgvData.Columns["SeatColumn"].Width = (int)(dgvData.Width * 0.389);
+            dgvData.Columns["CSeat"].Width = (int)(dgvData.Width * 0.777);
 
             // optionally set specific columns to hidden
-            //dgvGenres.Columns["GenreID"].Visible = false;
+            dgvData.Columns["SeatRow"].Visible = false;
+            dgvData.Columns["SeatColumn"].Visible = false;
         }
 
         private void label1_Click(object sender, EventArgs e)

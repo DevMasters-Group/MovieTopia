@@ -61,7 +61,7 @@ namespace MovieTopia
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
                             SELECT
-                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
+                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime, DATEADD(MINUTE, m.Duration + 30, ms.DateTime) as CleanEndDateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
                             FROM
                                 MovieSchedule ms
                             JOIN
@@ -108,17 +108,19 @@ namespace MovieTopia
             dgvData.Columns["GenreName"].HeaderText = "Genre";
             dgvData.Columns["DateTime"].HeaderText = "Start Time";
             dgvData.Columns["EndDateTime"].HeaderText = "End Time";
+            dgvData.Columns["CleanEndDateTime"].HeaderText = "Additional 30 Minutes for Cleaning";
 
             // Set DataGridView column widths
             dgvData.Columns["MovieScheduleID"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.09);
             dgvData.Columns["EndDateTime"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["CleanEndDateTime"].Width = (int)(dgvData.Width * 0.09);
             dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.278);
-            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.0775);
 
             // optionally set specific columns to hidden
             dgvData.Columns["MovieID"].Visible = false;
