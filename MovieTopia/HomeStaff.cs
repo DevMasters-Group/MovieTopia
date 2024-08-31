@@ -162,7 +162,7 @@ namespace MovieTopia
                 dgvSchedules.DataSource = ds;
                 dgvSchedules.DataMember = "MovieSchedule";
 
-                if (dgvSchedules.Rows.Count > 0)
+                if (dgvSchedules.Rows.Count > 1)
                 {
 
                     dgvSchedules.Columns[0].Width = 60;
@@ -179,7 +179,7 @@ namespace MovieTopia
                 {
                     MessageBox.Show("There are no movies currently scheduled of genre:\n" + cbxGenre.SelectedItem.ToString());
                 }
-                else
+                else if (dateFilter != "")
                 {
                     MessageBox.Show("There are no movies currently scheduled on: " + dateFilter);
                 }

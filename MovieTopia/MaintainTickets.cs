@@ -201,33 +201,58 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sqlCheckSeat, connection);
-
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieScheduleID"]).SelectedItem;
                     command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                     var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                     command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                    //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                    command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
-                    command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
+                    MessageBox.Show(selectedMovie.Key.ToString() + ", " + selectedSeat.Key);
 
-                    try
-                    { 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Created Successfully", "Success");
-                    }
-                    catch (SqlException)
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                        
+                        if (reader.HasRows)
+                        {
+                            // Data exists
+                            MessageBox.Show("Ticket can't be added since a ticket for the scheduled movie has already been booked for the desired seat!", "Error");
+                            reader.Close();
+                            connection.Close();
+                        }
+                        else
+                        {
+                            reader.Close();
+                            command = new SqlCommand(sql, connection);
+
+                            command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
+                            command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
+                            //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                            command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
+                            command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
+                            command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
+                            command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
+
+                            try
+                            {
+                                command.ExecuteNonQuery();
+                                MessageBox.Show("Created Successfully", "Success");
+                                connection.Close();
+                            }
+                            catch (SqlException)
+                            {
+                                MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                                connection.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Error");
+                                connection.Close();
+                            }
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error");
-                    }
+
+                    // Use AddWithValue to assign Demographics.
+                    // SQL Server will implicitly convert strings into XML.
+                    
                 }
                 LoadData();
             }
@@ -304,7 +329,7 @@ namespace MovieTopia
                         }
                         catch (SqlException)
                         {
-                            MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                            MessageBox.Show("Ticket can't be changed since a ticket for the scheduled movie has already been booked for the desired seat!", "Error");
                         }
                         catch (Exception ex)
                         {
