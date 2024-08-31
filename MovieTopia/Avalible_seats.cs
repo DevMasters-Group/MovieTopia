@@ -122,7 +122,7 @@ namespace MovieTopia
                         Width = seatWidth,
                         Height = seatHeight,
                         Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
-                        Image = Properties.Resources.logoFullPurple, // Default to available seat
+                        Image = Properties.Resources.Seat_Icon_Main1, // Default to available seat
                         SizeMode = PictureBoxSizeMode.StretchImage,
                         BackColor = Color.Purple,
                     };
@@ -146,9 +146,15 @@ namespace MovieTopia
             lblStage.Top = lblTheater_num.Bottom + 20 + rows * (seatHeight + verticalSpacing) + verticalSpacing;
 
             // Position buttons under the stage label
+            int totalBWidth = btnSelect.Width + btnReChoose.Width + padding;
+
             btnSelect.Top = lblStage.Bottom + padding;
-            btnSelect.Left = (this.ClientSize.Width - btnSelect.Width) / 2;
-            
+            btnReChoose.Top = btnSelect.Top;
+
+            btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
+            btnReChoose.Left = btnSelect.Right + padding;
+
+
         }
 
         private void MarkOccupiedSeats(SqlConnection conn, int rows, int columns)
@@ -216,13 +222,13 @@ namespace MovieTopia
             // Check the current image and switch to the next state
             if (seat.BackColor == Color.Purple)
             {
-                seat.Image = Properties.Resources.logoFullDarkBlackAndWhite;
+                seat.Image = Properties.Resources.logoIconDark;
                 seat.BackColor = Color.Black;
                 //MessageBox.Show(seat.Name);
             }
             else if (seat.BackColor == Color.Black)
             {
-                seat.Image = Properties.Resources.logoFullPurple;
+                seat.Image = Properties.Resources.Seat_Icon_Main1;
                 seat.BackColor = Color.Purple;
             }
             else
@@ -242,23 +248,22 @@ namespace MovieTopia
 
                 // Retrieve occupied seats for the current movie schedule
                 string sqlOccupiedSeats = @"
-                    SELECT
-                        t.SeatID, 
-                        s.SeatRow, 
-                        s.SeatColumn
-                    FROM
-                        MovieSchedule ms
-                    JOIN
-                        Ticket t ON t.MovieScheduleID = ms.MovieScheduleID
-                    JOIN
-                        Seat s ON s.SeatID = t.SeatID
-                    WHERE
-                        ms.MovieScheduleID = @MovieScheduleID";
+            SELECT
+                t.SeatID, 
+                s.SeatRow, 
+                s.SeatColumn
+            FROM
+                MovieSchedule ms
+            JOIN
+                Ticket t ON t.MovieScheduleID = ms.MovieScheduleID
+            JOIN
+                Seat s ON s.SeatID = t.SeatID
+            WHERE
+                ms.MovieScheduleID = @MovieScheduleID";
 
                 SqlCommand command = new SqlCommand(sqlOccupiedSeats, conn);
-                //
+
                 // Logic to get the movie schedule ID
-                //
                 int movieScheduleID = ScheduleID;
                 command.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
 
@@ -282,54 +287,31 @@ namespace MovieTopia
                         string seatName = seat.Name;
                         string seatRow = seatName.Substring(0, 1);
                         string seatColumn = seatName.Substring(1);
-                        decimal price = 70;
-                        DateTime purchaseDateTime = DateTime.Now;
 
                         // Check if the seat is already taken
                         if (!occupiedSeats.Contains(seatName))
                         {
-                            // Insert the selected seat into the Ticket table
-                            string insertTicketSql = @"
-                                INSERT INTO Ticket 
-                                    (SeatID, MovieScheduleID, Price, PurchaseDateTime, CustomerFirstName, CustomerLastName, CustomerPhoneNumber)
-                                SELECT 
-                                     SeatID, @MovieScheduleID, @Price, @PurchaseDateTime, @CustomerFirstName, @CustomerLastName, @CustomerPhoneNumber
-                                FROM 
-                                    Seat 
-                                WHERE 
-                                    SeatRow = @SeatRow AND SeatColumn = @SeatColumn";
-
-                            SqlCommand insertCommand = new SqlCommand(insertTicketSql, conn);
-                            insertCommand.Parameters.AddWithValue("@MovieScheduleID", movieScheduleID);
-                            insertCommand.Parameters.AddWithValue("@SeatRow", seatRow);
-                            insertCommand.Parameters.AddWithValue("@SeatColumn", seatColumn);
-                            insertCommand.Parameters.AddWithValue("@Price", price);
-                            insertCommand.Parameters.AddWithValue("@PurchaseDateTime", purchaseDateTime);
-                            insertCommand.Parameters.AddWithValue("@CustomerFirstName", "Jim");
-                            insertCommand.Parameters.AddWithValue("@CustomerLastName", "Shack");
-                            insertCommand.Parameters.AddWithValue("@CustomerPhoneNumber", "0740504642");
-
-                            insertCommand.ExecuteNonQuery();
+                            // Seat is available, add it to the list of selected seats
                             selectedSeats.Add(seatName);
                         }
-
                         else
                         {
                             MessageBox.Show($"Seat {seat.Name} is already taken.");
                         }
-                        
                     }
                 }
+
                 if (selectedSeats.Count > 0)
                 {
                     FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
+                    this.Hide();
                     finalBookingsForm.ShowDialog();
                     this.Close();
                 }
             }
             this.Close();
-            
         }
+
 
         private void btnReChoose_Click(object sender, EventArgs e)
         {
@@ -337,6 +319,16 @@ namespace MovieTopia
             this.Hide();
             SeatForm.ShowDialog();
             this.Close();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
