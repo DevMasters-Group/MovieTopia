@@ -214,10 +214,8 @@ namespace MovieTopia
                     command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
                     command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
 
-
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader()
-
+                    try
+                    { 
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
@@ -229,11 +227,8 @@ namespace MovieTopia
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
-
                     }
-
                 }
-
                 LoadData();
             }
         }
