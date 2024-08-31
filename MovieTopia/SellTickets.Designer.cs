@@ -42,6 +42,7 @@
             this.btnSelect = new MovieTopia.Controls.BTN();
             this.lblName = new System.Windows.Forms.Label();
             this.btnClearFilter = new MovieTopia.Controls.BTN();
+            this.btnReturn = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,6 +93,7 @@
             // 
             this.dgvData.AllowUserToAddRows = false;
             this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -186,9 +188,9 @@
             this.lblName.Location = new System.Drawing.Point(535, 22);
             this.lblName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(173, 32);
+            this.lblName.Size = new System.Drawing.Size(133, 26);
             this.lblName.TabIndex = 20;
-            this.lblName.Text = "Ticket Sales";
+            this.lblName.Text = "Sell Tickets";
             // 
             // btnClearFilter
             // 
@@ -211,11 +213,33 @@
             this.btnClearFilter.UseVisualStyleBackColor = false;
             this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
             // 
+            // btnReturn
+            // 
+            this.btnReturn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.btnReturn.BorderColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.BorderRadius = 30;
+            this.btnReturn.BorderSize = 1;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReturn.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.Location = new System.Drawing.Point(871, 573);
+            this.btnReturn.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(180, 50);
+            this.btnReturn.TabIndex = 22;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.MidnightBlue;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
             // SellTickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnClearFilter);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.btnCancel);
@@ -229,7 +253,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "SellTickets";
-            this.Text = "SellTickets";
+            this.Text = "Sell Tickets";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.SellTickets_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
@@ -250,5 +274,6 @@
         private Controls.BTN btnSelect;
         private System.Windows.Forms.Label lblName;
         private Controls.BTN btnClearFilter;
+        private Controls.BTN btnReturn;
     }
 }

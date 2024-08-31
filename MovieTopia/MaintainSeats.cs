@@ -57,15 +57,16 @@ namespace MovieTopia
                 conn.Open();
                 adapter= new SqlDataAdapter();
                 ds = new DataSet();
-                string sqlTheatres = "SELECT * FROM Theatre";
-                adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
-                adapter.Fill(ds, "Theatre");
+
+                //string sqlTheatres = "SELECT * FROM Theatre";
+                //adapter.SelectCommand = new SqlCommand(sqlTheatres, conn);
+                //adapter.Fill(ds, "Theatre");
 
                 string sqlseats = @"
-                            Select
-                                s.SeatID, s.SeatRow, s.SeatColumn
-                            From
-                                Seat s";
+                    SELECT
+                        s.SeatID, s.SeatRow, s.SeatColumn, CONCAT(s.SeatColumn, s.SeatRow) as CSeat
+                    FROM
+                        Seat s;";
 
                 adapter.SelectCommand = new SqlCommand(sqlseats, conn);
                 adapter.Fill(ds, "Seat");
@@ -87,15 +88,18 @@ namespace MovieTopia
                 return;
 
             dgvData.Columns["SeatID"].HeaderText = "Seat ID";
-            dgvData.Columns["SeatRow"].HeaderText = "Seat Row";
-            dgvData.Columns["SeatColumn"].HeaderText = "Seat Column";
+            //dgvData.Columns["SeatRow"].HeaderText = "Seat Row";
+            //dgvData.Columns["SeatColumn"].HeaderText = "Seat Column";
+            dgvData.Columns["CSeat"].HeaderText = "Seat";
 
             dgvData.Columns["SeatID"].Width = (int)(dgvData.Width * 0.2);
-            dgvData.Columns["SeatRow"].Width = (int)(dgvData.Width * 0.388);
-            dgvData.Columns["SeatColumn"].Width = (int)(dgvData.Width * 0.389);
+            //dgvData.Columns["SeatRow"].Width = (int)(dgvData.Width * 0.388);
+            //dgvData.Columns["SeatColumn"].Width = (int)(dgvData.Width * 0.389);
+            dgvData.Columns["CSeat"].Width = (int)(dgvData.Width * 0.777);
 
             // optionally set specific columns to hidden
-            //dgvGenres.Columns["GenreID"].Visible = false;
+            dgvData.Columns["SeatRow"].Visible = false;
+            dgvData.Columns["SeatColumn"].Visible = false;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -178,7 +182,7 @@ namespace MovieTopia
                         UPDATE 
                             Seat
                         SET 
-                            SeatRow = @SeatRow
+                            SeatRow = @SeatRow,
                             SeatColumn = @SeatColumn
                         WHERE
                             SeatID = @SeatID;
@@ -202,9 +206,9 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
-                        catch (SqlException)
+                        catch (SqlException ex)
                         {
-                            MessageBox.Show("The entered Seat already exits", "Error");
+                            MessageBox.Show("The entered Seat already exits.", "Error");
                         }
                         catch (Exception ex)
                         {
@@ -227,7 +231,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["SeatColumn"].Value}{selectedRow.Cells["SeatRow"].Value}\"?", "Delete Seat", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"

@@ -61,7 +61,7 @@ namespace MovieTopia
                 // select the parent table and join any additional fields from child entities
                 string sqlMovieSchedules = @"
                             SELECT
-                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
+                                ms.MovieScheduleID, ms.MovieID, ms.TheatreID, ms.Price, ms.DateTime, DATEADD(MINUTE, m.Duration, ms.DateTime) as EndDateTime, DATEADD(MINUTE, m.Duration + 30, ms.DateTime) as CleanEndDateTime, m.Title, m.Duration, m.PG_Rating, t.TheatreName, g.GenreName
                             FROM
                                 MovieSchedule ms
                             JOIN
@@ -69,7 +69,7 @@ namespace MovieTopia
                             JOIN
                                 Theatre t ON ms.TheatreID = t.TheatreID
                             JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                                Genre g ON m.GenreID = g.GenreID;";
                 // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
@@ -108,17 +108,19 @@ namespace MovieTopia
             dgvData.Columns["GenreName"].HeaderText = "Genre";
             dgvData.Columns["DateTime"].HeaderText = "Start Time";
             dgvData.Columns["EndDateTime"].HeaderText = "End Time";
+            dgvData.Columns["CleanEndDateTime"].HeaderText = "Additional 30 Minutes for Cleaning";
 
             // Set DataGridView column widths
             dgvData.Columns["MovieScheduleID"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["Price"].Width = (int)(dgvData.Width * 0.06);
             dgvData.Columns["DateTime"].Width = (int)(dgvData.Width * 0.09);
             dgvData.Columns["EndDateTime"].Width = (int)(dgvData.Width * 0.09);
-            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.277);
-            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.1);
-            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["CleanEndDateTime"].Width = (int)(dgvData.Width * 0.09);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.278);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["TheatreName"].Width = (int)(dgvData.Width * 0.0775);
+            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.0775);
 
             // optionally set specific columns to hidden
             dgvData.Columns["MovieID"].Visible = false;
@@ -220,6 +222,13 @@ namespace MovieTopia
                     // get the dictionary of controls back from the form to get their values
                     Dictionary<string, Control> data = detailsForm.controlsDict;
 
+                    int editingMovieScheduleID = int.Parse(((TextBox)data["MovieScheduleID"]).Text);
+                    var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
+                    var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
+                    var dateTime = ((DateTimePicker)data["DateTime"]).Text;
+
+                    if (!isValidScheduleTime(selectedTheatre.Key, DateTime.Parse(dateTime), editingMovieScheduleID)) return;
+
                     string sql = @"
                         UPDATE 
                             MovieSchedule
@@ -240,13 +249,11 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieID"]).SelectedItem;
                         command.Parameters.AddWithValue("@MovieID", selectedMovie.Key);
-                        var selectedTheatre = (KeyValuePair<int, string>)((ComboBox)data["TheatreID"]).SelectedItem;
                         command.Parameters.AddWithValue("@TheatreID", selectedTheatre.Key);
                         command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                        command.Parameters.AddWithValue("@DateTime", ((DateTimePicker)data["DateTime"]).Text);
-                        command.Parameters.AddWithValue("@MovieScheduleID", ((TextBox)data["MovieScheduleID"]).Text);
+                        command.Parameters.AddWithValue("@DateTime", dateTime);
+                        command.Parameters.AddWithValue("@MovieScheduleID", editingMovieScheduleID);
 
                         try
                         {
@@ -269,7 +276,7 @@ namespace MovieTopia
             }
         }
 
-        private bool canScheduleAfterExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies)
+        private bool canScheduleAfterExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies, int editingMovieScheduleID = 0)
         {
             DateTime mostRecentSchedule = datetime;
             string movie = string.Empty;
@@ -286,7 +293,9 @@ namespace MovieTopia
                 JOIN
                     Theatre t on t.TheatreID = ms.TheatreID 
                 WHERE
-                    ms.TheatreID = @TheatreID AND ms.DateTime <= @DateTime
+                    ms.TheatreID = @TheatreID
+                    AND ms.DateTime <= @DateTime
+                    AND (@ExcludeMovieScheduleID IS NULL OR ms.MovieScheduleID <> @ExcludeMovieScheduleID)
                 ORDER BY DateTime DESC;";
 
             using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -295,6 +304,14 @@ namespace MovieTopia
 
                 command.Parameters.AddWithValue("@TheatreID", theatreID);
                 command.Parameters.AddWithValue("@DateTime", datetime);
+                if (editingMovieScheduleID == 0)
+                {
+                    command.Parameters.Add("@ExcludeMovieScheduleID", SqlDbType.Int).Value = DBNull.Value;
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@ExcludeMovieScheduleID", editingMovieScheduleID);
+                }
 
                 try
                 {
@@ -319,7 +336,7 @@ namespace MovieTopia
                 }
             }
 
-            MessageBox.Show($"after existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing: {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            //MessageBox.Show($"after existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing: {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
             bool scheduleAfterExisting = mostRecentSchedule.AddMinutes(movieDuration + minutesBetweenMovies) <= datetime;
             if (!scheduleAfterExisting)
             {
@@ -329,7 +346,7 @@ namespace MovieTopia
             return true;
         }
 
-        private bool canScheduleBeforeExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies)
+        private bool canScheduleBeforeExistingDate(DateTime datetime, int theatreID, int minutesBetweenMovies, int editingMovieScheduleID = 0)
         {
             DateTime mostRecentSchedule = datetime;
             string movie = string.Empty;
@@ -346,7 +363,9 @@ namespace MovieTopia
                 JOIN
                     Theatre t on t.TheatreID = ms.TheatreID 
                 WHERE
-                    ms.TheatreID = @TheatreID AND ms.DateTime >= @DateTime
+                    ms.TheatreID = @TheatreID
+                    AND ms.DateTime >= @DateTime
+                    AND (@ExcludeMovieScheduleID IS NULL OR ms.MovieScheduleID <> @ExcludeMovieScheduleID)
                 ORDER BY DateTime ASC;";
 
             using (SqlConnection connection = new SqlConnection(DATABASE_URL))
@@ -355,6 +374,14 @@ namespace MovieTopia
 
                 command.Parameters.AddWithValue("@TheatreID", theatreID);
                 command.Parameters.AddWithValue("@DateTime", datetime);
+                if (editingMovieScheduleID == 0)
+                {
+                    command.Parameters.Add("@ExcludeMovieScheduleID", SqlDbType.Int).Value = DBNull.Value;
+                }
+                else
+                {
+                    command.Parameters.AddWithValue("@ExcludeMovieScheduleID", editingMovieScheduleID);
+                }
 
                 try
                 {
@@ -379,7 +406,7 @@ namespace MovieTopia
                 }
             }
 
-            MessageBox.Show($"before existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
+            //MessageBox.Show($"before existing - selected: {datetime.ToString("yyyy-MM-dd HH:mm")}; existing {mostRecentSchedule.ToString("yyyy-MM-dd HH:mm")}");
             bool scheduleBeforeExisting = mostRecentSchedule >= datetime.AddMinutes(movieDuration + minutesBetweenMovies);
             if (!scheduleBeforeExisting)
             {
@@ -389,11 +416,11 @@ namespace MovieTopia
             return true;
         }
 
-        private bool isValidScheduleTime(int theatreID, DateTime dateTime)
+        private bool isValidScheduleTime(int theatreID, DateTime dateTime, int editingMovieScheduleID = 0)
         {
             int minutesBetweenMovies = 30;
-            if (!canScheduleAfterExistingDate(dateTime, theatreID, minutesBetweenMovies)) return false;
-            if (!canScheduleBeforeExistingDate(dateTime, theatreID, minutesBetweenMovies)) return false;
+            if (!canScheduleAfterExistingDate(dateTime, theatreID, minutesBetweenMovies, editingMovieScheduleID)) return false;
+            if (!canScheduleBeforeExistingDate(dateTime, theatreID, minutesBetweenMovies, editingMovieScheduleID)) return false;
 
             return true;
         }
@@ -404,7 +431,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected movie schedule?", "Delete Movie Schedule", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"

@@ -66,7 +66,7 @@ namespace MovieTopia
                             FROM
                                 Movie m
                             JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                                Genre g ON m.GenreID = g.GenreID;";
                 string sqlGenres = "SELECT * FROM Genre";
                 string sqlSeats = "SELECT * FROM Seat";
                 //cmd = new SqlCommand(sqlMovies, conn);
@@ -260,7 +260,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
                 
 
