@@ -33,11 +33,11 @@
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
-            this.btnFilters = new MovieTopia.Controls.BTN();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
+            this.btnFilters = new MovieTopia.Controls.BTN();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelectMovie = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
@@ -76,7 +76,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1438, 100);
+            this.panel1.Size = new System.Drawing.Size(1682, 100);
             this.panel1.TabIndex = 2;
             // 
             // gbxFiltering
@@ -95,26 +95,6 @@
             this.gbxFiltering.TabStop = false;
             this.gbxFiltering.Text = "Selection";
             // 
-            // btnFilters
-            // 
-            this.btnFilters.BackColor = System.Drawing.Color.Crimson;
-            this.btnFilters.BackgroundColor = System.Drawing.Color.Crimson;
-            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnFilters.BorderRadius = 40;
-            this.btnFilters.BorderSize = 0;
-            this.btnFilters.FlatAppearance.BorderSize = 0;
-            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFilters.ForeColor = System.Drawing.Color.White;
-            this.btnFilters.Location = new System.Drawing.Point(648, 33);
-            this.btnFilters.Name = "btnFilters";
-            this.btnFilters.Size = new System.Drawing.Size(159, 63);
-            this.btnFilters.TabIndex = 4;
-            this.btnFilters.Text = "Remove Filters";
-            this.btnFilters.TextColor = System.Drawing.Color.White;
-            this.btnFilters.UseVisualStyleBackColor = false;
-            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -130,7 +110,7 @@
             this.dtpDate.Location = new System.Drawing.Point(278, 83);
             this.dtpDate.MinDate = new System.DateTime(2024, 8, 28, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(251, 22);
+            this.dtpDate.Size = new System.Drawing.Size(268, 22);
             this.dtpDate.TabIndex = 2;
             this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
@@ -149,10 +129,30 @@
             this.cbxGenre.FormattingEnabled = true;
             this.cbxGenre.Location = new System.Drawing.Point(278, 33);
             this.cbxGenre.Name = "cbxGenre";
-            this.cbxGenre.Size = new System.Drawing.Size(148, 24);
+            this.cbxGenre.Size = new System.Drawing.Size(210, 24);
             this.cbxGenre.TabIndex = 0;
             this.cbxGenre.Text = "* Please Select *";
             this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
+            // 
+            // btnFilters
+            // 
+            this.btnFilters.BackColor = System.Drawing.Color.Crimson;
+            this.btnFilters.BackgroundColor = System.Drawing.Color.Crimson;
+            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnFilters.BorderRadius = 40;
+            this.btnFilters.BorderSize = 0;
+            this.btnFilters.FlatAppearance.BorderSize = 0;
+            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilters.ForeColor = System.Drawing.Color.White;
+            this.btnFilters.Location = new System.Drawing.Point(747, 33);
+            this.btnFilters.Name = "btnFilters";
+            this.btnFilters.Size = new System.Drawing.Size(159, 63);
+            this.btnFilters.TabIndex = 4;
+            this.btnFilters.Text = "Remove Filters";
+            this.btnFilters.TextColor = System.Drawing.Color.White;
+            this.btnFilters.UseVisualStyleBackColor = false;
+            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
             // 
             // btnCancel
             // 
@@ -198,16 +198,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1438, 745);
+            this.ClientSize = new System.Drawing.Size(1682, 745);
             this.Controls.Add(this.gbxFiltering);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSelectMovie);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvSchedules);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1456, 792);
+            this.MinimumSize = new System.Drawing.Size(1700, 792);
             this.Name = "HomeStaff";
             this.Text = "HomeStaff";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.HomeStaff_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();

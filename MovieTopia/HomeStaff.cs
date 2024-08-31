@@ -27,11 +27,50 @@ namespace MovieTopia
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             InitializeComponent();
+            this.Resize += HomeStaff_Resize;
 
             // load initial data when form loads
             LoadData(genre, date);
             LoadGenre();
             dtpDate.MinDate = DateTime.Now;
+        }
+
+        private void HomeStaff_Resize(object sender, EventArgs e)
+        {
+            int totalContentWidth = 0;
+
+            // Sum up the width of all columns including their padding
+            foreach (DataGridViewColumn column in dgvSchedules.Columns)
+            {
+                totalContentWidth += column.Width;
+            }
+
+            // Optional: Add scrollbar width if the DataGridView has a vertical scrollbar
+            if (dgvSchedules.Controls.OfType<VScrollBar>().Any(v => v.Visible))
+            {
+                totalContentWidth += SystemInformation.VerticalScrollBarWidth;
+            }
+
+            int newWidth = this.ClientSize.Width - 70; // 100px from each side
+
+            // Ensure the new width is not less than a minimum width
+            if (newWidth > 0)
+            {
+                if (totalContentWidth <= newWidth)
+                dgvSchedules.Width = newWidth;
+                gbxFiltering.Width = newWidth;
+            }
+            else
+            {
+                dgvSchedules.Width = totalContentWidth;
+                gbxFiltering.Width = totalContentWidth;
+            }
+
+            int button = this.ClientSize.Width / 4;
+            btnSelectMovie.Top = this.ClientSize.Height - btnSelectMovie.Height - 50;
+            btnSelectMovie.Left = (button * 2) - 190;
+            btnCancel.Top = this.ClientSize.Height - btnCancel.Height - 50;
+            btnCancel.Left = (button * 2) + 20;
         }
 
         private void LoadData(int GenreID, string dateFilter)
