@@ -174,6 +174,8 @@ namespace MovieTopia
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
+                string sqlCheckSeat = @"
+                        SELECT SeatID FROM Ticket WHERE MovieScheduleID = @MovieScheduleID AND SeatID = @SeatID";
                 Dictionary<string, Control> data = detailsForm.controlsDict;
 
                 string sql = @"
@@ -198,9 +200,7 @@ namespace MovieTopia
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
+                    SqlCommand command = new SqlCommand(sqlCheckSeat, connection);
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
@@ -214,8 +214,10 @@ namespace MovieTopia
                     command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
                     command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
 
-                    try
-                    {
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader()
+
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
@@ -227,7 +229,9 @@ namespace MovieTopia
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
+
                     }
+
                 }
 
                 LoadData();
@@ -242,6 +246,7 @@ namespace MovieTopia
 
                 // This dictionary is used for mapping certain columns to their values in the child table - i.e. what column data you want to show in the drop down box
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
+
                 foreignKeySchemaNames["MovieScheduleID"] = "MovieSchedule";  // this will show the Movie title in the drop down
                 foreignKeySchemaNames["SeatID"] = "CSeat";
 
@@ -255,6 +260,7 @@ namespace MovieTopia
                 attributeNameMap["CustomerLastName"] = "Last Name";
 
                 DetailsForm detailsForm = new DetailsForm("Ticket", ds, selectedRow, foreignKeySchemaNames, attributeNameMap);
+
                 DialogResult result = detailsForm.ShowDialog();
 
                 if (result == DialogResult.OK)

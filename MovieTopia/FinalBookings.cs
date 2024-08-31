@@ -157,6 +157,7 @@ namespace MovieTopia
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Boolean saved = false;
             if (txtName.Text.Length > 0)
             {
                 if (txtSurname.Text.Length > 0)
@@ -174,43 +175,63 @@ namespace MovieTopia
                                     conn.Open();
 
                                     string sqlSeat = @"
-                                                SELECT
-                                                    SeatID
-                                                FROM
-                                                    Seat
-                                                WHERE
-                                                    SeatRow = @SeatRow AND
-                                                    SeatColumn = @SeatCol";
+                                SELECT
+                                    SeatID
+                                FROM
+                                    Seat
+                                WHERE
+                                    SeatRow = @SeatRow AND
+                                    SeatColumn = @SeatCol";
 
                                     SqlCommand command = new SqlCommand(sqlSeat, conn);
                                     command.Parameters.AddWithValue("@SeatRow", seatRow);
                                     command.Parameters.AddWithValue("@SeatCol", seatNumber);
                                     string seatID = command.ExecuteScalar().ToString();
 
+                                    // New Code: Check if the seat is already booked for the given MovieScheduleID
+                                    string sqlCheck = @"
+                                SELECT COUNT(*)
+                                FROM Ticket
+                                WHERE MovieScheduleID = @MovieScheduleID AND SeatID = @SeatID";
+
+                                    SqlCommand checkCommand = new SqlCommand(sqlCheck, conn);
+                                    checkCommand.Parameters.AddWithValue("@MovieScheduleID", MovieScheduleID);
+                                    checkCommand.Parameters.AddWithValue("@SeatID", seatID);
+                                    int count = (int)checkCommand.ExecuteScalar();
+
+                                    if (count > 0)
+                                    {
+                                        MessageBox.Show($"Seat {seatRow}{seatNumber} is already booked for this schedule.", "Error");
+                                        continue; // Skip to the next seat
+                                    }
+
                                     string sqlInsert = @"
-                                                INSERT INTO 
-                                                 Ticket (
-                                                    MovieScheduleID,
-                                                    SeatID,
-                                                    Price,
-                                                    CustomerFirstName,
-                                                    CustomerLastName,
-                                                    CustomerPhoneNumber
-                                                 )
-                                                VALUES
-                                                 (
-                                                    @MovieScheduleID,
-                                                    @SeatID,
-                                                    @Price,
-                                                    @CustomerName,
-                                                    @CustomerSName,
-                                                    @CustomerPNum
-                                                );";
+                                INSERT INTO 
+                                    Ticket (
+                                        MovieScheduleID,
+                                        SeatID,
+                                        Price,
+                                        PurchaseDateTime,
+                                        CustomerFirstName,
+                                        CustomerLastName,
+                                        CustomerPhoneNumber
+                                    )
+                                VALUES
+                                    (
+                                        @MovieScheduleID,
+                                        @SeatID,
+                                        @Price,
+                                        @PurchaseDateTime,
+                                        @CustomerName,
+                                        @CustomerSName,
+                                        @CustomerPNum
+                                    );";
 
                                     command = new SqlCommand(sqlInsert, conn);
                                     command.Parameters.AddWithValue("@MovieScheduleID", MovieScheduleID);
                                     command.Parameters.AddWithValue("@SeatID", seatID);
                                     command.Parameters.AddWithValue("@Price", priceT);
+                                    command.Parameters.AddWithValue("@PurchaseDateTime", DateTime.Now);
                                     command.Parameters.AddWithValue("@CustomerName", txtName.Text);
                                     command.Parameters.AddWithValue("@CustomerSName", txtSurname.Text);
                                     command.Parameters.AddWithValue("@CustomerPNum", txtCellNum.Text);
@@ -218,8 +239,8 @@ namespace MovieTopia
                                     try
                                     {
                                         command.ExecuteNonQuery();
-                                        MessageBox.Show("Your tickets have been booked", "Success");
-                                        conn.Close();
+                                        //MessageBox.Show("Your tickets have been booked", "Success");
+                                        saved = true;
                                     }
                                     catch (Exception ex)
                                     {
@@ -227,23 +248,39 @@ namespace MovieTopia
                                     }
                                 }
                             }
+                            
                         }
-                    } else
+                        if (saved)
+                        {
+                            string result = string.Join(", ", SeatNames);
+                            MessageBox.Show("Your tickets for the following have been booked: \n\n" +
+                                txtName.Text + " " + txtSurname.Text + "\n" +
+                                "Cell number: " + txtCellNum.Text + "\n\n" +
+                                "Movie Name: " + txtMovie.Text + "\n" +
+                                "Theatre: " + txtTheatre.Text + "\n" +
+                                "At R" + txtPrice.Text + " per ticket\n" +
+                                "For seats: " + result, "Ticket Confirmation");
+                        }
+                    }
+                    else
                     {
                         MessageBox.Show("Please Enter your cellphone number \ne.g. 0605811652");
                         txtCellNum.Focus();
                     }
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Please Enter your Surname \ne.g. Chamberlain");
                     txtSurname.Focus();
                 }
-            } else
+            }
+            else
             {
                 MessageBox.Show("Please Enter your First Name \ne.g. John");
                 txtName.Focus();
             }
         }
+
 
         private void label7_Click(object sender, EventArgs e)
         {
@@ -253,6 +290,24 @@ namespace MovieTopia
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnGoBack_Click(object sender, EventArgs e)
+        {
+            // Show a message box with Yes and No buttons
+            DialogResult result = MessageBox.Show("Are you sure you want to cancel the ticket?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Check which button was clicked
+            if (result == DialogResult.Yes)
+            {
+                // Close the form if No was clicked
+                this.Close();
+            }
+            else if (result == DialogResult.No)
+            {
+                // Exit the method if Yes was clicked
+                return;
+            }
         }
     }
 }

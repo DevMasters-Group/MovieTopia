@@ -356,6 +356,8 @@
     <Content Include="Resources\Booked.png" />
     <None Include="Resources\errorIcon.ico" />
     <Content Include="Resources\Not_booked.png" />
+    <None Include="Resources\Seat_Icon_Main1.png" />
+    <None Include="Resources\Seat_Icon_Main.jpg" />
     <Content Include="Resources\Selected_seat.png" />
   </ItemGroup>
   <ItemGroup>
