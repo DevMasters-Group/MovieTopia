@@ -237,7 +237,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["TheatreName"].Value}\"?", "Delete Theatre", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["TheatreName"].Value}\"?", "Delete Theatre", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"

@@ -38,6 +38,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.pnlSeats = new System.Windows.Forms.Panel();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnContinue = new MovieTopia.Controls.BTN();
             this.pnlScreen.SuspendLayout();
@@ -131,6 +132,13 @@
             this.label3.TabIndex = 1;
             this.label3.Text = "Available";
             // 
+            // pnlSeats
+            // 
+            this.pnlSeats.Location = new System.Drawing.Point(398, 126);
+            this.pnlSeats.Name = "pnlSeats";
+            this.pnlSeats.Size = new System.Drawing.Size(474, 292);
+            this.pnlSeats.TabIndex = 13;
+            // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.IndianRed;
@@ -180,6 +188,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 761);
+            this.Controls.Add(this.pnlSeats);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.pnlLegend);
@@ -188,7 +197,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "SeatArray";
-            this.Text = "SeatArray";
+            this.Text = "Available Seats";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlScreen.ResumeLayout(false);
             this.pnlScreen.PerformLayout();
             this.pnlLegend.ResumeLayout(false);
@@ -210,5 +220,6 @@
         private System.Windows.Forms.Label label3;
         private Controls.BTN btnCancel;
         private Controls.BTN btnContinue;
+        private System.Windows.Forms.Panel pnlSeats;
     }
 }
