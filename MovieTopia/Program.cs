@@ -28,6 +28,7 @@ namespace MovieTopia
             string database = Environment.GetEnvironmentVariable("DB_DATABASE");
 
             string connectionString = $"Server={server};Database={database};Integrated Security=True;TrustServerCertificate=True";
+            //string connectionString = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|{database}.mdf;Integrated Security=True;";
 
             // Optionally, set the connection string as an environment variable (optional)
             Environment.SetEnvironmentVariable("DATABASE_URL", connectionString);
@@ -38,7 +39,6 @@ namespace MovieTopia
             config.Save(ConfigurationSaveMode.Modified);
 
             ConfigurationManager.RefreshSection("connectionStrings");
-
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

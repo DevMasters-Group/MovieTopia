@@ -16,6 +16,7 @@ namespace MovieTopia
     {
         private string DATABASE_URL;
         private int padding = 20;
+        private string tblName = "Movie";
         DataSet ds;
         SqlDataAdapter adapter;
 
@@ -32,13 +33,20 @@ namespace MovieTopia
 
         private void Form_Resize(Object sender, EventArgs e)
         {
+            lblName.Top = padding / 2;
             lblName.Left = (this.ClientSize.Width - lblName.Width) / 2;
             btnEdit.Left = (this.ClientSize.Width - btnEdit.Width) /2;
             btnNew.Left = btnEdit.Left - btnEdit.Width - padding;
             btnDelete.Left = btnEdit.Left + btnEdit.Width + padding;
+            btnReturn.Left = this.ClientSize.Width - btnReturn.Width - padding;
             btnNew.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
-            btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding*2);
-            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding*2);
+            btnEdit.Top = (this.ClientSize.Height - btnEdit.Height - padding * 2);
+            btnDelete.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+            btnReturn.Top = (this.ClientSize.Height - btnDelete.Height - padding * 2);
+
+            lblFilter.Location = new Point(padding, 3 * padding);
+            txtFilter.Location = new Point(lblFilter.Left + lblFilter.Width + padding, 3 * padding);
+            btnHelp.Location = new Point(btnReturn.Left, lblFilter.Top - padding / 2);
 
             AdjustDataGridViewSize();
             AdjustColumnWidths();
@@ -58,7 +66,7 @@ namespace MovieTopia
                             FROM
                                 Movie m
                             JOIN
-                                Genre g ON m.GenreID = g.GenreID";
+                                Genre g ON m.GenreID = g.GenreID;";
                 string sqlGenres = "SELECT * FROM Genre";
                 string sqlSeats = "SELECT * FROM Seat";
                 //cmd = new SqlCommand(sqlMovies, conn);
@@ -70,37 +78,38 @@ namespace MovieTopia
                 adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
                 adapter.Fill(ds, "Seat");
 
-                dgvMovies.DataSource = ds;
-                dgvMovies.DataMember = "Movie";
+                //dgvData.DataSource = ds;
+                //dgvData.DataMember = "Movie";
+                dgvData.DataSource = ds.Tables[tblName].DefaultView;
             }
         }
 
         private void AdjustDataGridViewSize()
         {
-            dgvMovies.Width = this.ClientSize.Width - (2 * padding);
-            dgvMovies.Height = this.ClientSize.Height - (10 * padding);
-            dgvMovies.Location = new Point(padding, padding * 3);
+            dgvData.Width = this.ClientSize.Width - (2 * padding);
+            dgvData.Height = this.ClientSize.Height - (11 * padding);
+            dgvData.Location = new Point(padding, padding * 5);
         }
 
         private void AdjustColumnWidths()
         {
-            if (dgvMovies.Columns.Count == 0)
+            if (dgvData.Columns.Count == 0)
                 return;
 
-            dgvMovies.Columns["MovieID"].HeaderText = "Movie ID";
-            dgvMovies.Columns["PG_Rating"].HeaderText = "PG Rating";
-            dgvMovies.Columns["GenreName"].HeaderText = "Genre";
+            dgvData.Columns["MovieID"].HeaderText = "Movie ID";
+            dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
+            dgvData.Columns["GenreName"].HeaderText = "Genre";
 
-            dgvMovies.Columns["MovieID"].Width = (int)(dgvMovies.Width * 0.1);
-            //dgvMovies.Columns["GenreID"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["GenreName"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["Title"].Width = (int)(dgvMovies.Width * 0.2);
-            dgvMovies.Columns["Description"].Width = (int)(dgvMovies.Width * 0.377);
-            dgvMovies.Columns["Duration"].Width = (int)(dgvMovies.Width * 0.1);
-            dgvMovies.Columns["PG_Rating"].Width = (int)(dgvMovies.Width * 0.1);
+            dgvData.Columns["MovieID"].Width = (int)(dgvData.Width * 0.1);
+            //dgvData.Columns["GenreID"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["GenreName"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["Title"].Width = (int)(dgvData.Width * 0.2);
+            dgvData.Columns["Description"].Width = (int)(dgvData.Width * 0.377);
+            dgvData.Columns["Duration"].Width = (int)(dgvData.Width * 0.1);
+            dgvData.Columns["PG_Rating"].Width = (int)(dgvData.Width * 0.1);
 
             // optionally set specific columns to hidden
-            dgvMovies.Columns["GenreID"].Visible = false;
+            dgvData.Columns["GenreID"].Visible = false;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -108,7 +117,12 @@ namespace MovieTopia
             Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
             foreignKeySchemaNames["GenreID"] = "GenreName";
 
-            DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames);
+            Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+            attributeNameMap["MovieID"] = "Movie ID";
+            attributeNameMap["GenreID"] = "Genre";
+            attributeNameMap["PG_Rating"] = "PG Rating";
+
+            DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames, attributeNameMap);
             DialogResult result = detailsForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -140,7 +154,8 @@ namespace MovieTopia
 
                     // Use AddWithValue to assign Demographics.
                     // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
+                    var selectedGenre = (KeyValuePair<int, string>)((ComboBox)data["GenreID"]).SelectedItem;
+                    command.Parameters.AddWithValue("@GenreID", selectedGenre.Key);
                     command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
                     command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
                     command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
@@ -151,6 +166,10 @@ namespace MovieTopia
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
+                    }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("The entered Movie already exits", "Error");
                     }
                     catch (Exception ex)
                     {
@@ -164,14 +183,18 @@ namespace MovieTopia
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
                 Dictionary<string, string> foreignKeySchemaNames = new Dictionary<string, string>();
                 foreignKeySchemaNames["GenreID"] = "GenreName";
+                Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
+                attributeNameMap["MovieID"] = "Movie ID";
+                attributeNameMap["GenreID"] = "Genre";
+                attributeNameMap["PG_Rating"] = "PG Rating";
 
-                DetailsForm detailsForm = new DetailsForm("Movie", ds, selectedRow, foreignKeySchemaNames);
+                DetailsForm detailsForm = new DetailsForm("Movie", ds, selectedRow, foreignKeySchemaNames, attributeNameMap);
                 DialogResult result = detailsForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
@@ -198,7 +221,8 @@ namespace MovieTopia
 
                         // Use AddWithValue to assign Demographics.
                         // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@GenreID", ((ComboBox)data["GenreID"]).SelectedValue);
+                        var selectedGenre = (KeyValuePair<int, string>)((ComboBox)data["GenreID"]).SelectedItem;
+                        command.Parameters.AddWithValue("@GenreID", selectedGenre.Key);
                         command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
                         command.Parameters.AddWithValue("@Description", ((TextBox)data["Description"]).Text);
                         command.Parameters.AddWithValue("@Duration", int.Parse(((NumericUpDown)data["Duration"]).Text));
@@ -211,6 +235,10 @@ namespace MovieTopia
                             command.ExecuteNonQuery();
                             MessageBox.Show("Updated Successfully", "Success");
                         }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Movie already exits", "Error");
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
@@ -220,13 +248,21 @@ namespace MovieTopia
                     LoadData();
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a Movie to edit.");
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvMovies.SelectedRows.Count == 1)
+            if (dgvData.SelectedRows.Count == 1)
             {
-                DataGridViewRow selectedRow = dgvMovies.SelectedRows[0];
+                DataGridViewRow selectedRow = dgvData.SelectedRows[0];
+
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm == DialogResult.No) return;
+                
 
                 string sql = @"
                         DELETE FROM 
@@ -250,6 +286,10 @@ namespace MovieTopia
                         command.ExecuteNonQuery();
                         MessageBox.Show("Deleted Successfully", "Success");
                     }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show($"\"{selectedRow.Cells["Title"].Value}\" cannot be deleted because of 1 or more Scheduled Movies that are dependent on this Movie. Please delete the corresponding records before attempting to delete this Movie.", "Error");
+                    }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
@@ -258,6 +298,60 @@ namespace MovieTopia
 
                 LoadData();
             }
+            else
+            {
+                MessageBox.Show("Please select a Movie to delete.");
+            }
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = txtFilter.Text;
+            DataTable dt = ds.Tables[tblName];
+
+            if (string.IsNullOrEmpty(filterText))
+            {
+                dt.DefaultView.RowFilter = "";
+            }
+            else
+            {
+                // Construct the filter string
+                var filterConditions = dt.Columns.Cast<DataColumn>()
+                    .Select(c => {
+                        if (c.DataType == typeof(string))
+                        {
+                            return $"{c.ColumnName} LIKE '%{filterText}%'";
+                        }
+                        else if (c.DataType == typeof(int) || c.DataType == typeof(decimal))
+                        {
+                            // Try parsing filterText to avoid applying invalid filter
+                            if (decimal.TryParse(filterText, out _))
+                            {
+                                return $"{c.ColumnName} = {filterText}";
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
+                        return null;
+                    })
+                    .Where(condition => condition != null); // Filter out any null conditions
+
+                // Combine all filter conditions using "OR"
+                dt.DefaultView.RowFilter = string.Join(" OR ", filterConditions);
+            }
+        }
+
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.ShowDialog();
         }
     }
 }

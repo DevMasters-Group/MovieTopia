@@ -61,6 +61,16 @@ namespace MovieTopia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon errorIcon {
+            get {
+                object obj = ResourceManager.GetObject("errorIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logoFullDark {
@@ -126,6 +136,26 @@ namespace MovieTopia.Properties {
         internal static System.Drawing.Bitmap logoIconLight {
             get {
                 object obj = ResourceManager.GetObject("logoIconLight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Seat_Icon_Main {
+            get {
+                object obj = ResourceManager.GetObject("Seat_Icon_Main", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Seat_Icon_Main1 {
+            get {
+                object obj = ResourceManager.GetObject("Seat_Icon_Main1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

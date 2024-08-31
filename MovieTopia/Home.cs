@@ -43,9 +43,9 @@ namespace MovieTopia
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error: {ex.Message}");
-                    btnCStaff.Enabled = false;
-                    btnCAdmin.Enabled = false;
+                    //MessageBox.Show($"Error: {ex.Message}");
+                    MessageBox.Show("Error: The program was unable to connect to the database.\r\nPlease ensure that Microsoft SQL Server is installed and that the service is running.");
+                    this.Close();
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace MovieTopia
             HomeAdmin homeAdmin = new HomeAdmin();
             this.Hide();
             homeAdmin.ShowDialog();
-            this.Close();
+            this.Show();
             
         }
     }

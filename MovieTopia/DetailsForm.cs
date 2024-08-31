@@ -18,11 +18,13 @@ namespace MovieTopia
         private string DATABASE_URL;
         private int padding = 20;
         public Dictionary<string, Control> controlsDict = new Dictionary<string, Control>();
+        private Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
         private bool newRecord;
         private int numCharCountLabels = 0;
         private Label[] charCountLabels;
         DataSet ds;
         SqlDataAdapter adapter;
+        //private ErrorProvider errorProvider = new ErrorProvider();
 
         /// <summary>
         /// This form automatically builds itself based on the parameters passed into it. See <see cref="DetailsForm"/> for more.
@@ -31,15 +33,21 @@ namespace MovieTopia
         /// <param name="schemaName">The schemaName is the table name of the record which you are creating or editing.</param>
         /// <param name="dataSet">The dataSet contains all of the DataTables from the select queries for accessing child entity data. Important that the table or accessing name is the entity name itself eg. 'Movie' or 'MovieSchedule'.</param>
         /// <param name="selectedDataGridViewRow">The selectedDataGridViewRow is the currently selected or highlighted row in the Data grid. Ensure to set the datagrid Multiselect property to false, otherwise errors can occur.</param>
-        /// <param name="foreignKeySchemaNames">The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's</param>
-        public DetailsForm(string schemaName, DataSet dataSet, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null)
+        /// <param name="foreignKeySchemaNames">The foreignKeySchemaNames is a dictionary that maps the foreign key field name to the column in the child entity you wish to see in the drop down. The default values visible are the ID's.</param>
+        /// <param name="attributeNameMap">The attributeNameMap is a dictionary that maps the a new label name to each field name to be displayed next to the respective control.</param>
+        public DetailsForm(string schemaName, DataSet dataSet, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null, Dictionary<string, string> attributeNameMap = null)
         {
             InitializeComponent();
+
+            this.FormClosing += DetailsForm_FormClosing;
 
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             if (dataSet == null || selectedDataGridViewRow == null) this.newRecord = true;
 
+            this.Text = newRecord ? $"Create {schemaName}" : $"Edit {schemaName}";
+
+            if (attributeNameMap != null) this.attributeNameMap = attributeNameMap;
             QuerySchema(schemaName);
             PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);
         }
@@ -133,8 +141,9 @@ namespace MovieTopia
             foreach (DataRow row in table.Rows)
             {
                 // Get the column name and the cell value
+                string type = row["dataType"].ToString();
                 string key = row["columnName"].ToString();
-                string value = row["defaultValue"].ToString();
+                string value = type == "varchar" ? "" : row["defaultValue"].ToString();
                 //MessageBox.Show(columnName);
 
                 // Add the column name and value to the dictionary
@@ -184,9 +193,12 @@ namespace MovieTopia
 
                 if (!fieldData.ContainsKey(schemaColumnName)) { continue; }
 
+                if (newRecord && primaryKey) { continue; }
+
+                attributeNameMap.TryGetValue(schemaColumnName, out string lblName);
                 Label label = new Label
                 {
-                    Text = schemaColumnName,
+                    Text = lblName ?? schemaColumnName,
                     Top = y,
                     Left = padding,
                     Width = 160,
@@ -237,24 +249,45 @@ namespace MovieTopia
                                     foreignKeyRelation = schemaColumnName;
                                 }
 
-                                List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
+                                ComboBox cbx = (ComboBox)control;
+                                cbx.Items.Clear();
+                                int requiredWidth = 200;
+
                                 foreach (DataRow row in foreignEntity.Rows)
                                 {
-                                    items.Add(new KeyValuePair<string, string>(row[schemaColumnName].ToString(), row[foreignKeyRelation].ToString()));
+                                    int id = (int)row[schemaColumnName];
+                                    string name = row[foreignKeyRelation].ToString();
+                                    int stringWidth = ((int)name.Length / 17) == 0 ? 200 : 400;
+                                    requiredWidth = (stringWidth > requiredWidth) ? stringWidth : requiredWidth;
+                                    cbx.Items.Add(new KeyValuePair<int, string>(id, name));
                                 }
 
-                                ComboBox cbx = (ComboBox)control;
-                                cbx.DataSource = items;
+                                cbx.Width = requiredWidth;
+
                                 cbx.ValueMember = "Key";
                                 cbx.DisplayMember = "Value";
 
-                                // TODO - fix the selection stuff
-                                //fieldData.TryGetValue(foreignKeyRelation, out string key)
-                                string selected = fieldData[schemaColumnName].ToString();
-                                cbx.SelectedText = selected;
+                                if (newRecord)
+                                {
+                                    cbx.SelectedIndex = -1;
+                                }
+                                else
+                                {
+                                    foreach (KeyValuePair<int, string> item in cbx.Items)
+                                    {
+                                        if (item.Key == (int)fieldData[schemaColumnName])
+                                        {
+                                            cbx.SelectedItem = item;
+                                            break;
+                                        }
+                                    }
+                                }
                                 control = cbx;
                             }
                         }
+                        control.Validating += (sender, e) => {
+                            ValidateSelected((ComboBox)sender, e);  // invoke error provider for validation checks
+                        };
                     }
                     else if (primaryKey)
                     {
@@ -270,15 +303,19 @@ namespace MovieTopia
                     }
                     else
                     {
+                        int value = int.Parse(fieldData[schemaColumnName].ToString());
                         control = new NumericUpDown
                         {
-                            Minimum = 0,
+                            Minimum = 1,
                             Maximum = 300,
-                            Value = int.Parse(fieldData[schemaColumnName].ToString()),
+                            Value = value == 0 ? 1 : value,
                             Top = y,
                             Left = label.Width + padding,
                             Width = 200,
                             Font = new Font("Arial", 10, FontStyle.Regular),
+                        };
+                        control.Validating += (sender, e) => {
+                            ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
                         };
                     }
                 }
@@ -295,6 +332,9 @@ namespace MovieTopia
                         Width = 200,
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
+                    control.Validating += (sender, e) => {
+                        ValidateNumericUpDown((NumericUpDown)sender, e);  // invoke error provider for validation checks
+                    };
                 }
                 else if (dataType == "datetime")  // Handle datetime
                 {
@@ -302,6 +342,7 @@ namespace MovieTopia
                     {
                         //Value = (DateTime)fieldData[schemaColumnName],
                         Value = newRecord ? DateTime.Now : (DateTime)fieldData[schemaColumnName],
+                        MinDate = DateTime.Now,
                         Top = y,
                         Left = label.Width + padding,
                         Width = 200,
@@ -310,6 +351,9 @@ namespace MovieTopia
                         CustomFormat = "yyyy-MM-dd HH:mm",
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
+                    //control.Validating += (sender, e) => {
+                    //    ValidateDateTimePicker((DateTimePicker)sender, e);  // invoke error provider for validation checks
+                    //};
                 }
                 else  // Handle textboxes for other data types
                 {
@@ -332,7 +376,25 @@ namespace MovieTopia
                         Font = new Font("Arial", 10, FontStyle.Regular),
                     };
                     control.Height *= requiredHeightMultiplier;
-                    
+                    //control.Validating += (sender, e) => {
+                    //    ValidateNotEmpty((TextBox)sender, e);  // invoke error provider for validation checks
+                    //};
+                    control.Validating += new CancelEventHandler(textBox_Validating);
+                    control.KeyPress += (sender, e) =>
+                    {
+                        if (schemaColumnName.Contains("CustomerPhoneNumber"))
+                        {
+                            // Allow control characters (like backspace) and digits
+                            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                            {
+                                e.Handled = true; // Ignore the key press if it's not a digit or control character
+                            }
+                        }
+                    };
+                    if (schemaColumnName.Contains("SeatColumn"))
+                    {
+                        control.TextChanged += new System.EventHandler(textBox_TextChanged);
+                    }
 
                     // Create and configure the character count Label
                     Label charCountLabel = new Label
@@ -367,6 +429,96 @@ namespace MovieTopia
         }
 
         /// <summary>
+        /// Validates the ComboBox has a selected item
+        /// </summary>
+        /// <param name="comboBox">The ComboBox control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void ValidateSelected(ComboBox comboBox, CancelEventArgs e)
+        {
+            if (comboBox.SelectedIndex == -1) // Placeholder is selected
+            {
+                errorProvider1.SetIconPadding(comboBox, padding);
+                errorProvider1.SetError(comboBox, "Please select a valid item.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider1.SetError(comboBox, ""); // Clear the error
+            }
+        }
+
+        /// <summary>
+        /// Validates the TextBox value to prevent blank or whitespace entries
+        /// </summary>
+        /// <param name="sender">The control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void textBox_Validating(object sender, CancelEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            if (string.IsNullOrWhiteSpace(tb.Text) || string.IsNullOrEmpty(tb.Text))
+            {
+                errorProvider1.SetIconPadding(tb, padding);
+                errorProvider1.SetError(tb, "This field is required.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider1.SetError(tb, "");
+            }
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            int cursorPosition = textBox.SelectionStart;
+            // Convert the text to uppercase
+            textBox.Text = textBox.Text.ToUpper();
+            textBox.SelectionStart = cursorPosition;
+        }
+
+        /// <summary>
+        /// Validates the NumericUpDown value to prevent invalid number entries
+        /// </summary>
+        /// <param name="numericUpDown">The NumericUpDown control.</param>
+        /// <param name="e">The CancelEventsArgs.</param>
+        private void ValidateNumericUpDown(NumericUpDown numericUpDown, CancelEventArgs e)
+        {
+            if (numericUpDown.Value < numericUpDown.Minimum)
+            {
+                // Set the error message
+                errorProvider1.SetIconPadding(numericUpDown, padding);
+                errorProvider1.SetError(numericUpDown, $"This field requires a valid number (between {numericUpDown.Minimum} and {numericUpDown.Maximum})");
+                e.Cancel = true;
+            }
+            else
+            {
+                // Clear the error
+                errorProvider1.SetError(numericUpDown, "");
+            }
+        }
+
+        ///// <summary>
+        ///// Validates the DateTimePicker value to prevent invalid dates entries
+        ///// </summary>
+        ///// <param name="dateTimePicker">The DateTimePicker control.</param>
+        ///// <param name="e">The CancelEventsArgs.</param>
+        //private void ValidateDateTimePicker(DateTimePicker dateTimePicker, CancelEventArgs e)
+        //{
+        //    if (dateTimePicker.Value == dateTimePicker.MinDate)
+        //    {
+        //        // Set the error message
+        //        errorProvider1.SetIconPadding(dateTimePicker, padding);
+        //        errorProvider1.SetError(dateTimePicker, "Please select a valid date.");
+        //        e.Cancel = true;
+        //    }
+        //    else
+        //    {
+        //        // Clear the error
+        //        errorProvider1.SetError(dateTimePicker, "");
+        //    }
+        //}
+
+        /// <summary>
         /// Updates the character count label based on the content of the TextBox.
         /// </summary>
         /// <param name="textBox">The TextBox control.</param>
@@ -396,6 +548,7 @@ namespace MovieTopia
                 BackgroundColor = Color.DodgerBlue,
                 BorderColor = Color.MediumBlue,
                 BorderSize = 1,
+                CausesValidation = true,
             };
             saveButton.Click += SaveButton_Click;
 
@@ -410,6 +563,7 @@ namespace MovieTopia
                 BackgroundColor = Color.Red,
                 BorderColor = Color.DarkRed,
                 BorderSize = 1,
+                CausesValidation = false,
             };
             cancelButton.Click += CancelButton_Click;
 
@@ -419,15 +573,35 @@ namespace MovieTopia
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            // TODO - Validation checks
-
-            // dialog result to handle data grid reload
-            this.Close();
+            if (this.ValidateChildren(ValidationConstraints.Enabled))
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please enter values for all the required fields");
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void DetailsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Check if the form is closing due to user clicking the close button
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                // Allow form to close without validation if the close button was clicked
+                return;
+            }
+
+            if (!this.ValidateChildren(ValidationConstraints.Enabled))
+            {
+                e.Cancel = true;
+                //MessageBox.Show("Please correct the validation errors before closing the form.");
+            }
         }
     }
 }
