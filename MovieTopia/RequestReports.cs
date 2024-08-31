@@ -149,7 +149,7 @@ namespace MovieTopia
 
                 if (reportType == "Top 10 Movies")
                 {
-                    sql = $@"SELECT TOP 10 m.Title, COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                    sql = $@"SELECT TOP 10 m.Title, COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                             FROM Movie m
                             JOIN MovieSchedule ms ON ms.MovieID = m.MovieID
                             JOIN Ticket t ON ms.MovieScheduleID = t.MovieScheduleID
@@ -161,7 +161,7 @@ namespace MovieTopia
                 }
                 else if(reportType == "Top 10 Genres")
                 {
-                    sql = $@"SELECT TOP 10 g.GenreName, COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                    sql = $@"SELECT TOP 10 g.GenreName, COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                             FROM Genre g
                             JOIN Movie m ON g.GenreID = m.GenreID
                             JOIN MovieSchedule ms ON m.MovieID = ms.MovieID
@@ -180,27 +180,31 @@ namespace MovieTopia
                     {
                         sql = $@"SELECT DATENAME(MONTH, t.PurchaseDateTime) AS [Period],
                                COUNT(t.TicketID) AS TicketsSold,
-                               FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                               FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                         FROM Ticket t
+                        JOIN MovieSchedule ms ON ms.MovieScheduleID = t.MovieScheduleID
                         WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
                         GROUP BY MONTH(t.PurchaseDateTime), DATENAME(MONTH, t.PurchaseDateTime)
                         ORDER BY MONTH(t.PurchaseDateTime);
 
-                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold], FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold], FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                         FROM Ticket t
+                        JOIN MovieSchedule ms ON ms.MovieScheduleID = t.MovieScheduleID
                         WHERE YEAR(t.PurchaseDateTime) = @SelectedYear;";
                     }
                     else if (grouping == "Quarterly")
                     {
                         sql = $@"SELECT 'Q' + CAST(DATEPART(QUARTER, t.PurchaseDateTime) AS VARCHAR) AS [Period],
-                               COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                               COUNT(t.TicketID) AS TicketsSold, FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                         FROM Ticket t
+                        JOIN MovieSchedule ms ON ms.MovieScheduleID = t.MovieScheduleID
                         WHERE YEAR(t.PurchaseDateTime) = @SelectedYear
                         GROUP BY DATEPART(QUARTER, t.PurchaseDateTime)
                         ORDER BY DATEPART(QUARTER, t.PurchaseDateTime);
 
-                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold], FORMAT(SUM(t.Price), 'N2') AS TotalPrice
+                        SELECT 'Total' AS [Period], COUNT(t.TicketID) AS [Tickets Sold], FORMAT(SUM(ms.Price), 'N2') AS TotalPrice
                         FROM Ticket t
+                        JOIN MovieSchedule ms ON ms.MovieScheduleID = t.MovieScheduleID
                         WHERE YEAR(t.PurchaseDateTime) = @SelectedYear;";
                     }
 
