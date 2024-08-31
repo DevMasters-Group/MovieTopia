@@ -162,11 +162,27 @@ namespace MovieTopia
                 dgvSchedules.DataSource = ds;
                 dgvSchedules.DataMember = "MovieSchedule";
 
-                dgvSchedules.Columns[0].Width = 60;
-                dgvSchedules.Columns[1].Width = 175;
-                dgvSchedules.Columns[2].Width = 75;
-                dgvSchedules.Columns[3].Width = 75;
-                dgvSchedules.Columns["Price"].DefaultCellStyle.Format = "'R' 0.00";
+                if (dgvSchedules.Rows.Count > 0)
+                {
+
+                    dgvSchedules.Columns[0].Width = 60;
+                    dgvSchedules.Columns[1].Width = 175;
+                    dgvSchedules.Columns[2].Width = 75;
+                    dgvSchedules.Columns[3].Width = 75;
+                    dgvSchedules.Columns["Price"].DefaultCellStyle.Format = "'R' 0.00";
+                }
+                else if (GenreID == 0 && dateFilter == "")
+                {
+                    MessageBox.Show("There are currently no movies scheduled");
+                }
+                else if (GenreID != 0)
+                {
+                    MessageBox.Show("There are no movies currently scheduled of genre:\n" + cbxGenre.SelectedItem.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("There are no movies currently scheduled on: " + dateFilter);
+                }
             }
         }
 
