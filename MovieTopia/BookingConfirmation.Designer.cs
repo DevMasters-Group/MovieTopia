@@ -40,25 +40,25 @@
             this.lblTheatre = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.gbxCDetails = new System.Windows.Forms.GroupBox();
-            this.gbxMDetails = new System.Windows.Forms.GroupBox();
-            this.txtFName = new System.Windows.Forms.TextBox();
-            this.txtLName = new System.Windows.Forms.TextBox();
-            this.txtPhoneNumber = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPhoneNumber = new System.Windows.Forms.TextBox();
+            this.txtLName = new System.Windows.Forms.TextBox();
+            this.txtFName = new System.Windows.Forms.TextBox();
+            this.gbxMDetails = new System.Windows.Forms.GroupBox();
             this.gbxSeatsTotal = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.lblTotalSeats = new System.Windows.Forms.Label();
+            this.txtSelected = new System.Windows.Forms.TextBox();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
             this.lblPrice = new System.Windows.Forms.Label();
+            this.lblTotalSeats = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnContinue = new MovieTopia.Controls.BTN();
-            this.lblGrandTotal = new System.Windows.Forms.Label();
-            this.txtSelected = new System.Windows.Forms.TextBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbxCDetails.SuspendLayout();
             this.gbxMDetails.SuspendLayout();
             this.gbxSeatsTotal.SuspendLayout();
@@ -171,6 +171,64 @@
             this.gbxCDetails.TabStop = false;
             this.gbxCDetails.Text = "Customer Details";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(6, 71);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 17);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Last Name:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(6, 105);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(110, 17);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Phone Number:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(6, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 17);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "First Name:";
+            // 
+            // txtPhoneNumber
+            // 
+            this.txtPhoneNumber.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPhoneNumber.Location = new System.Drawing.Point(144, 102);
+            this.txtPhoneNumber.MaxLength = 10;
+            this.txtPhoneNumber.Name = "txtPhoneNumber";
+            this.txtPhoneNumber.Size = new System.Drawing.Size(280, 24);
+            this.txtPhoneNumber.TabIndex = 2;
+            this.txtPhoneNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhoneNumber_KeyPress_1);
+            // 
+            // txtLName
+            // 
+            this.txtLName.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLName.Location = new System.Drawing.Point(144, 68);
+            this.txtLName.MaxLength = 25;
+            this.txtLName.Name = "txtLName";
+            this.txtLName.Size = new System.Drawing.Size(280, 24);
+            this.txtLName.TabIndex = 1;
+            // 
+            // txtFName
+            // 
+            this.txtFName.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFName.Location = new System.Drawing.Point(144, 33);
+            this.txtFName.MaxLength = 25;
+            this.txtFName.Name = "txtFName";
+            this.txtFName.Size = new System.Drawing.Size(280, 24);
+            this.txtFName.TabIndex = 0;
+            // 
             // gbxMDetails
             // 
             this.gbxMDetails.Controls.Add(this.lblMovie);
@@ -188,60 +246,6 @@
             this.gbxMDetails.TabIndex = 10;
             this.gbxMDetails.TabStop = false;
             this.gbxMDetails.Text = "Movie Details";
-            // 
-            // txtFName
-            // 
-            this.txtFName.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFName.Location = new System.Drawing.Point(144, 33);
-            this.txtFName.Name = "txtFName";
-            this.txtFName.Size = new System.Drawing.Size(280, 24);
-            this.txtFName.TabIndex = 0;
-            // 
-            // txtLName
-            // 
-            this.txtLName.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLName.Location = new System.Drawing.Point(144, 68);
-            this.txtLName.Name = "txtLName";
-            this.txtLName.Size = new System.Drawing.Size(280, 24);
-            this.txtLName.TabIndex = 1;
-            // 
-            // txtPhoneNumber
-            // 
-            this.txtPhoneNumber.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhoneNumber.Location = new System.Drawing.Point(144, 102);
-            this.txtPhoneNumber.Name = "txtPhoneNumber";
-            this.txtPhoneNumber.Size = new System.Drawing.Size(280, 24);
-            this.txtPhoneNumber.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 17);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "First Name:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 105);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(110, 17);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Phone Number:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 71);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 17);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Last Name:";
             // 
             // gbxSeatsTotal
             // 
@@ -261,45 +265,34 @@
             this.gbxSeatsTotal.TabStop = false;
             this.gbxSeatsTotal.Text = "Totals";
             // 
-            // label10
+            // txtSelected
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 283);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(95, 18);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Grand Total:";
+            this.txtSelected.Enabled = false;
+            this.txtSelected.Location = new System.Drawing.Point(150, 30);
+            this.txtSelected.Name = "txtSelected";
+            this.txtSelected.Size = new System.Drawing.Size(280, 24);
+            this.txtSelected.TabIndex = 12;
             // 
-            // label8
+            // lblGrandTotal
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 33);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(111, 17);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Seats Selected:";
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Location = new System.Drawing.Point(147, 283);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.Size = new System.Drawing.Size(58, 18);
+            this.lblGrandTotal.TabIndex = 18;
+            this.lblGrandTotal.Text = "label14";
+            this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label11
+            // lblPrice
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 214);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(84, 17);
-            this.label11.TabIndex = 14;
-            this.label11.Text = "Total Seats:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(6, 249);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(113, 17);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "Price per Ticket:";
+            this.lblPrice.AutoSize = true;
+            this.lblPrice.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPrice.Location = new System.Drawing.Point(147, 249);
+            this.lblPrice.Name = "lblPrice";
+            this.lblPrice.Size = new System.Drawing.Size(54, 17);
+            this.lblPrice.TabIndex = 17;
+            this.lblPrice.Text = "label14";
+            this.lblPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblTotalSeats
             // 
@@ -312,16 +305,49 @@
             this.lblTotalSeats.Text = "label13";
             this.lblTotalSeats.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblPrice
+            // label12
             // 
-            this.lblPrice.AutoSize = true;
-            this.lblPrice.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPrice.Location = new System.Drawing.Point(147, 249);
-            this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(54, 17);
-            this.lblPrice.TabIndex = 17;
-            this.lblPrice.Text = "label14";
-            this.lblPrice.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(6, 249);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(113, 17);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "Price per Ticket:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 214);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(84, 17);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Total Seats:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(6, 33);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(111, 17);
+            this.label8.TabIndex = 12;
+            this.label8.Text = "Seats Selected:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 283);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(95, 18);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "Grand Total:";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // btnCancel
             // 
@@ -366,28 +392,6 @@
             this.btnContinue.TextColor = System.Drawing.Color.DarkGreen;
             this.btnContinue.UseVisualStyleBackColor = false;
             this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
-            // 
-            // lblGrandTotal
-            // 
-            this.lblGrandTotal.AutoSize = true;
-            this.lblGrandTotal.Location = new System.Drawing.Point(147, 283);
-            this.lblGrandTotal.Name = "lblGrandTotal";
-            this.lblGrandTotal.Size = new System.Drawing.Size(58, 18);
-            this.lblGrandTotal.TabIndex = 18;
-            this.lblGrandTotal.Text = "label14";
-            this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtSelected
-            // 
-            this.txtSelected.Enabled = false;
-            this.txtSelected.Location = new System.Drawing.Point(150, 30);
-            this.txtSelected.Name = "txtSelected";
-            this.txtSelected.Size = new System.Drawing.Size(280, 24);
-            this.txtSelected.TabIndex = 12;
-            // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
             // 
             // BookingConfirmation
             // 

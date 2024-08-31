@@ -29,9 +29,18 @@ namespace MovieTopia
 
             InitializeComponent();
 
+            this.Resize += Form_Resize;
+
+            pnlSeats.AutoScroll = true;
+
             Alignment();
             LoadData();
             PopulateArray();
+        }
+
+        private void Form_Resize(Object sender, EventArgs e)
+        {
+            Alignment();
         }
 
         private void Alignment()
@@ -47,6 +56,11 @@ namespace MovieTopia
             btnContinue.Top = pnlLegend.Top;
             btnCancel.Left = this.ClientSize.Width - btnCancel.Width - padding;
             btnContinue.Left = btnCancel.Left - padding / 2 - btnContinue.Width;
+
+            pnlSeats.Top = pnlScreen.Top + pnlScreen.Height + padding / 2;
+            pnlSeats.Left = padding;
+            pnlSeats.Height = pnlLegend.Top - 4 * padding;
+            pnlSeats.Width = this.ClientSize.Width - 2 * padding;
         }
 
         private void LoadData()
@@ -75,7 +89,17 @@ namespace MovieTopia
                         WHERE 
                             t.TheatreID = (SELECT TheatreID FROM MovieSchedule WHERE MovieScheduleID = {movieScheduleID})
                             AND s.SeatRow <= t.NumRows 
-                            AND s.SeatColumn <= CHAR(64 + t.NumCols)
+                            AND CAST(
+                                CASE 
+                                    WHEN LEN(s.SeatColumn) = 1 THEN
+                                        ASCII(s.SeatColumn) - ASCII('A') + 1
+                                    WHEN LEN(s.SeatColumn) = 2 THEN
+                                        (ASCII(LEFT(s.SeatColumn, 1)) - ASCII('A')) * 26 + ASCII(RIGHT(s.SeatColumn, 1)) - ASCII('A') + 1
+                                    ELSE
+                                        0 -- Handle cases with more than 2 letters or invalid formats
+                                END AS INT
+                            ) <= t.NumCols
+                            
                     ),
                     BookedSeats AS (
                         SELECT 
@@ -102,6 +126,9 @@ namespace MovieTopia
                     ORDER BY 
                         SeatRow, SeatColumn;";
 
+                //AND s.SeatColumn <= (SELECT MAX(SeatColumn) FROM Seat WHERE TheatreID = t.TheatreID)
+                //--AND s.SeatColumn <= CHAR(64 + t.NumCols)
+
                 adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
                 adapter.Fill(ds, "Seats");
             }
@@ -112,22 +139,28 @@ namespace MovieTopia
             int pictureBoxWidth = 40; // Size of each PictureBox
             int pictureBoxHeight = 25; // Size of each PictureBox
             int margin = 5; // Space between PictureBoxes
-            int startX = pnlScreen.Left;
-            int startY = pnlScreen.Bottom + padding; // Starting position for the first PictureBox
+            //int startX = pnlSeats.Left;
+            //int startY = pnlSeats.Top; // Starting position for the first PictureBox
 
-            // Temporary variables to calculate total size of seat array
-            int totalWidth = 0;
-            int totalHeight = 0;
+            if (ds.Tables["Seats"].Rows.Count == 0)
+            {
+                MessageBox.Show("No seats have been found. Please ensure they have been created.");
+                return;
+            }
 
             // Determine the maximum number of rows and columns
             int maxRow = ds.Tables["Seats"].AsEnumerable().Max(row => row.Field<int>("SeatRow"));
-            int maxCol = ds.Tables["Seats"].AsEnumerable().Max(row => Convert.ToChar(row.Field<string>("SeatColumn")) - 'A' + 1);
+            //int maxCol = ds.Tables["Seats"].AsEnumerable().Max(row => Convert.ToChar(row.Field<string>("SeatColumn")) - 'A' + 1);
+            int maxCol = ds.Tables["Seats"].AsEnumerable().Max(row => ConvertSeatColumnToIndexNumber(row.Field<string>("SeatColumn")));
 
-            totalWidth = (maxCol * pictureBoxWidth) + ((maxCol - 1) * margin);
-            totalHeight = (maxRow * pictureBoxHeight) + ((maxRow - 1) * margin);
+            int totalWidth = (maxCol * pictureBoxWidth) + ((maxCol - 1) * margin);
+            int totalHeight = (maxRow * pictureBoxHeight) + ((maxRow - 1) * margin);
 
-            startX = pnlScreen.Left + pnlScreen.Width / 2 - totalWidth / 2;
-            startY = pnlScreen.Bottom + padding; // Leave space for the legend
+            //startX = 0 + (pnlSeats.ClientSize.Width - totalWidth) / 2;
+            int startX = 0;
+            int startY = 0;
+
+            pnlSeats.Controls.Clear();
 
             foreach (DataRow row in ds.Tables["Seats"].Rows)
             {
@@ -135,13 +168,15 @@ namespace MovieTopia
                 string seatColumn = row["SeatColumn"].ToString();
                 bool isBooked = Convert.ToBoolean(row["IsBooked"]);
 
+                int seatColIndex = ConvertSeatColumnToIndexNumber(seatColumn);
+
                 // Create a new PictureBox
                 PictureBox pb = new PictureBox
                 {
                     Width = pictureBoxWidth,
                     Height = pictureBoxHeight,
                     BackColor = isBooked ? Color.Gray : Color.LightGray, // Dark grey if booked, light grey if available
-                    Location = new Point(startX + (seatColumn[0] - 'A') * (pictureBoxWidth + margin),
+                    Location = new Point(startX + (seatColIndex - 1) * (pictureBoxWidth + margin),
                                  startY + (seatRow - 1) * (pictureBoxHeight + margin)),
                     Tag = new { SeatID = row["SeatID"], SeatRow = seatRow, SeatColumn = seatColumn, IsBooked = isBooked }
                 };
@@ -166,8 +201,18 @@ namespace MovieTopia
                 pb.Controls.Add(seatLabel);
 
                 // Add the PictureBox to the form or a container (e.g., Panel)
-                this.Controls.Add(pb);
+                pnlSeats.Controls.Add(pb);
             }
+        }
+
+        private int ConvertSeatColumnToIndexNumber(string seatColumn)
+        {
+            int index = 0;
+            for (int i = 0; i < seatColumn.Length; i++)
+            {
+                index = index * 26 + (seatColumn[i] - 'A' + 1);
+            }
+            return index;
         }
 
         private void Seat_Click(object sender, EventArgs e)
@@ -182,7 +227,7 @@ namespace MovieTopia
                 pb.BackColor = selected ? Color.DeepSkyBlue : Color.LightGray; // Toggle selection
                 if (selected)
                 {
-                    selectedSeatIDs.Add(seatID);
+                    //selectedSeatIDs.Add(seatID);
                     selectedSeats[seatID] = seatInfo.SeatColumn + "" + seatInfo.SeatRow;
                     btnContinue.Enabled = true;
                     btnContinue.ForeColor = Color.DarkGreen;
@@ -191,7 +236,7 @@ namespace MovieTopia
                 }
                 else
                 {
-                    selectedSeatIDs.Remove(seatID);
+                    //selectedSeatIDs.Remove(seatID);
                     selectedSeats.Remove(seatID);
                     if (selectedSeats.Count == 0)
                     {
@@ -207,22 +252,6 @@ namespace MovieTopia
                 MessageBox.Show("This seat is already booked.");
             }
         }
-
-        //private List<int> GetSelectedSeatIDs()
-        //{
-        //    List<int> selectedSeatIDs = new List<int>();
-
-        //    foreach (Control control in this.Controls)
-        //    {
-        //        if (control is PictureBox pb && pb.BackColor == Color.FromArgb(0, 191, 255)) // Check for selected color
-        //        {
-        //            var seatInfo = (dynamic)pb.Tag;
-        //            selectedSeatIDs.Add(seatInfo.SeatID);
-        //        }
-        //    }
-
-        //    return selectedSeatIDs;
-        //}
 
         private void btnCancel_Click(object sender, EventArgs e)
         {

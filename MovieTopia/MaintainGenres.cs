@@ -105,14 +105,7 @@ namespace MovieTopia
                 Dictionary<string, Control> data = detailsForm.controlsDict;
 
                 string sql = @"
-                    INSERT INTO 
-                        Genre (
-                            GenreName
-                        )
-                        VALUES
-                        (
-                            @GenreName
-                        );";
+                    INSERT INTO Genre (GenreName) VALUES (@GenreName);";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
@@ -163,13 +156,7 @@ namespace MovieTopia
                     Dictionary<string, Control> data = detailsForm.controlsDict;
 
                     string sql = @"
-                        UPDATE 
-                            Genre
-                        SET 
-                            GenreName = @GenreName
-                        WHERE
-                            GenreID = @GenreID;
-                        ";
+                        UPDATE Genre SET GenreName = @GenreName WHERE GenreID = @GenreID;";
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                     {
@@ -213,14 +200,11 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["GenreName"].Value}\"?", "Delete Genre", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["GenreName"].Value}\"?", "Delete Genre", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"
-                        DELETE FROM 
-                            Genre
-                        WHERE
-                            GenreID = @GenreID;";
+                        DELETE FROM Genre WHERE GenreID = @GenreID;";
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {

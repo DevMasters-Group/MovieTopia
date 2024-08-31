@@ -67,7 +67,7 @@ namespace MovieTopia
                             t.TicketID, 
                             t.MovieScheduleID, 
                             t.SeatID, 
-                            t.Price, 
+                            ms.Price, 
                             t.PurchaseDateTime, 
                             t.CustomerFirstName, 
                             t.CustomerLastName, 
@@ -131,6 +131,7 @@ namespace MovieTopia
             dgvData.Columns["PurchaseDateTime"].HeaderText = "Purchased on";
             dgvData.Columns["CustomerFirstName"].HeaderText = "Customer First Name";
             dgvData.Columns["CustomerLastName"].HeaderText = "Customer Last Name";
+            dgvData.Columns["CustomerPhoneNumber"].HeaderText = "Customer Phone Number";
             dgvData.Columns["Title"].HeaderText = "Movie";
             dgvData.Columns["TheatreName"].HeaderText = "Theatre";
             dgvData.Columns["DateTime"].HeaderText = "Movie Time";
@@ -182,7 +183,6 @@ namespace MovieTopia
                             Ticket (
                                 MovieScheduleID,
                                 SeatID,
-                                Price,
                                 PurchaseDateTime,
                                 CustomerFirstName,
                                 CustomerLastName,
@@ -192,7 +192,6 @@ namespace MovieTopia
                             (
                                 @MovieScheduleID,
                                 @SeatID,
-                                @Price,
                                 @PurchaseDateTime,
                                 @CustomerFirstName,
                                 @CustomerLastName,
@@ -209,16 +208,14 @@ namespace MovieTopia
                     command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                     var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                     command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                    command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                    //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                     command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
                     command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                     command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
                     command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
 
-
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader()
-
+                    try
+                    { 
                         connection.Open();
                         command.ExecuteNonQuery();
                         MessageBox.Show("Created Successfully", "Success");
@@ -230,11 +227,8 @@ namespace MovieTopia
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Error");
-
                     }
-
                 }
-
                 LoadData();
             }
         }
@@ -275,7 +269,6 @@ namespace MovieTopia
                         SET
                             MovieScheduleID = @MovieScheduleID,
                             SeatID = @SeatID,
-                            Price = @Price,
                             PurchaseDateTime = @PurchaseDateTime,
                             CustomerFirstName = @CustomerFirstName,
                             CustomerLastName = @CustomerLastName,
@@ -296,7 +289,7 @@ namespace MovieTopia
                         command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                         var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                         command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                        command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                        //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                         command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
                         command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                         command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
@@ -334,7 +327,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvData.SelectedRows[0];
 
-                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected ticket?", "Delete Ticket", MessageBoxButtons.YesNo);
+                DialogResult confirm = MessageBox.Show($"Are you sure you want to delete the selected ticket?", "Delete Ticket", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
 
                 string sql = @"

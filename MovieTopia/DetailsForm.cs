@@ -38,11 +38,15 @@ namespace MovieTopia
         public DetailsForm(string schemaName, DataSet dataSet, DataGridViewRow selectedDataGridViewRow = null, Dictionary<string, string> foreignKeySchemaNames = null, Dictionary<string, string> attributeNameMap = null)
         {
             InitializeComponent();
+
             this.FormClosing += DetailsForm_FormClosing;
 
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             if (dataSet == null || selectedDataGridViewRow == null) this.newRecord = true;
+
+            this.Text = newRecord ? $"Create {schemaName}" : $"Edit {schemaName}";
+
             if (attributeNameMap != null) this.attributeNameMap = attributeNameMap;
             QuerySchema(schemaName);
             PopulateFields(selectedDataGridViewRow, dataSet, foreignKeySchemaNames);
@@ -247,13 +251,18 @@ namespace MovieTopia
 
                                 ComboBox cbx = (ComboBox)control;
                                 cbx.Items.Clear();
+                                int requiredWidth = 200;
 
                                 foreach (DataRow row in foreignEntity.Rows)
                                 {
                                     int id = (int)row[schemaColumnName];
                                     string name = row[foreignKeyRelation].ToString();
+                                    int stringWidth = ((int)name.Length / 17) == 0 ? 200 : 400;
+                                    requiredWidth = (stringWidth > requiredWidth) ? stringWidth : requiredWidth;
                                     cbx.Items.Add(new KeyValuePair<int, string>(id, name));
                                 }
+
+                                cbx.Width = requiredWidth;
 
                                 cbx.ValueMember = "Key";
                                 cbx.DisplayMember = "Value";
@@ -272,9 +281,8 @@ namespace MovieTopia
                                             break;
                                         }
                                     }
-                                    control = cbx;
                                 }
-                               
+                                control = cbx;
                             }
                         }
                         control.Validating += (sender, e) => {
@@ -372,7 +380,21 @@ namespace MovieTopia
                     //    ValidateNotEmpty((TextBox)sender, e);  // invoke error provider for validation checks
                     //};
                     control.Validating += new CancelEventHandler(textBox_Validating);
-
+                    control.KeyPress += (sender, e) =>
+                    {
+                        if (schemaColumnName.Contains("CustomerPhoneNumber"))
+                        {
+                            // Allow control characters (like backspace) and digits
+                            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                            {
+                                e.Handled = true; // Ignore the key press if it's not a digit or control character
+                            }
+                        }
+                    };
+                    if (schemaColumnName.Contains("SeatColumn"))
+                    {
+                        control.TextChanged += new System.EventHandler(textBox_TextChanged);
+                    }
 
                     // Create and configure the character count Label
                     Label charCountLabel = new Label
@@ -443,6 +465,15 @@ namespace MovieTopia
             {
                 errorProvider1.SetError(tb, "");
             }
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            int cursorPosition = textBox.SelectionStart;
+            // Convert the text to uppercase
+            textBox.Text = textBox.Text.ToUpper();
+            textBox.SelectionStart = cursorPosition;
         }
 
         /// <summary>
