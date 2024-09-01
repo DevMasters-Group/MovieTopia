@@ -27,10 +27,7 @@ namespace MovieTopia
             InitializeComponent();
             ScheduleID = scheduleID;
             loadSeats(scheduleID);
-
         }
-
-
 
         private void loadSeats(int ScheduleId)
         {
@@ -81,7 +78,6 @@ namespace MovieTopia
             }
         }
 
-
         private void DisplaySeats(int rows, int columns)
         {
             int seatWidth = 30;
@@ -97,8 +93,6 @@ namespace MovieTopia
             // Center the theater number label
             lblTheater_num.Left = (this.ClientSize.Width - lblTheater_num.Width) / 2;
             lblTheater_num.Top = topPadding;
-
-
 
             // Add seats and row number labels
             for (int row = 0; row < rows; row++)
@@ -153,8 +147,6 @@ namespace MovieTopia
 
             btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
             btnReChoose.Left = btnSelect.Right + padding;
-
-
         }
 
         private void MarkOccupiedSeats(SqlConnection conn, int rows, int columns)
@@ -207,9 +199,7 @@ namespace MovieTopia
 
                     }
                 }
-            }
-
-            
+            }        
         }
 
         //Click event where we check if the seat is taken or not and change the Backcolor of the seat. Long with the imagige to show that it is selceted
@@ -236,7 +226,6 @@ namespace MovieTopia
                 seat.Image = Properties.Resources.logoIconLight;
                 seat.BackColor = Color.Red;
             }
-            
         }
 
 
