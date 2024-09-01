@@ -61,10 +61,10 @@
             // 
             this.lblTheater_num.AutoSize = true;
             this.lblTheater_num.Font = new System.Drawing.Font("Arial", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTheater_num.Location = new System.Drawing.Point(506, 7);
+            this.lblTheater_num.Location = new System.Drawing.Point(581, 9);
             this.lblTheater_num.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTheater_num.Name = "lblTheater_num";
-            this.lblTheater_num.Size = new System.Drawing.Size(140, 40);
+            this.lblTheater_num.Size = new System.Drawing.Size(162, 46);
             this.lblTheater_num.TabIndex = 95;
             this.lblTheater_num.Text = "Theater";
             // 
@@ -95,7 +95,7 @@
             this.label3.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(72, 228);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(133, 21);
+            this.label3.Size = new System.Drawing.Size(161, 25);
             this.label3.TabIndex = 5;
             this.label3.Text = "Available Seats";
             // 
@@ -105,7 +105,7 @@
             this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(72, 144);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 21);
+            this.label2.Size = new System.Drawing.Size(158, 25);
             this.label2.TabIndex = 4;
             this.label2.Text = "Selected Seats";
             // 
@@ -115,7 +115,7 @@
             this.label1.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(72, 57);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(196, 21);
+            this.label1.Size = new System.Drawing.Size(237, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Previously booked seat";
             this.label1.Click += new System.EventHandler(this.label1_Click);

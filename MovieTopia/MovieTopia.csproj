@@ -148,12 +148,6 @@
     <Compile Include="DetailsForm.Designer.cs">
       <DependentUpon>DetailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FinalBookings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FinalBookings.Designer.cs">
-      <DependentUpon>FinalBookings.cs</DependentUpon>
-    </Compile>
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,9 +241,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DetailsForm.resx">
       <DependentUpon>DetailsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FinalBookings.resx">
-      <DependentUpon>FinalBookings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>

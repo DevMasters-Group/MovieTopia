@@ -228,7 +228,6 @@ namespace MovieTopia
                     command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                     var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                     command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                    MessageBox.Show(selectedMovie.Key.ToString() + ", " + selectedSeat.Key);
 
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())

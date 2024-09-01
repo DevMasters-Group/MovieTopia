@@ -91,11 +91,13 @@ namespace MovieTopia
             // Calculate left and top padding
             int totalWidth = columns * seatWidth + (columns - 1) * horizontalSpacing;
             int leftPadding = (this.ClientSize.Width - totalWidth) / 2;
-            int topPadding = (this.ClientSize.Height - (rows * seatHeight + (rows - 1) * verticalSpacing) - lblStage.Height - padding * 4 - lblTheater_num.Height) / 2;
+            //int topPadding = (this.ClientSize.Height - (rows * seatHeight + (rows - 1) * verticalSpacing) - lblStage.Height - padding * 4 - lblTheater_num.Height) / 2;
 
             // Center the theater number label
             lblTheater_num.Left = (this.ClientSize.Width - lblTheater_num.Width) / 2;
-            lblTheater_num.Top = topPadding;
+            
+
+
 
             pnlSeats.Controls.Clear();
             // Add seats and row number labels
@@ -175,23 +177,28 @@ namespace MovieTopia
 
             // Position the stage label
             lblStage.Left = (this.ClientSize.Width - lblStage.Width) / 2;
-            lblStage.Top = lblTheater_num.Bottom + 20 + rows * (seatHeight + verticalSpacing) + verticalSpacing;
-
-            // Position buttons under the stage label
-            int totalBWidth = btnSelect.Width + btnReChoose.Width + padding;
-
-            btnSelect.Top = lblStage.Bottom + padding;
-            btnReChoose.Top = btnSelect.Top;
-
-            btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
-            btnReChoose.Left = btnSelect.Right + padding;
+            lblStage.Top = this.ClientSize.Height / 2 + this.ClientSize.Height / 4 + this.ClientSize.Height / 10  + lblTheater_num.Top - btnSelect.Height;
 
             // Position the panels
             pnlSeats.Top = lblTheater_num.Top + lblTheater_num.Height + padding / 2;
             pnlSeats.Left = padding;
-            pnlSeats.Height = lblStage.Top - 4 * padding - lblStage.Height - btnSelect.Height;
+            //pnlSeats.Height = this.ClientSize.Height - this.ClientSize.Height/4 - 2 * padding - lblStage.Height - btnSelect.Height;
+            pnlSeats.Height = lblStage.Top - 4 * padding; ;
             pnlSeats.Width = this.ClientSize.Width - 2 * padding - gbxGuide.Width;
 
+            
+
+            // Position buttons under the stage label
+            int totalBWidth = btnSelect.Width + btnReChoose.Width + padding;
+
+            //btnSelect.Top = this.ClientSize.Height / 2 + this.ClientSize.Height / 3 + lblTheater_num.Top + padding;
+            btnSelect.Top =  lblStage.Top+padding;
+            btnReChoose.Top = btnSelect.Top;
+
+            //btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
+            btnReChoose.Left = (this.ClientSize.Width - totalWidth) / 2 - 2 * padding;
+            btnSelect.Left = btnReChoose.Right + padding;
+            //btnReChoose.Left = btnSelect.Right + padding;
 
         }
 
@@ -338,9 +345,9 @@ namespace MovieTopia
 
                 if (selectedSeats.Count > 0)
                 {
-                    FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
-                    this.Hide();
-                    finalBookingsForm.ShowDialog();
+                   // FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
+                   // this.Hide();
+                   // finalBookingsForm.ShowDialog();
                     this.Close();
                 }
             }
