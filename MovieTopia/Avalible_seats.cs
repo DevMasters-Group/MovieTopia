@@ -345,9 +345,9 @@ namespace MovieTopia
 
                 if (selectedSeats.Count > 0)
                 {
-                    FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
-                    this.Hide();
-                    finalBookingsForm.ShowDialog();
+                   // FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
+                   // this.Hide();
+                   // finalBookingsForm.ShowDialog();
                     this.Close();
                 }
             }
