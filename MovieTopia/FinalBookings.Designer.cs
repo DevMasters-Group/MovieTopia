@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinalBookings));
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.lblFormName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.gbxHolder = new System.Windows.Forms.GroupBox();
             this.txtCellNum = new System.Windows.Forms.TextBox();
@@ -39,21 +40,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gbxMovie = new System.Windows.Forms.GroupBox();
+            this.txtTotal = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.rchSeats = new System.Windows.Forms.RichTextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnGoBack = new MovieTopia.Controls.BTN();
             this.btnSave = new MovieTopia.Controls.BTN();
             this.gbxNumbers = new System.Windows.Forms.GroupBox();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.lblDuration = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.lblFormName = new System.Windows.Forms.Label();
             this.lblTheatre = new System.Windows.Forms.Label();
@@ -78,6 +72,17 @@
             this.pnlTop.Size = new System.Drawing.Size(3046, 100);
             this.pnlTop.TabIndex = 0;
             // 
+            // lblFormName
+            // 
+            this.lblFormName.AutoSize = true;
+            this.lblFormName.Font = new System.Drawing.Font("Arial", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblFormName.Location = new System.Drawing.Point(764, 26);
+            this.lblFormName.Name = "lblFormName";
+            this.lblFormName.Size = new System.Drawing.Size(433, 46);
+            this.lblFormName.TabIndex = 8;
+            this.lblFormName.Text = "Booking Confirmation";
+            // 
             // picLogo
             // 
             this.picLogo.BackColor = System.Drawing.Color.Transparent;
@@ -98,6 +103,7 @@
             this.gbxHolder.Controls.Add(this.label3);
             this.gbxHolder.Controls.Add(this.label2);
             this.gbxHolder.Controls.Add(this.label1);
+            this.gbxHolder.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxHolder.Location = new System.Drawing.Point(42, 197);
             this.gbxHolder.Name = "gbxHolder";
             this.gbxHolder.Size = new System.Drawing.Size(880, 237);
@@ -178,6 +184,7 @@
             this.gbxMovie.Controls.Add(this.lblDate);
             this.gbxMovie.Controls.Add(this.label5);
             this.gbxMovie.Controls.Add(this.label4);
+            this.gbxMovie.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxMovie.Location = new System.Drawing.Point(42, 453);
             this.gbxMovie.Name = "gbxMovie";
             this.gbxMovie.Size = new System.Drawing.Size(880, 351);
@@ -212,7 +219,7 @@
             this.rchSeats.Location = new System.Drawing.Point(185, 27);
             this.rchSeats.Name = "rchSeats";
             this.rchSeats.ReadOnly = true;
-            this.rchSeats.Size = new System.Drawing.Size(702, 210);
+            this.rchSeats.Size = new System.Drawing.Size(686, 192);
             this.rchSeats.TabIndex = 7;
             this.rchSeats.Text = "The seats you have selected are as follows:\n";
             // 
@@ -255,11 +262,11 @@
             this.btnGoBack.BorderSize = 0;
             this.btnGoBack.FlatAppearance.BorderSize = 0;
             this.btnGoBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGoBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoBack.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGoBack.ForeColor = System.Drawing.Color.White;
             this.btnGoBack.Location = new System.Drawing.Point(902, 859);
             this.btnGoBack.Name = "btnGoBack";
-            this.btnGoBack.Size = new System.Drawing.Size(169, 53);
+            this.btnGoBack.Size = new System.Drawing.Size(180, 50);
             this.btnGoBack.TabIndex = 4;
             this.btnGoBack.Text = "Go Back";
             this.btnGoBack.TextColor = System.Drawing.Color.White;
@@ -275,11 +282,11 @@
             this.btnSave.BorderSize = 0;
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(679, 859);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(169, 53);
+            this.btnSave.Size = new System.Drawing.Size(180, 50);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Book Tickets";
             this.btnSave.TextColor = System.Drawing.Color.White;
@@ -295,6 +302,7 @@
             this.gbxNumbers.Controls.Add(this.rchSeats);
             this.gbxNumbers.Controls.Add(this.label6);
             this.gbxNumbers.Controls.Add(this.label7);
+            this.gbxNumbers.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxNumbers.Location = new System.Drawing.Point(971, 197);
             this.gbxNumbers.Name = "gbxNumbers";
             this.gbxNumbers.Size = new System.Drawing.Size(928, 607);
@@ -359,6 +367,9 @@
             this.label14.TabIndex = 12;
             this.label14.Text = "Time of Viewing";
             // 
+            this.label14.TabIndex = 12;
+            this.label14.Text = "Time of Viewing";
+            // 
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.PaleVioletRed;
@@ -368,17 +379,14 @@
             this.btnCancel.BorderSize = 0;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(1140, 859);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(169, 53);
+            this.btnCancel.Size = new System.Drawing.Size(180, 50);
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.White;
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // lblFormName
             // 
             this.lblFormName.AutoSize = true;
@@ -428,11 +436,14 @@
             this.lblPrice.TabIndex = 12;
             this.lblPrice.Text = "R0";
             // 
-            // FinalBookings
+            this.lblFormName.TabIndex = 8;
+            this.lblFormName.Text = "Booking Confirmation";
             // 
+            // FinalBookings
+            this.ClientSize = new System.Drawing.Size(3046, 1325);
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(3046, 1325);
+            this.ClientSize = new System.Drawing.Size(2433, 1312);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.gbxNumbers);
             this.Controls.Add(this.btnGoBack);
