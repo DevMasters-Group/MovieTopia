@@ -29,71 +29,93 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinalBookings));
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pnlTop = new System.Windows.Forms.Panel();
+            this.lblFormName = new System.Windows.Forms.Label();
+            this.picLogo = new System.Windows.Forms.PictureBox();
+            this.gbxHolder = new System.Windows.Forms.GroupBox();
             this.txtCellNum = new System.Windows.Forms.TextBox();
             this.txtSurname = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbxMovie = new System.Windows.Forms.GroupBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lblDuration = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.txtTheatre = new System.Windows.Forms.TextBox();
+            this.txtMovie = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.rchSeats = new System.Windows.Forms.RichTextBox();
-            this.txtTheatre = new System.Windows.Forms.TextBox();
-            this.txtMovie = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnGoBack = new MovieTopia.Controls.BTN();
             this.btnSave = new MovieTopia.Controls.BTN();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gbxNumbers = new System.Windows.Forms.GroupBox();
+            this.btnCancel = new MovieTopia.Controls.BTN();
+            this.pnlTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
+            this.gbxHolder.SuspendLayout();
+            this.gbxMovie.SuspendLayout();
+            this.gbxNumbers.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pnlTop
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1122, 100);
-            this.panel1.TabIndex = 0;
+            this.pnlTop.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pnlTop.Controls.Add(this.lblFormName);
+            this.pnlTop.Controls.Add(this.picLogo);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(1924, 100);
+            this.pnlTop.TabIndex = 0;
             // 
-            // pictureBox1
+            // lblFormName
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullDark;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(204, 100);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.lblFormName.AutoSize = true;
+            this.lblFormName.Font = new System.Drawing.Font("Arial", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblFormName.Location = new System.Drawing.Point(764, 26);
+            this.lblFormName.Name = "lblFormName";
+            this.lblFormName.Size = new System.Drawing.Size(433, 46);
+            this.lblFormName.TabIndex = 8;
+            this.lblFormName.Text = "Booking Confirmation";
             // 
-            // groupBox1
+            // picLogo
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.LightBlue;
-            this.groupBox1.Controls.Add(this.txtCellNum);
-            this.groupBox1.Controls.Add(this.txtSurname);
-            this.groupBox1.Controls.Add(this.txtName);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(48, 137);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1021, 225);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Ticket Holder Information";
+            this.picLogo.BackColor = System.Drawing.Color.Transparent;
+            this.picLogo.BackgroundImage = global::MovieTopia.Properties.Resources.logoFullDark;
+            this.picLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picLogo.Location = new System.Drawing.Point(0, 0);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Size = new System.Drawing.Size(204, 100);
+            this.picLogo.TabIndex = 1;
+            this.picLogo.TabStop = false;
+            // 
+            // gbxHolder
+            // 
+            this.gbxHolder.BackColor = System.Drawing.Color.LightBlue;
+            this.gbxHolder.Controls.Add(this.txtCellNum);
+            this.gbxHolder.Controls.Add(this.txtSurname);
+            this.gbxHolder.Controls.Add(this.txtName);
+            this.gbxHolder.Controls.Add(this.label3);
+            this.gbxHolder.Controls.Add(this.label2);
+            this.gbxHolder.Controls.Add(this.label1);
+            this.gbxHolder.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxHolder.Location = new System.Drawing.Point(42, 197);
+            this.gbxHolder.Name = "gbxHolder";
+            this.gbxHolder.Size = new System.Drawing.Size(880, 237);
+            this.gbxHolder.TabIndex = 1;
+            this.gbxHolder.TabStop = false;
+            this.gbxHolder.Text = "Ticket Holder Information";
             // 
             // txtCellNum
             // 
@@ -154,26 +176,128 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter the Ticket holder\'s First name: ";
             // 
-            // groupBox2
+            // gbxMovie
             // 
-            this.groupBox2.BackColor = System.Drawing.Color.LightPink;
-            this.groupBox2.Controls.Add(this.txtTotal);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.txtPrice);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.rchSeats);
-            this.groupBox2.Controls.Add(this.txtTheatre);
-            this.groupBox2.Controls.Add(this.txtMovie);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(48, 393);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1021, 443);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Movie Information";
+            this.gbxMovie.BackColor = System.Drawing.Color.LightPink;
+            this.gbxMovie.Controls.Add(this.label14);
+            this.gbxMovie.Controls.Add(this.lblTime);
+            this.gbxMovie.Controls.Add(this.label12);
+            this.gbxMovie.Controls.Add(this.label11);
+            this.gbxMovie.Controls.Add(this.lblDuration);
+            this.gbxMovie.Controls.Add(this.lblDate);
+            this.gbxMovie.Controls.Add(this.txtTheatre);
+            this.gbxMovie.Controls.Add(this.txtMovie);
+            this.gbxMovie.Controls.Add(this.label5);
+            this.gbxMovie.Controls.Add(this.label4);
+            this.gbxMovie.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxMovie.Location = new System.Drawing.Point(42, 453);
+            this.gbxMovie.Name = "gbxMovie";
+            this.gbxMovie.Size = new System.Drawing.Size(880, 351);
+            this.gbxMovie.TabIndex = 2;
+            this.gbxMovie.TabStop = false;
+            this.gbxMovie.Text = "Movie Information";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(21, 280);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(136, 21);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "Time of Viewing";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTime.Location = new System.Drawing.Point(282, 280);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(153, 21);
+            this.lblTime.TabIndex = 11;
+            this.lblTime.Text = "Selected Theatre:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(21, 157);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(186, 21);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Duration of the Movie:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(21, 220);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(140, 21);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Date of Viewing:";
+            // 
+            // lblDuration
+            // 
+            this.lblDuration.AutoSize = true;
+            this.lblDuration.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDuration.Location = new System.Drawing.Point(282, 157);
+            this.lblDuration.Name = "lblDuration";
+            this.lblDuration.Size = new System.Drawing.Size(153, 21);
+            this.lblDuration.TabIndex = 8;
+            this.lblDuration.Text = "Selected Theatre:";
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.Location = new System.Drawing.Point(282, 220);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(153, 21);
+            this.lblDate.TabIndex = 7;
+            this.lblDate.Text = "Selected Theatre:";
+            // 
+            // txtTheatre
+            // 
+            this.txtTheatre.Enabled = false;
+            this.txtTheatre.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTheatre.Location = new System.Drawing.Point(196, 91);
+            this.txtTheatre.MaxLength = 100;
+            this.txtTheatre.Name = "txtTheatre";
+            this.txtTheatre.ReadOnly = true;
+            this.txtTheatre.Size = new System.Drawing.Size(237, 28);
+            this.txtTheatre.TabIndex = 6;
+            // 
+            // txtMovie
+            // 
+            this.txtMovie.Enabled = false;
+            this.txtMovie.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMovie.Location = new System.Drawing.Point(196, 37);
+            this.txtMovie.MaxLength = 100;
+            this.txtMovie.Name = "txtMovie";
+            this.txtMovie.ReadOnly = true;
+            this.txtMovie.Size = new System.Drawing.Size(237, 28);
+            this.txtMovie.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(21, 94);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(153, 21);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Selected Theatre:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(21, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 21);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Selected Movie:";
             // 
             // txtTotal
             // 
@@ -229,28 +353,6 @@
             this.rchSeats.TabIndex = 7;
             this.rchSeats.Text = "The seats you have selected are as follows:\n";
             // 
-            // txtTheatre
-            // 
-            this.txtTheatre.Enabled = false;
-            this.txtTheatre.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTheatre.Location = new System.Drawing.Point(196, 91);
-            this.txtTheatre.MaxLength = 100;
-            this.txtTheatre.Name = "txtTheatre";
-            this.txtTheatre.ReadOnly = true;
-            this.txtTheatre.Size = new System.Drawing.Size(237, 28);
-            this.txtTheatre.TabIndex = 6;
-            // 
-            // txtMovie
-            // 
-            this.txtMovie.Enabled = false;
-            this.txtMovie.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMovie.Location = new System.Drawing.Point(196, 37);
-            this.txtMovie.MaxLength = 100;
-            this.txtMovie.Name = "txtMovie";
-            this.txtMovie.ReadOnly = true;
-            this.txtMovie.Size = new System.Drawing.Size(237, 28);
-            this.txtMovie.TabIndex = 5;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -261,30 +363,10 @@
             this.label6.TabIndex = 2;
             this.label6.Text = "Selected Seats:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(21, 94);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(153, 21);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Selected Theatre:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(21, 40);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(138, 21);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Selected Movie:";
-            // 
             // btnGoBack
             // 
-            this.btnGoBack.BackColor = System.Drawing.Color.PaleVioletRed;
-            this.btnGoBack.BackgroundColor = System.Drawing.Color.PaleVioletRed;
+            this.btnGoBack.BackColor = System.Drawing.Color.MediumOrchid;
+            this.btnGoBack.BackgroundColor = System.Drawing.Color.MediumOrchid;
             this.btnGoBack.BorderColor = System.Drawing.Color.PaleVioletRed;
             this.btnGoBack.BorderRadius = 40;
             this.btnGoBack.BorderSize = 0;
@@ -292,7 +374,7 @@
             this.btnGoBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGoBack.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGoBack.ForeColor = System.Drawing.Color.White;
-            this.btnGoBack.Location = new System.Drawing.Point(576, 870);
+            this.btnGoBack.Location = new System.Drawing.Point(902, 859);
             this.btnGoBack.Name = "btnGoBack";
             this.btnGoBack.Size = new System.Drawing.Size(180, 50);
             this.btnGoBack.TabIndex = 4;
@@ -312,7 +394,7 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(353, 870);
+            this.btnSave.Location = new System.Drawing.Point(679, 859);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(180, 50);
             this.btnSave.TabIndex = 3;
@@ -321,44 +403,86 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // gbxNumbers
+            // 
+            this.gbxNumbers.BackColor = System.Drawing.Color.LightBlue;
+            this.gbxNumbers.Controls.Add(this.txtTotal);
+            this.gbxNumbers.Controls.Add(this.label8);
+            this.gbxNumbers.Controls.Add(this.rchSeats);
+            this.gbxNumbers.Controls.Add(this.txtPrice);
+            this.gbxNumbers.Controls.Add(this.label6);
+            this.gbxNumbers.Controls.Add(this.label7);
+            this.gbxNumbers.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxNumbers.Location = new System.Drawing.Point(971, 197);
+            this.gbxNumbers.Name = "gbxNumbers";
+            this.gbxNumbers.Size = new System.Drawing.Size(928, 607);
+            this.gbxNumbers.TabIndex = 6;
+            this.gbxNumbers.TabStop = false;
+            this.gbxNumbers.Text = "Final Amounts";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BackgroundColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnCancel.BorderRadius = 40;
+            this.btnCancel.BorderSize = 0;
+            this.btnCancel.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(1140, 859);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(180, 50);
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextColor = System.Drawing.Color.White;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // FinalBookings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1122, 946);
+            this.ClientSize = new System.Drawing.Size(1924, 1055);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.gbxNumbers);
             this.Controls.Add(this.btnGoBack);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.gbxMovie);
+            this.Controls.Add(this.gbxHolder);
+            this.Controls.Add(this.pnlTop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(1140, 904);
+            this.MinimumSize = new System.Drawing.Size(1700, 800);
             this.Name = "FinalBookings";
             this.Text = "FinalBookings";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FinalBookings_Load);
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
+            this.gbxHolder.ResumeLayout(false);
+            this.gbxHolder.PerformLayout();
+            this.gbxMovie.ResumeLayout(false);
+            this.gbxMovie.PerformLayout();
+            this.gbxNumbers.ResumeLayout(false);
+            this.gbxNumbers.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel pnlTop;
+        private System.Windows.Forms.PictureBox picLogo;
+        private System.Windows.Forms.GroupBox gbxHolder;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCellNum;
         private System.Windows.Forms.TextBox txtSurname;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbxMovie;
         private System.Windows.Forms.RichTextBox rchSeats;
         private System.Windows.Forms.TextBox txtTheatre;
         private System.Windows.Forms.TextBox txtMovie;
@@ -371,5 +495,14 @@
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox gbxNumbers;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblDuration;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblTime;
+        private Controls.BTN btnCancel;
+        private System.Windows.Forms.Label lblFormName;
     }
 }

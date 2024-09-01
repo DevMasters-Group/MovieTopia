@@ -35,12 +35,13 @@
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.lblFormName = new System.Windows.Forms.Label();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
-            this.btnFilters = new MovieTopia.Controls.BTN();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
+            this.btnFilters = new MovieTopia.Controls.BTN();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelectMovie = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
@@ -103,12 +104,24 @@
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pnlTop.Controls.Add(this.lblFormName);
             this.pnlTop.Controls.Add(this.picLogo);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(1682, 99);
             this.pnlTop.TabIndex = 2;
+            // 
+            // lblFormName
+            // 
+            this.lblFormName.AutoSize = true;
+            this.lblFormName.Font = new System.Drawing.Font("Arial", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFormName.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblFormName.Location = new System.Drawing.Point(649, 23);
+            this.lblFormName.Name = "lblFormName";
+            this.lblFormName.Size = new System.Drawing.Size(355, 46);
+            this.lblFormName.TabIndex = 9;
+            this.lblFormName.Text = "Select Your Movie";
             // 
             // gbxFiltering
             // 
@@ -125,26 +138,6 @@
             this.gbxFiltering.TabIndex = 5;
             this.gbxFiltering.TabStop = false;
             this.gbxFiltering.Text = "Selection";
-            // 
-            // btnFilters
-            // 
-            this.btnFilters.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnFilters.BackgroundColor = System.Drawing.Color.RoyalBlue;
-            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.btnFilters.BorderRadius = 40;
-            this.btnFilters.BorderSize = 0;
-            this.btnFilters.FlatAppearance.BorderSize = 0;
-            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilters.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFilters.ForeColor = System.Drawing.Color.White;
-            this.btnFilters.Location = new System.Drawing.Point(917, 47);
-            this.btnFilters.Name = "btnFilters";
-            this.btnFilters.Size = new System.Drawing.Size(164, 50);
-            this.btnFilters.TabIndex = 4;
-            this.btnFilters.Text = "Clear Filters";
-            this.btnFilters.TextColor = System.Drawing.Color.White;
-            this.btnFilters.UseVisualStyleBackColor = false;
-            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
             // 
             // label2
             // 
@@ -186,6 +179,26 @@
             this.cbxGenre.TabIndex = 0;
             this.cbxGenre.Text = "* Please Select *";
             this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
+            // 
+            // btnFilters
+            // 
+            this.btnFilters.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnFilters.BackgroundColor = System.Drawing.Color.RoyalBlue;
+            this.btnFilters.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnFilters.BorderRadius = 40;
+            this.btnFilters.BorderSize = 0;
+            this.btnFilters.FlatAppearance.BorderSize = 0;
+            this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilters.ForeColor = System.Drawing.Color.White;
+            this.btnFilters.Location = new System.Drawing.Point(682, 45);
+            this.btnFilters.Name = "btnFilters";
+            this.btnFilters.Size = new System.Drawing.Size(164, 50);
+            this.btnFilters.TabIndex = 4;
+            this.btnFilters.Text = "Clear Filters";
+            this.btnFilters.TextColor = System.Drawing.Color.White;
+            this.btnFilters.UseVisualStyleBackColor = false;
+            this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
             // 
             // btnCancel
             // 
@@ -246,6 +259,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.pnlTop.ResumeLayout(false);
+            this.pnlTop.PerformLayout();
             this.gbxFiltering.ResumeLayout(false);
             this.gbxFiltering.PerformLayout();
             this.ResumeLayout(false);
@@ -265,5 +279,6 @@
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label label2;
         private Controls.BTN btnFilters;
+        private System.Windows.Forms.Label lblFormName;
     }
 }
