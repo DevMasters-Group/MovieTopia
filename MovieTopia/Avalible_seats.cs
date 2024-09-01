@@ -24,13 +24,13 @@ namespace MovieTopia
         public Avalible_seats(int scheduleID)
         {
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
+            
             InitializeComponent();
             ScheduleID = scheduleID;
             loadSeats(scheduleID);
+            pnlSeats.AutoScroll = true;
 
         }
-
-
 
         private void loadSeats(int ScheduleId)
         {
@@ -81,7 +81,6 @@ namespace MovieTopia
             }
         }
 
-
         private void DisplaySeats(int rows, int columns)
         {
             int seatWidth = 30;
@@ -92,43 +91,77 @@ namespace MovieTopia
             // Calculate left and top padding
             int totalWidth = columns * seatWidth + (columns - 1) * horizontalSpacing;
             int leftPadding = (this.ClientSize.Width - totalWidth) / 2;
-            int topPadding = (this.ClientSize.Height - (rows * seatHeight + (rows - 1) * verticalSpacing) - lblStage.Height - padding - lblTheater_num.Height) / 2;
+            //int topPadding = (this.ClientSize.Height - (rows * seatHeight + (rows - 1) * verticalSpacing) - lblStage.Height - padding * 4 - lblTheater_num.Height) / 2;
 
             // Center the theater number label
             lblTheater_num.Left = (this.ClientSize.Width - lblTheater_num.Width) / 2;
-            lblTheater_num.Top = topPadding;
+            
 
 
 
+            pnlSeats.Controls.Clear();
             // Add seats and row number labels
             for (int row = 0; row < rows; row++)
             {
                 for (int column = 0; column < columns; column++)
                 {
-                    // Add seat labels by using controll properties
-                    LBL colLabel = new LBL
+                    if(column >= 24)
                     {
-                        Text = ((char)('A' + column)).ToString(),
-                        Width = seatWidth,
-                        Height = seatHeight,
-                        Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 10),
-                    };
-                    this.Controls.Add(colLabel);
+                        // Add seat labels by using controll properties
+                        LBL colLabel = new LBL
+                        {
+                            Text = ((char)('A' + column)).ToString() + ((char)('A' + column)).ToString(),
+                            Width = seatWidth,
+                            Height = seatHeight,
+                            Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 10),
+                        };
+                        this.Controls.Add(colLabel);
+                        pnlSeats.Controls.Add(colLabel);
+                        // Add seat picture boxes by using controll properties
+                        PBX seat = new PBX
+                        {
+                            Name = ((row + 1).ToString() + (char)('A' + column)).ToString() + ((char)('A' + column)).ToString(),
+                            Width = seatWidth,
+                            Height = seatHeight,
+                            Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
+                            Image = Properties.Resources.Seat_Icon_Main1, // Default to available seat
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                            BackColor = Color.Purple,
+                        };
+                        // Add event handler for seat click so that when clicked on it will triger the click event
+                        seat.Click += new EventHandler(PBX_Click);
+                        this.Controls.Add(seat);
+                        pnlSeats.Controls.Add(seat);
+                    }
+                    else
+                    {
+                        // Add seat labels by using controll properties
+                        LBL colLabel = new LBL
+                        {
+                            Text = ((char)('A' + column)).ToString(),
+                            Width = seatWidth,
+                            Height = seatHeight,
+                            Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 10),
+                        };
+                        this.Controls.Add(colLabel);
+                        pnlSeats.Controls.Add(colLabel);
 
-                    // Add seat picture boxes by using controll properties
-                    PBX seat = new PBX
-                    {
-                        Name = ( (row + 1).ToString()+(char)('A' + column)).ToString() ,
-                        Width = seatWidth,
-                        Height = seatHeight,
-                        Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
-                        Image = Properties.Resources.Seat_Icon_Main1, // Default to available seat
-                        SizeMode = PictureBoxSizeMode.StretchImage,
-                        BackColor = Color.Purple,
-                    };
-                    // Add event handler for seat click so that when clicked on it will triger the click event
-                    seat.Click += new EventHandler(PBX_Click);
-                    this.Controls.Add(seat);
+                        // Add seat picture boxes by using controll properties
+                        PBX seat = new PBX
+                        {
+                            Name = ((row + 1).ToString() + (char)('A' + column)).ToString(),
+                            Width = seatWidth,
+                            Height = seatHeight,
+                            Location = new Point(leftPadding + column * (seatWidth + horizontalSpacing), lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
+                            Image = Properties.Resources.Seat_Icon_Main1, // Default to available seat
+                            SizeMode = PictureBoxSizeMode.StretchImage,
+                            BackColor = Color.Purple,
+                        };
+                        // Add event handler for seat click so that when clicked on it will triger the click event
+                        seat.Click += new EventHandler(PBX_Click);
+                        this.Controls.Add(seat);
+                        pnlSeats.Controls.Add(seat);
+                    }
                 }
                 // Add row number labels
                 LBL rowLabel = new LBL
@@ -139,21 +172,33 @@ namespace MovieTopia
                     Location = new Point(leftPadding - seatWidth - 10, lblTheater_num.Bottom + 40 + row * (seatHeight + verticalSpacing)),
                 };
                 this.Controls.Add(rowLabel);
+                pnlSeats.Controls.Add(rowLabel);
             }
 
             // Position the stage label
             lblStage.Left = (this.ClientSize.Width - lblStage.Width) / 2;
-            lblStage.Top = lblTheater_num.Bottom + 20 + rows * (seatHeight + verticalSpacing) + verticalSpacing;
+            lblStage.Top = this.ClientSize.Height / 2 + this.ClientSize.Height / 4 + this.ClientSize.Height / 10  + lblTheater_num.Top - btnSelect.Height;
+
+            // Position the panels
+            pnlSeats.Top = lblTheater_num.Top + lblTheater_num.Height + padding / 2;
+            pnlSeats.Left = padding;
+            //pnlSeats.Height = this.ClientSize.Height - this.ClientSize.Height/4 - 2 * padding - lblStage.Height - btnSelect.Height;
+            pnlSeats.Height = lblStage.Top - 4 * padding; ;
+            pnlSeats.Width = this.ClientSize.Width - 2 * padding - gbxGuide.Width;
+
+            
 
             // Position buttons under the stage label
             int totalBWidth = btnSelect.Width + btnReChoose.Width + padding;
 
-            btnSelect.Top = lblStage.Bottom + padding;
+            //btnSelect.Top = this.ClientSize.Height / 2 + this.ClientSize.Height / 3 + lblTheater_num.Top + padding;
+            btnSelect.Top =  lblStage.Top+padding;
             btnReChoose.Top = btnSelect.Top;
 
-            btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
-            btnReChoose.Left = btnSelect.Right + padding;
-
+            //btnSelect.Left = (this.ClientSize.Width - totalWidth) / 2;
+            btnReChoose.Left = (this.ClientSize.Width - totalWidth) / 2 - 2 * padding;
+            btnSelect.Left = btnReChoose.Right + padding;
+            //btnReChoose.Left = btnSelect.Right + padding;
 
         }
 
@@ -207,9 +252,7 @@ namespace MovieTopia
 
                     }
                 }
-            }
-
-            
+            }        
         }
 
         //Click event where we check if the seat is taken or not and change the Backcolor of the seat. Long with the imagige to show that it is selceted
@@ -236,7 +279,6 @@ namespace MovieTopia
                 seat.Image = Properties.Resources.logoIconLight;
                 seat.BackColor = Color.Red;
             }
-            
         }
 
 
@@ -303,9 +345,9 @@ namespace MovieTopia
 
                 if (selectedSeats.Count > 0)
                 {
-                    FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
-                    this.Hide();
-                    finalBookingsForm.ShowDialog();
+                   // FinalBookings finalBookingsForm = new FinalBookings(selectedSeats, ScheduleID);
+                   // this.Hide();
+                   // finalBookingsForm.ShowDialog();
                     this.Close();
                 }
             }

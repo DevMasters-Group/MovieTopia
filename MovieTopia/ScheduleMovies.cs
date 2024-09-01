@@ -51,6 +51,18 @@ namespace MovieTopia
             AdjustColumnWidths();
         }
 
+        private void dgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvData.Columns[e.ColumnIndex].Name == "Price")
+            {
+                if (e.Value != null)
+                {
+                    if (Double.TryParse(e.Value.ToString(), out double value))
+                        e.Value = "R " + value.ToString("f2");
+                }
+            }
+        }
+
         private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
@@ -86,6 +98,7 @@ namespace MovieTopia
                 //dgvData.DataSource = ds;
                 //dgvData.DataMember = "MovieSchedule";
                 dgvData.DataSource = ds.Tables[tblName].DefaultView;
+                dgvData.CellFormatting += dgvSchedules_CellFormatting;
             }
         }
 
@@ -106,6 +119,7 @@ namespace MovieTopia
             dgvData.Columns["TheatreName"].HeaderText = "Theatre";
             dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
             dgvData.Columns["GenreName"].HeaderText = "Genre";
+            dgvData.Columns["Duration"].HeaderText = "Duration (minutes)";
             dgvData.Columns["DateTime"].HeaderText = "Start Time";
             dgvData.Columns["EndDateTime"].HeaderText = "End Time";
             dgvData.Columns["CleanEndDateTime"].HeaderText = "Additional 30 Minutes for Cleaning";
@@ -486,7 +500,7 @@ namespace MovieTopia
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterText = txtFilter.Text;
+            string filterText = txtFilter.Text.Replace("[", "").Replace("]", "");
             DataTable dt = ds.Tables[tblName];
 
             if (string.IsNullOrEmpty(filterText))

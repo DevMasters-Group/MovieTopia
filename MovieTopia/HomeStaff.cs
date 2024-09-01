@@ -15,7 +15,7 @@ namespace MovieTopia
     public partial class HomeStaff : Form
     {
         private string DATABASE_URL;
-        private int padding = 20;
+        private int padding = 50;
         DataSet ds;
         SqlDataAdapter adapter;
         private int inc = 0;
@@ -37,40 +37,88 @@ namespace MovieTopia
 
         private void HomeStaff_Resize(object sender, EventArgs e)
         {
-            int totalContentWidth = 0;
+            AdjustDataGridViewSize();
+            AdjustColumnWidths();
 
-            // Sum up the width of all columns including their padding
-            foreach (DataGridViewColumn column in dgvSchedules.Columns)
+            int button = this.ClientSize.Width / 2;
+            btnSelectMovie.Top = this.ClientSize.Height - btnSelectMovie.Height - padding;
+            btnSelectMovie.Left = (button) - btnSelectMovie.Width - padding;
+            btnCancel.Top = this.ClientSize.Height - btnCancel.Height - padding;
+            btnCancel.Left = (button) + padding;
+
+            btnFilters.Left = cbxGenre.Left + cbxGenre.Width + padding / 2;
+            btnFilters.Top = 0 + ((gbxFiltering.Height / 2) - (btnFilters.Height / 2));
+            btnFilters.BringToFront();
+        }
+
+        private void AdjustDataGridViewSize()
+        {
+            dgvSchedules.Width = this.ClientSize.Width - (2 * padding);
+            dgvSchedules.Height = this.ClientSize.Height - pnlTop.Height - gbxFiltering.Height - btnCancel.Height - (padding*4);
+            gbxFiltering.Width = this.ClientSize.Width - (2 * padding);
+            gbxFiltering.Location = new Point(padding, (0 + pnlTop.Height + padding));
+            dgvSchedules.Location = new Point(padding, 0 + pnlTop.Height + (2*padding) + gbxFiltering.Height);
+            picLogo.Height = pnlTop.Height;
+        }
+
+        private void AdjustColumnWidths()
+        {
+            if (dgvSchedules.Columns.Count == 0)
+                return;
+
+            dgvSchedules.Columns["Code"].HeaderText = "Number";
+            dgvSchedules.Columns["MovieTitle"].HeaderText = "Movie Title";
+            dgvSchedules.Columns["Price"].HeaderText = "Ticket Price";
+            dgvSchedules.Columns["MovieDate"].HeaderText = "Viewing Date";
+            dgvSchedules.Columns["MovieTime"].HeaderText = "Viewing Time";
+            dgvSchedules.Columns["Duration"].HeaderText = "Movie Duration";
+            dgvSchedules.Columns["PG_Rating"].HeaderText = "PG Rating";
+            dgvSchedules.Columns["GenreName"].HeaderText = "Movie Genre";
+            dgvSchedules.Columns["TotalSeats"].HeaderText = "Total Seats";
+            dgvSchedules.Columns["BookedSeats"].HeaderText = "Booked Seats";
+
+            dgvSchedules.Columns["MovieTitle"].Width = (int)(dgvSchedules.Width * 0.12);
+            dgvSchedules.Columns["Theatre"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Price"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["MovieDate"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["MovieTime"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["Duration"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["PG_Rating"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["GenreName"].Width = (int)(dgvSchedules.Width * 0.1);
+            dgvSchedules.Columns["TotalSeats"].Width = (int)(dgvSchedules.Width * 0.075);
+            dgvSchedules.Columns["BookedSeats"].Width = (int)(dgvSchedules.Width * 0.075);
+
+            // optionally set specific columns to hidden
+            dgvSchedules.Columns["Code"].Visible = false;
+        }
+
+        private void dgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            if (dgvSchedules.Columns[e.ColumnIndex].Name == "Duration")
             {
-                totalContentWidth += column.Width;
+                if (e.Value != null)
+                {
+                    int hours = 0;
+                    if (int.TryParse(e.Value.ToString(), out int value))
+                    {
+                        for (int i = (int)e.Value; i >= 60; i -= 60)
+                        {
+                            ++hours;
+                        }
+                        e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours * 60).ToString() + " min";
+                    }
+                    
+                }
             }
-
-            // Optional: Add scrollbar width if the DataGridView has a vertical scrollbar
-            if (dgvSchedules.Controls.OfType<VScrollBar>().Any(v => v.Visible))
+            if (dgvSchedules.Columns[e.ColumnIndex].Name == "Price")
             {
-                totalContentWidth += SystemInformation.VerticalScrollBarWidth;
+                if (e.Value != null)
+                {
+                    if (Double.TryParse(e.Value.ToString(), out double value))
+                        e.Value = "R " + value.ToString("f2");
+                }
             }
-
-            int newWidth = this.ClientSize.Width - 70; // 100px from each side
-
-            // Ensure the new width is not less than a minimum width
-            if (newWidth > 0)
-            {
-                if (totalContentWidth <= newWidth)
-                dgvSchedules.Width = newWidth;
-                gbxFiltering.Width = newWidth;
-            }
-            else
-            {
-                dgvSchedules.Width = totalContentWidth;
-                gbxFiltering.Width = totalContentWidth;
-            }
-
-            int button = this.ClientSize.Width / 4;
-            btnSelectMovie.Top = this.ClientSize.Height - btnSelectMovie.Height - 50;
-            btnSelectMovie.Left = (button * 2) - 190;
-            btnCancel.Top = this.ClientSize.Height - btnCancel.Height - 50;
-            btnCancel.Left = (button * 2) + 20;
         }
 
         private void LoadData(int GenreID, string dateFilter)
@@ -105,7 +153,7 @@ namespace MovieTopia
                 LEFT JOIN
                     Ticket ticket ON ms.MovieScheduleID = ticket.MovieScheduleID
                 WHERE
-                    --ms.DateTime > GETDATE() AND
+                    ms.DateTime > GETDATE() AND
                     (@GenreID = 0 OR m.GenreID = @GenreID) AND
                     (@DateFilter IS NULL OR CAST(ms.DateTime AS DATE) = CAST(@DateFilter AS DATE))
                 GROUP BY
@@ -121,19 +169,16 @@ namespace MovieTopia
                     t.NumCols
                 HAVING
                     COUNT(ticket.SeatID) < (t.NumRows * t.NumCols)";
-                // display only movie data that is still yet to be played
 
-                // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
 
-                // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn);
                 adapter.SelectCommand.Parameters.AddWithValue("@GenreID", GenreID);
 
                 if (string.IsNullOrWhiteSpace(dateFilter))
                 {
-                    adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value); // Use DBNull for empty filter
+                    adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value);
                 }
                 else
                 {
@@ -145,7 +190,6 @@ namespace MovieTopia
                     }
                     else
                     {
-                        // Handle invalid date format if necessary
                         adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value);
                     }
                 }
@@ -161,12 +205,30 @@ namespace MovieTopia
                 // fill the datagrid
                 dgvSchedules.DataSource = ds;
                 dgvSchedules.DataMember = "MovieSchedule";
+                dgvSchedules.CellFormatting += dgvSchedules_CellFormatting;
 
-                dgvSchedules.Columns[0].Width = 60;
-                dgvSchedules.Columns[1].Width = 175;
-                dgvSchedules.Columns[2].Width = 75;
-                dgvSchedules.Columns[3].Width = 75;
-                dgvSchedules.Columns["Price"].DefaultCellStyle.Format = "'R' 0.00";
+                if (dgvSchedules.Rows.Count >= 1)
+                {
+                    return;
+                }
+                else if (GenreID == 0 && dateFilter == "")
+                {
+                    MessageBox.Show("There are currently no movies scheduled for viewing");
+                }
+                else if (GenreID != 0 && dateFilter != "")
+                {
+                    int spaceIndex = cbxGenre.SelectedItem.ToString().IndexOf(' ');
+                    MessageBox.Show("There are currently no movies scheduled for...\n Genre: " + cbxGenre.SelectedItem.ToString().Substring(spaceIndex + 1) + "\nand Date: " + dateFilter);
+                }
+                else if (dateFilter != "")
+                {
+                    MessageBox.Show("There are no movies currently scheduled on: " + dateFilter);
+                }
+                else
+                {
+                    int spaceIndex = cbxGenre.SelectedItem.ToString().IndexOf(' ');
+                    MessageBox.Show("There are no movies currently scheduled for genre: " + cbxGenre.SelectedItem.ToString().Substring(spaceIndex + 1));
+                }
             }
         }
 
@@ -189,8 +251,8 @@ namespace MovieTopia
                             Movie m ON g.GenreID = m.GenreID
                         JOIN
                             MovieSchedule ms ON ms.MovieID = m.MovieID
-                        --WHERE
-                            --ms.DateTime > GETDATE()
+                        WHERE
+                            ms.DateTime > GETDATE()
                         GROUP BY
                             g.GenreID,
                             g.GenreName";
@@ -248,7 +310,7 @@ namespace MovieTopia
             {
                 DataGridViewRow selectedRow = dgvSchedules.SelectedRows[0];  // get the selected row
 
-                int movieScheduleID = Convert.ToInt32(selectedRow.Cells[0].Value);
+                int movieScheduleID = Convert.ToInt32(selectedRow.Cells["Code"].Value);
 
                 Avalible_seats SeatForm = new Avalible_seats(movieScheduleID);
                 this.Hide();
@@ -264,7 +326,7 @@ namespace MovieTopia
         {
             if (cbxGenre.SelectedIndex < 0)
             {
-                MessageBox.Show("Please select a genre to filter by!");
+                //MessageBox.Show("Please select a genre to filter by!");
                 return;
             }
             else
@@ -312,6 +374,7 @@ namespace MovieTopia
         {
             genre = 0;
             date = "";
+            cbxGenre.SelectedIndex = -1;
             LoadData(genre, date);
         }
     }

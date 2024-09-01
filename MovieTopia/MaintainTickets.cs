@@ -54,6 +54,32 @@ namespace MovieTopia
             AdjustColumnWidths();
         }
 
+        private void dgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            if (dgvData.Columns[e.ColumnIndex].Name == "Duration")
+            {
+                if (e.Value != null)
+                {
+                    int hours = 0;
+                    for (int i = (int)e.Value; i >= 60; i -= 60)
+                    {
+                        ++hours;
+                    }
+                    e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours * 60).ToString() + " min";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dgvData.Columns[e.ColumnIndex].Name == "Price")
+            {
+                if (e.Value != null)
+                {
+                    if (Double.TryParse(e.Value.ToString(), out double value))
+                        e.Value = "R " + value.ToString("f2");
+                }
+            }
+        }
+
         private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
@@ -98,10 +124,6 @@ namespace MovieTopia
                 // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlTicket, conn); ;
                 adapter.Fill(ds, "Ticket");
-                //adapter.SelectCommand = new SqlCommand(sqlMovies, conn); ;
-                //adapter.Fill(ds, "Movie");
-                //adapter.SelectCommand = new SqlCommand(sqlTheatres, conn); ;
-                //adapter.Fill(ds, "Theatre");
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedule, conn); ;
                 adapter.Fill(ds, "MovieSchedule");
                 adapter.SelectCommand = new SqlCommand(sqlSeats, conn); ;
@@ -111,6 +133,7 @@ namespace MovieTopia
                 //dgvData.DataSource = ds;
                 //dgvData.DataMember = "Ticket";
                 dgvData.DataSource = ds.Tables[tblName].DefaultView;
+                dgvData.CellFormatting += dgvSchedules_CellFormatting;
             }
         }
 
@@ -201,32 +224,52 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sqlCheckSeat, connection);
-
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieScheduleID"]).SelectedItem;
                     command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                     var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                     command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                    //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
-                    command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
-                    command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
-                    command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
 
-                    try
-                    { 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Created Successfully", "Success");
-                    }
-                    catch (SqlException)
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error");
+                        
+                        if (reader.HasRows)
+                        {
+                            // Data exists
+                            MessageBox.Show("Ticket can't be added since a ticket for the scheduled movie has already been booked for the desired seat!", "Error");
+                            reader.Close();
+                            connection.Close();
+                        }
+                        else
+                        {
+                            reader.Close();
+                            command = new SqlCommand(sql, connection);
+
+                            command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
+                            command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
+                            //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
+                            command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
+                            command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
+                            command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
+                            command.Parameters.AddWithValue("@CustomerPhoneNumber", ((TextBox)data["CustomerPhoneNumber"]).Text);
+
+                            try
+                            {
+                                command.ExecuteNonQuery();
+                                MessageBox.Show("Created Successfully", "Success");
+                                connection.Close();
+                            }
+                            catch (SqlException)
+                            {
+                                MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                                connection.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Error");
+                                connection.Close();
+                            }
+                        }
                     }
                 }
                 LoadData();
@@ -280,16 +323,11 @@ namespace MovieTopia
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                     {
                         SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
 
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
                         var selectedMovie = (KeyValuePair<int, string>)((ComboBox)data["MovieScheduleID"]).SelectedItem;
                         command.Parameters.AddWithValue("@MovieScheduleID", selectedMovie.Key);
                         var selectedSeat = (KeyValuePair<int, string>)((ComboBox)data["SeatID"]).SelectedItem;
                         command.Parameters.AddWithValue("@SeatID", selectedSeat.Key);
-                        //command.Parameters.AddWithValue("@Price", ((NumericUpDown)data["Price"]).Value);
                         command.Parameters.AddWithValue("@PurchaseDateTime", ((DateTimePicker)data["PurchaseDateTime"]).Text);
                         command.Parameters.AddWithValue("@CustomerFirstName", ((TextBox)data["CustomerFirstName"]).Text);
                         command.Parameters.AddWithValue("@CustomerLastName", ((TextBox)data["CustomerLastName"]).Text);
@@ -304,14 +342,13 @@ namespace MovieTopia
                         }
                         catch (SqlException)
                         {
-                            MessageBox.Show("This seat has already been booked for the selected Movie Schedule.", "Error");
+                            MessageBox.Show("Ticket can't be changed since a ticket for the scheduled movie has already been booked for the desired seat!", "Error");
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Error");
                         }
                     }
-
                     LoadData();
                 }
             }
@@ -339,11 +376,7 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
 
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     command.Parameters.AddWithValue("@TicketID", selectedRow.Cells["TicketID"].Value);
 
                     try
@@ -357,7 +390,6 @@ namespace MovieTopia
                         MessageBox.Show(ex.Message, "Error");
                     }
                 }
-
                 LoadData();
             }
             else
@@ -373,7 +405,7 @@ namespace MovieTopia
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterText = txtFilter.Text;
+            string filterText = txtFilter.Text.Replace("[", "").Replace("]", "");
             DataTable dt = ds.Tables[tblName];
 
             if (string.IsNullOrEmpty(filterText))
