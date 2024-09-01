@@ -88,7 +88,7 @@ namespace MovieTopia
                 int movieID = 0;
                 int theatreID = 0;
                 int price = 0;
-                DateTime scheduleDateTime;
+                DateTime scheduleDateTime = DateTime.Today;
 
                 if (reader.Read())
                 {
@@ -103,7 +103,7 @@ namespace MovieTopia
                 // Get the MovieName from the Movie table
                 string sqlMovie = @"
             SELECT
-                Title
+                Title, Duration
             FROM
                 Movie
             WHERE
@@ -112,8 +112,17 @@ namespace MovieTopia
                 command = new SqlCommand(sqlMovie, conn);
                 command.Parameters.AddWithValue("@MovieID", movieID);
 
-                string movieName = command.ExecuteScalar().ToString();
+                SqlDataReader reader2 = command.ExecuteReader();
 
+                string movieName = "";
+                int duration = 0;
+
+                if (reader2.Read())
+                {
+                    movieName = Convert.ToString(reader2["Title"]);
+                    duration = Convert.ToInt32(reader2["Duration"]);
+                }
+                reader2.Close();
                 // Get the TheatreName from the Theatre table
                 string sqlTheatre = @"
             SELECT
@@ -128,14 +137,20 @@ namespace MovieTopia
 
                 string theatreName = command.ExecuteScalar().ToString();
 
-                // Display the movie name in the textbox - txtMovie
-                txtMovie.Text = movieName;
+                int hours = 0;
+                for (int i = duration; i >= 60; i -= 60)
+                {
+                    ++hours;
+                }
+                string durationS = hours.ToString() + " Hours, and " + (duration - hours * 60).ToString() + " min";
 
-                // Display the theatre name in the textbox - txtTheatre
-                txtTheatre.Text = theatreName;
-                txtPrice.Text = priceT.ToString();
+                lblMovie.Text = movieName;
+                lblTheatre.Text = theatreName;
+                lblTicket.Text = "R " + priceT.ToString() + ",00";
+                lblDate.Text = scheduleDateTime.ToString("dd MMM YYYY");
+                lblTime.Text = scheduleDateTime.ToString("hh:ss tt");
+                lblDuration.Text = durationS.ToString();
 
-                // Add all the seat names to the richtextbox - rchSeats
                 DisplaySeatsInRichTextBox();
             }
         }
@@ -144,8 +159,8 @@ namespace MovieTopia
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("The Seats you have selected are:\n");
-            sb.AppendLine("Seat Row\t\tSeat Column");
-            sb.AppendLine("========\t\t===========");
+            sb.AppendLine("Seat Row\t\tSeat Column\t\tSeat Price");
+            sb.AppendLine("========\t\t===========\t\t==========");
             int count = 0;
 
             foreach (string seatName in SeatNames)
@@ -155,13 +170,17 @@ namespace MovieTopia
                     string seatRow = seatName.Substring(0, 1); // First character as the row
                     string seatNumber = seatName.Substring(1); // Remaining characters as the number
 
-                    sb.AppendLine($"{seatRow}\t\t\t{seatNumber}");
+                    sb.AppendLine($"{seatRow}\t\t\t{seatNumber}\t\t\t{lblTicket.Text}");
                     ++count;
                 }
             }
 
+            sb.AppendLine("");
+            sb.AppendLine("======================================================");
+            sb.AppendLine("Amount of Seats: \t" + count + "\t\tTotal: R" + (count * priceT));
+
             rchSeats.Text = sb.ToString();
-            txtTotal.Text = (priceT * count).ToString();
+            lblPrice.Text = "R " + (priceT * count).ToString() + ",00";
         }
 
 
@@ -280,14 +299,21 @@ namespace MovieTopia
                         if (saved)
                         {
                             string result = string.Join(", ", SeatNames);
-                            MessageBox.Show("Your tickets for the following have been booked: \n\n" +
+                            DialogResult dialogResult = MessageBox.Show("Your tickets for the following have been booked: \n\n" +
                                 txtName.Text + " " + txtSurname.Text + "\n" +
                                 "Cell number: " + txtCellNum.Text + "\n\n" +
-                                "Movie Name: " + txtMovie.Text + "\n" +
-                                "Theatre: " + txtTheatre.Text + "\n" +
-                                "At R" + txtPrice.Text + " per ticket\n" +
-                                "For seats: " + result, "Ticket Confirmation");
+                                "Movie Name: " + lblMovie.Text + "\n" +
+                                "Theatre: " + lblTheatre.Text + "\n" +
+                                "At " + lblTicket.Text + " per ticket\n" +
+                                "For seats: " + result, "Ticket Confirmation", MessageBoxButtons.OK);
+
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                MessageBox.Show("Please collect your ticket and receipt at the register.","All Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+                            }
                         }
+
                     }
                     else
                     {
@@ -339,6 +365,11 @@ namespace MovieTopia
             {
                 return;
             }
+        }
+
+        private void txtCellNum_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
