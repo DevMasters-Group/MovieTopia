@@ -112,7 +112,6 @@ namespace MovieTopia
             return letter;
         }
 
-
         private void btnNew_Click(object sender, EventArgs e)
         {
             Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
@@ -167,7 +166,7 @@ namespace MovieTopia
                         int neededAmount = columns*rows;
                         int seatCount = (int)command1.ExecuteScalar();
 
-                        if (neededAmount == seatCount)
+                        if (neededAmount <= seatCount)
                             Validated = true;
 
                         connection.Close();
@@ -175,11 +174,7 @@ namespace MovieTopia
                     if (Validated)
                     {
                         SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
 
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
                         command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
                         command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
                         command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
@@ -200,13 +195,12 @@ namespace MovieTopia
                         {
                             MessageBox.Show(ex.Message, "Error");
                         }
-                    } else
+                    }
+                    else
                     {
                         MessageBox.Show("You can't add a theatre with that amount of rows and columns because no such seats exist", "Unsucessfull", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    
                 }
-
                 LoadData();
             }
         }
@@ -229,6 +223,12 @@ namespace MovieTopia
                 {
                     Dictionary<string, Control> data = detailsForm.controlsDict;
 
+                    string sqlValidate = @"SELECT COUNT(*) 
+                       FROM Seat 
+                       WHERE SeatColumn BETWEEN 'A' AND @SeatColumn 
+                       AND SeatRow > 0 
+                       AND SeatRow <= @SeatRow;";
+
                     string sql = @"
                         UPDATE 
                             Theatre
@@ -240,37 +240,59 @@ namespace MovieTopia
                         WHERE
                             TheatreID = @TheatreID;
                         ";
+                    bool Validated = false;
 
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                     {
-                        SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
-
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
-                        command.Parameters.AddWithValue("@TheatreID", ((TextBox)data["TheatreID"]).Text);
-                        command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
-                        command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
-                        command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
-                        command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
-
-                        try
+                        using (SqlCommand command1 = new SqlCommand(sqlValidate, connection))
                         {
+                            int columns = int.Parse(((NumericUpDown)data["NumCols"]).Text);
+                            int rows = int.Parse(((NumericUpDown)data["NumRows"]).Text);
+                            string Letters = ConvertNumberToLetter(columns);
+
+                            command1.Parameters.AddWithValue("@SeatColumn", Letters);
+                            command1.Parameters.AddWithValue("@SeatRow", rows);
+
                             connection.Open();
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Updated Successfully", "Success");
+
+                            int neededAmount = columns * rows;
+                            int seatCount = (int)command1.ExecuteScalar();
+
+                            if (neededAmount <= seatCount)
+                                Validated = true;
+
+                            connection.Close();
                         }
-                        catch (SqlException)
+                        if (Validated)
                         {
-                            MessageBox.Show("The entered Theatre name already exits", "Error");
+                            SqlCommand command = new SqlCommand(sql, connection);
+
+                            command.Parameters.AddWithValue("@TheatreID", ((TextBox)data["TheatreID"]).Text);
+                            command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
+                            command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
+                            command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
+                            command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
+
+                            try
+                            {
+                                connection.Open();
+                                command.ExecuteNonQuery();
+                                MessageBox.Show("Updated Successfully", "Success");
+                            }
+                            catch (SqlException)
+                            {
+                                MessageBox.Show("The entered Theatre name already exits", "Error");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message, "Error");
+                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            MessageBox.Show(ex.Message, "Error");
+                            MessageBox.Show("You can't add a theatre with that amount of rows and columns because no such seats exist", "Unsucessfull", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
                     LoadData();
                 }
             }
@@ -298,11 +320,7 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
 
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     command.Parameters.AddWithValue("@TheatreID", selectedRow.Cells["TheatreID"].Value);
 
                     try
@@ -320,7 +338,6 @@ namespace MovieTopia
                         MessageBox.Show(ex.Message, "Error");
                     }
                 }
-
                 LoadData();
             }
             else
