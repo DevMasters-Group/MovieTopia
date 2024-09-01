@@ -81,9 +81,13 @@ namespace MovieTopia
 
         private void btnCStaff_Click(object sender, EventArgs e)
         {
-            HomeStaff homeStaff = new HomeStaff();
+            //HomeStaff homeStaff = new HomeStaff();
+            //this.Hide();
+            //homeStaff.ShowDialog();
+            //this.Show();
+            SellTickets sellTickets = new SellTickets();
             this.Hide();
-            homeStaff.ShowDialog();
+            sellTickets.ShowDialog();
             this.Show();
         }
 
