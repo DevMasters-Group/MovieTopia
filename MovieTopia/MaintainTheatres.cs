@@ -99,6 +99,20 @@ namespace MovieTopia
             //dgvData.Columns["GenreID"].Visible = false;
         }
 
+        public static string ConvertNumberToLetter(int num)
+        {
+            int dividend = num;
+            string letter = String.Empty;
+            while (dividend > 0)
+            {
+                int modulo = (dividend - 1) % 26;
+                letter = Convert.ToChar('A' + modulo) + letter;
+                dividend = (dividend - modulo) / 26;
+            }
+            return letter;
+        }
+
+
         private void btnNew_Click(object sender, EventArgs e)
         {
             Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
@@ -112,6 +126,13 @@ namespace MovieTopia
             if (result == DialogResult.OK)
             {
                 Dictionary<string, Control> data = detailsForm.controlsDict;
+
+                string sqlValidate = @"SELECT COUNT(*) 
+                       FROM Seat 
+                       WHERE SeatColumn BETWEEN 'A' AND @SeatColumn 
+                       AND SeatRow > 0 
+                       AND SeatRow <= @SeatRow;";
+
 
                 string sql = @"
                     INSERT INTO 
@@ -128,34 +149,62 @@ namespace MovieTopia
                             @NumRows,
                             @NumCols
                         );";
+                bool Validated = false;
 
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
-                    SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
-
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
-                    command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
-                    command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
-                    command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
-                    command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
-
-                    try
+                    using (SqlCommand command1 = new SqlCommand(sqlValidate, connection))
                     {
+                        int columns = int.Parse(((NumericUpDown)data["NumCols"]).Text);
+                        int rows = int.Parse(((NumericUpDown)data["NumRows"]).Text);
+                        string Letters = ConvertNumberToLetter(columns);
+
+                        command1.Parameters.AddWithValue("@SeatColumn", Letters);
+                        command1.Parameters.AddWithValue("@SeatRow", rows);
+
                         connection.Open();
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Created Successfully", "Success");
+
+                        int neededAmount = columns*rows;
+                        int seatCount = (int)command1.ExecuteScalar();
+
+                        if (neededAmount == seatCount)
+                            Validated = true;
+
+                        connection.Close();
                     }
-                    catch (SqlException)
+                    if (Validated)
                     {
-                        MessageBox.Show("The entered Theatre name already exits", "Error");
-                    }
-                    catch (Exception ex)
+                        SqlCommand command = new SqlCommand(sql, connection);
+                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
+                        //command.Parameters["@ID"].Value = customerID;
+
+                        // Use AddWithValue to assign Demographics.
+                        // SQL Server will implicitly convert strings into XML.
+                        command.Parameters.AddWithValue("@TheatreName", ((TextBox)data["TheatreName"]).Text);
+                        command.Parameters.AddWithValue("@Active", ((CheckBox)data["Active"]).Checked);
+                        command.Parameters.AddWithValue("@NumRows", int.Parse(((NumericUpDown)data["NumRows"]).Text));
+                        command.Parameters.AddWithValue("@NumCols", int.Parse(((NumericUpDown)data["NumCols"]).Text));
+
+                        try
+                        {
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Created Successfully", "Success");
+                            connection.Close();
+                        }
+                        catch (SqlException)
+                        {
+                            MessageBox.Show("The entered Theatre name already exits", "Error");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error");
+                        }
+                    } else
                     {
-                        MessageBox.Show(ex.Message, "Error");
+                        MessageBox.Show("You can't add a theatre with that amount of rows and columns because no such seats exist", "Unsucessfull", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    
                 }
 
                 LoadData();

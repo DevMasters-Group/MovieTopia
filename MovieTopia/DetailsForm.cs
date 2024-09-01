@@ -603,5 +603,10 @@ namespace MovieTopia
                 //MessageBox.Show("Please correct the validation errors before closing the form.");
             }
         }
+
+        private void DetailsForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
