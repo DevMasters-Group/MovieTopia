@@ -39,8 +39,8 @@
             this.cbxAsc = new System.Windows.Forms.CheckBox();
             this.cbxDesc = new System.Windows.Forms.CheckBox();
             this.pnlReport = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblEndReport = new System.Windows.Forms.Label();
+            this.lblLine2 = new System.Windows.Forms.Label();
             this.dgvReport = new System.Windows.Forms.DataGridView();
             this.lblLine1 = new System.Windows.Forms.Label();
             this.lblGenDate = new System.Windows.Forms.Label();
@@ -55,6 +55,7 @@
             this.cbxMonthly = new System.Windows.Forms.CheckBox();
             this.cbxQuarterly = new System.Windows.Forms.CheckBox();
             this.cbbYear = new System.Windows.Forms.ComboBox();
+            this.btnReturn = new MovieTopia.Controls.BTN();
             this.btnSave = new MovieTopia.Controls.BTN();
             this.btnGenerate = new MovieTopia.Controls.BTN();
             this.pnlReport.SuspendLayout();
@@ -166,8 +167,8 @@
             this.pnlReport.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pnlReport.BackColor = System.Drawing.SystemColors.Control;
             this.pnlReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlReport.Controls.Add(this.label2);
-            this.pnlReport.Controls.Add(this.label1);
+            this.pnlReport.Controls.Add(this.lblEndReport);
+            this.pnlReport.Controls.Add(this.lblLine2);
             this.pnlReport.Controls.Add(this.dgvReport);
             this.pnlReport.Controls.Add(this.lblLine1);
             this.pnlReport.Controls.Add(this.lblGenDate);
@@ -177,28 +178,29 @@
             this.pnlReport.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlReport.Location = new System.Drawing.Point(11, 280);
             this.pnlReport.Name = "pnlReport";
-            this.pnlReport.Size = new System.Drawing.Size(915, 538);
+            this.pnlReport.Size = new System.Drawing.Size(915, 588);
             this.pnlReport.TabIndex = 10;
             this.pnlReport.Visible = false;
             // 
-            // label2
+            // lblEndReport
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(455, 521);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 20);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "END OF REPORT";
+            this.lblEndReport.AutoSize = true;
+            this.lblEndReport.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEndReport.Location = new System.Drawing.Point(431, 524);
+            this.lblEndReport.Name = "lblEndReport";
+            this.lblEndReport.Size = new System.Drawing.Size(115, 20);
+            this.lblEndReport.TabIndex = 7;
+            this.lblEndReport.Text = "END OF REPORT";
             // 
-            // label1
+            // lblLine2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(84, 508);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(784, 16);
-            this.label1.TabIndex = 6;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.lblLine2.AutoSize = true;
+            this.lblLine2.Location = new System.Drawing.Point(84, 495);
+            this.lblLine2.Name = "lblLine2";
+            this.lblLine2.Size = new System.Drawing.Size(784, 16);
+            this.lblLine2.TabIndex = 6;
+            this.lblLine2.Text = resources.GetString("lblLine2.Text");
+            this.lblLine2.Click += new System.EventHandler(this.lblLine2_Click);
             // 
             // dgvReport
             // 
@@ -289,9 +291,9 @@
             this.groupBox1.Controls.Add(this.cbxDesc);
             this.groupBox1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(14, 96);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(256, 46);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
@@ -315,9 +317,9 @@
             this.groupBox2.Controls.Add(this.cbxQuarterly);
             this.groupBox2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(14, 46);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(254, 91);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
@@ -356,6 +358,26 @@
             this.cbbYear.Name = "cbbYear";
             this.cbbYear.Size = new System.Drawing.Size(121, 24);
             this.cbbYear.TabIndex = 12;
+            // 
+            // btnReturn
+            // 
+            this.btnReturn.BackColor = System.Drawing.Color.DimGray;
+            this.btnReturn.BackgroundColor = System.Drawing.Color.DimGray;
+            this.btnReturn.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.btnReturn.BorderRadius = 40;
+            this.btnReturn.BorderSize = 0;
+            this.btnReturn.FlatAppearance.BorderSize = 0;
+            this.btnReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReturn.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReturn.ForeColor = System.Drawing.Color.White;
+            this.btnReturn.Location = new System.Drawing.Point(11, 887);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(150, 40);
+            this.btnReturn.TabIndex = 15;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.TextColor = System.Drawing.Color.White;
+            this.btnReturn.UseVisualStyleBackColor = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // btnSave
             // 
@@ -405,7 +427,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(948, 956);
+            this.ClientSize = new System.Drawing.Size(1127, 956);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.pnlTicketSales);
             this.Controls.Add(this.pnlTop10);
@@ -419,6 +442,7 @@
             this.Text = "RequestReports";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.RequestReports_Load_1);
+            this.Resize += new System.EventHandler(this.RequestReports_Resize);
             this.pnlReport.ResumeLayout(false);
             this.pnlReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReport)).EndInit();
@@ -460,10 +484,11 @@
         private System.Windows.Forms.CheckBox cbxQuarterly;
         private System.Windows.Forms.CheckBox cbxMonthly;
         private System.Windows.Forms.ComboBox cbbYear;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblEndReport;
+        private System.Windows.Forms.Label lblLine2;
         private Controls.BTN btnSave;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private Controls.BTN btnReturn;
     }
 }
