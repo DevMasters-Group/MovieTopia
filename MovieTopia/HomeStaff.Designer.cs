@@ -33,11 +33,11 @@
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.gbxFiltering = new System.Windows.Forms.GroupBox();
+            this.btnFilters = new MovieTopia.Controls.BTN();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.cbxGenre = new System.Windows.Forms.ComboBox();
-            this.btnFilters = new MovieTopia.Controls.BTN();
             this.btnCancel = new MovieTopia.Controls.BTN();
             this.btnSelectMovie = new MovieTopia.Controls.BTN();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSchedules)).BeginInit();
@@ -98,45 +98,6 @@
             this.gbxFiltering.TabStop = false;
             this.gbxFiltering.Text = "Selection";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 88);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(213, 17);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Select a date to filter movies by: ";
-            // 
-            // dtpDate
-            // 
-            this.dtpDate.Location = new System.Drawing.Point(313, 83);
-            this.dtpDate.MinDate = new System.DateTime(2024, 8, 28, 0, 0, 0, 0);
-            this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(268, 22);
-            this.dtpDate.TabIndex = 2;
-            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(266, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Select a genre to filter movies by Genre: ";
-            // 
-            // cbxGenre
-            // 
-            this.cbxGenre.FormattingEnabled = true;
-            this.cbxGenre.Location = new System.Drawing.Point(313, 33);
-            this.cbxGenre.Name = "cbxGenre";
-            this.cbxGenre.Size = new System.Drawing.Size(268, 24);
-            this.cbxGenre.TabIndex = 0;
-            this.cbxGenre.Text = "* Please Select *";
-            this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
-            // 
             // btnFilters
             // 
             this.btnFilters.BackColor = System.Drawing.Color.RoyalBlue;
@@ -156,6 +117,45 @@
             this.btnFilters.TextColor = System.Drawing.Color.White;
             this.btnFilters.UseVisualStyleBackColor = false;
             this.btnFilters.Click += new System.EventHandler(this.btnFilters_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(6, 88);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(310, 21);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Select a date to filter movies by: ";
+            // 
+            // dtpDate
+            // 
+            this.dtpDate.Location = new System.Drawing.Point(313, 83);
+            this.dtpDate.MinDate = new System.DateTime(2024, 8, 28, 0, 0, 0, 0);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(268, 22);
+            this.dtpDate.TabIndex = 2;
+            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(385, 21);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Select a genre to filter movies by Genre: ";
+            // 
+            // cbxGenre
+            // 
+            this.cbxGenre.FormattingEnabled = true;
+            this.cbxGenre.Location = new System.Drawing.Point(313, 33);
+            this.cbxGenre.Name = "cbxGenre";
+            this.cbxGenre.Size = new System.Drawing.Size(268, 24);
+            this.cbxGenre.TabIndex = 0;
+            this.cbxGenre.Text = "* Please Select *";
+            this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
             // 
             // btnCancel
             // 
