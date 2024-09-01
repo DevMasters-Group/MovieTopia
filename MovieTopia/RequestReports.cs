@@ -29,6 +29,8 @@ namespace MovieTopia
         {
             DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
             InitializeComponent();
+
+            btnReturn.Font = new Font("Arial", 12, FontStyle.Regular);
         }
 
         private void RequestReports_Resize(object sender, EventArgs e)
