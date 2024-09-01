@@ -54,20 +54,6 @@ namespace MovieTopia
 
         private void dgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-
-            if (dgvData.Columns[e.ColumnIndex].Name == "Duration")
-            {
-                if (e.Value != null)
-                {
-                    int hours = 0;
-                    for (int i = (int)e.Value; i >= 60; i -= 60)
-                    {
-                        ++hours;
-                    }
-                    e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours * 60).ToString() + " min";
-                    e.FormattingApplied = true;
-                }
-            }
             if (dgvData.Columns[e.ColumnIndex].Name == "Price")
             {
                 if (e.Value != null)
@@ -126,6 +112,7 @@ namespace MovieTopia
             dgvData.Columns["MovieID"].HeaderText = "Movie ID";
             dgvData.Columns["PG_Rating"].HeaderText = "PG Rating";
             dgvData.Columns["GenreName"].HeaderText = "Genre";
+            dgvData.Columns["Duration"].HeaderText = "Duration (minutes)";
 
             dgvData.Columns["MovieID"].Width = (int)(dgvData.Width * 0.1);
             //dgvData.Columns["GenreID"].Width = (int)(dgvData.Width * 0.1);
