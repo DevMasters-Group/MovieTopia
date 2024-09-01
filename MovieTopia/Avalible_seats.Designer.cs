@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Avalible_seats));
             this.lblStage = new System.Windows.Forms.Label();
             this.lblTheater_num = new System.Windows.Forms.Label();
             this.gbxGuide = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnReChoose = new MovieTopia.Controls.BTN();
             this.btnSelect = new MovieTopia.Controls.BTN();
             this.gbxGuide.SuspendLayout();
@@ -85,6 +86,34 @@
             this.gbxGuide.TabStop = false;
             this.gbxGuide.Text = "Seat Booking Guide";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(72, 228);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 18);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Available Seats";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(72, 144);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(121, 18);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Selected Seats";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(72, 57);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(184, 18);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Previously booked seat";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
             // pictureBox3
             // 
             this.pictureBox3.BackgroundImage = global::MovieTopia.Properties.Resources.logoIconDark;
@@ -115,34 +144,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(50, 50);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(72, 57);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 18);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Previously booked seat";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(72, 144);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(121, 18);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Selected Seats";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(72, 228);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 18);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Available Seats";
             // 
             // btnReChoose
             // 
@@ -200,6 +201,7 @@
             this.Controls.Add(this.lblStage);
             this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.lblTheater_num);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1500, 798);
             this.Name = "Avalible_seats";
