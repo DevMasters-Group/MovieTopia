@@ -46,10 +46,7 @@ namespace MovieTopia
             btnCancel.Top = this.ClientSize.Height - btnCancel.Height - padding;
             btnCancel.Left = (button) + padding;
 
-            if ((gbxFiltering.Width / 3) < 500)
-                btnFilters.Left = 500;
-            else
-                btnFilters.Left = 0 + (gbxFiltering.Width / 3);
+            btnFilters.Left = cbxGenre.Left + cbxGenre.Width + padding / 2;
             btnFilters.Top = 0 + ((gbxFiltering.Height / 2) - (btnFilters.Height / 2));
             btnFilters.BringToFront();
         }
@@ -207,7 +204,7 @@ namespace MovieTopia
                 dgvSchedules.DataMember = "MovieSchedule";
                 dgvSchedules.CellFormatting += dgvSchedules_CellFormatting;
 
-                if (dgvSchedules.Rows.Count > 1)
+                if (dgvSchedules.Rows.Count >= 1)
                 {
                     return;
                 }

@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeStaff));
             this.dgvSchedules = new System.Windows.Forms.DataGridView();
             this.picLogo = new System.Windows.Forms.PictureBox();
@@ -51,11 +54,35 @@
             this.dgvSchedules.AllowUserToAddRows = false;
             this.dgvSchedules.AllowUserToDeleteRows = false;
             this.dgvSchedules.BackgroundColor = System.Drawing.Color.LightPink;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSchedules.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvSchedules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvSchedules.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvSchedules.Location = new System.Drawing.Point(42, 313);
             this.dgvSchedules.MultiSelect = false;
             this.dgvSchedules.Name = "dgvSchedules";
             this.dgvSchedules.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSchedules.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvSchedules.RowHeadersWidth = 51;
             this.dgvSchedules.RowTemplate.Height = 24;
             this.dgvSchedules.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -91,6 +118,7 @@
             this.gbxFiltering.Controls.Add(this.dtpDate);
             this.gbxFiltering.Controls.Add(this.label1);
             this.gbxFiltering.Controls.Add(this.cbxGenre);
+            this.gbxFiltering.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxFiltering.Location = new System.Drawing.Point(42, 126);
             this.gbxFiltering.Name = "gbxFiltering";
             this.gbxFiltering.Size = new System.Drawing.Size(1353, 168);
@@ -107,9 +135,9 @@
             this.btnFilters.BorderSize = 0;
             this.btnFilters.FlatAppearance.BorderSize = 0;
             this.btnFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFilters.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFilters.ForeColor = System.Drawing.Color.White;
-            this.btnFilters.Location = new System.Drawing.Point(682, 45);
+            this.btnFilters.Location = new System.Drawing.Point(917, 47);
             this.btnFilters.Name = "btnFilters";
             this.btnFilters.Size = new System.Drawing.Size(164, 50);
             this.btnFilters.TabIndex = 4;
@@ -121,38 +149,40 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(6, 88);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(310, 21);
+            this.label2.Size = new System.Drawing.Size(269, 21);
             this.label2.TabIndex = 3;
             this.label2.Text = "Select a date to filter movies by: ";
             // 
             // dtpDate
             // 
-            this.dtpDate.Location = new System.Drawing.Point(313, 83);
+            this.dtpDate.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDate.Location = new System.Drawing.Point(408, 82);
             this.dtpDate.MinDate = new System.DateTime(2024, 8, 28, 0, 0, 0, 0);
             this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(268, 22);
+            this.dtpDate.Size = new System.Drawing.Size(354, 28);
             this.dtpDate.TabIndex = 2;
             this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(6, 36);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(385, 21);
+            this.label1.Size = new System.Drawing.Size(335, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "Select a genre to filter movies by Genre: ";
             // 
             // cbxGenre
             // 
+            this.cbxGenre.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxGenre.FormattingEnabled = true;
-            this.cbxGenre.Location = new System.Drawing.Point(313, 33);
+            this.cbxGenre.Location = new System.Drawing.Point(408, 33);
             this.cbxGenre.Name = "cbxGenre";
-            this.cbxGenre.Size = new System.Drawing.Size(268, 24);
+            this.cbxGenre.Size = new System.Drawing.Size(354, 29);
             this.cbxGenre.TabIndex = 0;
             this.cbxGenre.Text = "* Please Select *";
             this.cbxGenre.SelectedIndexChanged += new System.EventHandler(this.cbxGenre_SelectedIndexChanged);
@@ -166,11 +196,11 @@
             this.btnCancel.BorderSize = 0;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(806, 671);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(168, 50);
+            this.btnCancel.Size = new System.Drawing.Size(180, 50);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextColor = System.Drawing.Color.White;
@@ -186,11 +216,11 @@
             this.btnSelectMovie.BorderSize = 0;
             this.btnSelectMovie.FlatAppearance.BorderSize = 0;
             this.btnSelectMovie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelectMovie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelectMovie.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectMovie.ForeColor = System.Drawing.Color.White;
             this.btnSelectMovie.Location = new System.Drawing.Point(496, 671);
             this.btnSelectMovie.Name = "btnSelectMovie";
-            this.btnSelectMovie.Size = new System.Drawing.Size(168, 50);
+            this.btnSelectMovie.Size = new System.Drawing.Size(180, 50);
             this.btnSelectMovie.TabIndex = 3;
             this.btnSelectMovie.Text = "Select Movie";
             this.btnSelectMovie.TextColor = System.Drawing.Color.White;

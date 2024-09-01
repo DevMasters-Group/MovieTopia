@@ -121,9 +121,13 @@ namespace MovieTopia
 
         private void btnSTickets_Click(object sender, EventArgs e)
         {
-            SellTickets sellTickets = new SellTickets();
+            //SellTickets sellTickets = new SellTickets();
+            //this.Hide();
+            //sellTickets.ShowDialog();
+            //this.Show();
+            HomeStaff homeStaff = new HomeStaff();
             this.Hide();
-            sellTickets.ShowDialog();
+            homeStaff.ShowDialog();
             this.Show();
         }
 

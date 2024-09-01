@@ -81,7 +81,6 @@ namespace MovieTopia
             }
         }
 
-
         private void DisplaySeats(int rows, int columns)
         {
             int seatWidth = 30;
@@ -246,9 +245,7 @@ namespace MovieTopia
 
                     }
                 }
-            }
-
-            
+            }        
         }
 
         //Click event where we check if the seat is taken or not and change the Backcolor of the seat. Long with the imagige to show that it is selceted
@@ -275,7 +272,6 @@ namespace MovieTopia
                 seat.Image = Properties.Resources.logoIconLight;
                 seat.BackColor = Color.Red;
             }
-            
         }
 
 

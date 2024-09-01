@@ -60,11 +60,11 @@
             // lblTheater_num
             // 
             this.lblTheater_num.AutoSize = true;
-            this.lblTheater_num.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTheater_num.Location = new System.Drawing.Point(569, 9);
+            this.lblTheater_num.Font = new System.Drawing.Font("Arial", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTheater_num.Location = new System.Drawing.Point(506, 7);
             this.lblTheater_num.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTheater_num.Name = "lblTheater_num";
-            this.lblTheater_num.Size = new System.Drawing.Size(163, 46);
+            this.lblTheater_num.Size = new System.Drawing.Size(140, 40);
             this.lblTheater_num.TabIndex = 95;
             this.lblTheater_num.Text = "Theater";
             // 
@@ -78,7 +78,7 @@
             this.gbxGuide.Controls.Add(this.pictureBox3);
             this.gbxGuide.Controls.Add(this.pictureBox2);
             this.gbxGuide.Controls.Add(this.pictureBox1);
-            this.gbxGuide.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbxGuide.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxGuide.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.gbxGuide.Location = new System.Drawing.Point(1295, 15);
             this.gbxGuide.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -92,27 +92,30 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(81, 285);
+            this.label3.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(72, 228);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 22);
+            this.label3.Size = new System.Drawing.Size(133, 21);
             this.label3.TabIndex = 5;
             this.label3.Text = "Available Seats";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(81, 180);
+            this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(72, 144);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(145, 22);
+            this.label2.Size = new System.Drawing.Size(131, 21);
             this.label2.TabIndex = 4;
             this.label2.Text = "Selected Seats";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(81, 71);
+            this.label1.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(72, 57);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(218, 22);
+            this.label1.Size = new System.Drawing.Size(196, 21);
             this.label1.TabIndex = 3;
             this.label1.Text = "Previously booked seat";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -161,7 +164,7 @@
             this.btnReChoose.BorderSize = 2;
             this.btnReChoose.FlatAppearance.BorderSize = 0;
             this.btnReChoose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReChoose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReChoose.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReChoose.ForeColor = System.Drawing.Color.White;
             this.btnReChoose.Location = new System.Drawing.Point(395, 692);
             this.btnReChoose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -184,7 +187,7 @@
             this.btnSelect.BorderSize = 2;
             this.btnSelect.FlatAppearance.BorderSize = 0;
             this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelect.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelect.ForeColor = System.Drawing.Color.Black;
             this.btnSelect.Location = new System.Drawing.Point(698, 692);
             this.btnSelect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
