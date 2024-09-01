@@ -16,7 +16,7 @@ namespace MovieTopia
         private string DATABASE_URL;
         DataSet ds;
         SqlDataAdapter adapter;
-
+        private int padding = 50;
         private int MovieScheduleID;
         private int priceT = 0;
         private List<string> SeatNames;
@@ -28,8 +28,38 @@ namespace MovieTopia
             InitializeComponent();
             MovieScheduleID = movieScheduleID;
             SeatNames = selectedSeats;
+            this.Resize += FinalBookings_Resize;
 
             DisplayMovieScheduleDetails();
+        }
+
+        private void FinalBookings_Resize(object sender, EventArgs e)
+        {
+            picLogo.Location = new Point(0, 0);
+            picLogo.Height = pnlTop.Height;
+
+            lblFormName.Left = this.ClientSize.Width/2 - lblFormName.Width/2;
+            lblFormName.Top = pnlTop.Height/2 - lblFormName.Height/2;   
+
+            gbxHolder.Height = this.ClientSize.Height/2 - pnlTop.Height - 25 - padding;
+            gbxHolder.Width = this.ClientSize.Width / 2 - padding - 25;
+            gbxHolder.Top = pnlTop.Height + padding;
+            gbxHolder.Left = padding;
+
+            gbxMovie.Height = this.ClientSize.Height / 2 - btnCancel.Height - 25 - (padding*2);
+            gbxMovie.Width = this.ClientSize.Width / 2 - padding - 25;
+            gbxMovie.Top = this.ClientSize.Height / 2 + 25;
+            gbxMovie.Left = padding;
+
+            gbxNumbers.Height = this.ClientSize.Height - btnCancel.Height - (padding*3) - pnlTop.Height;
+            gbxNumbers.Width = this.ClientSize.Width / 2 - padding - 25;
+            gbxNumbers.Top = pnlTop.Height + padding;
+            gbxNumbers.Left = this.ClientSize.Width/2 + 25;
+
+            btnCancel.Top = btnGoBack.Top = btnSave.Top = this.ClientSize.Height - padding - btnSave.Height;
+            btnCancel.Left = this.ClientSize.Width/2 - btnCancel.Width/2;
+            btnSave.Left = this.ClientSize.Width/2 - btnCancel.Width/2 - (padding * 2) - btnSave.Width;
+            btnGoBack.Left = this.ClientSize.Width/2 + btnCancel.Width/2 + (padding*2);
         }
 
         private void DisplayMovieScheduleDetails()
@@ -291,18 +321,22 @@ namespace MovieTopia
 
         private void btnGoBack_Click(object sender, EventArgs e)
         {
-            // Show a message box with Yes and No buttons
+            Avalible_seats SeatForm = new Avalible_seats(MovieScheduleID);
+            this.Hide();
+            SeatForm.ShowDialog();
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
             DialogResult result = MessageBox.Show("Are you sure you want to cancel the ticket?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // Check which button was clicked
             if (result == DialogResult.Yes)
             {
-                // Close the form if No was clicked
                 this.Close();
             }
             else if (result == DialogResult.No)
             {
-                // Exit the method if Yes was clicked
                 return;
             }
         }

@@ -103,12 +103,15 @@ namespace MovieTopia
                 if (e.Value != null)
                 {
                     int hours = 0;
-                    for (int i = (int)e.Value; i >= 60; i -= 60)
+                    if (int.TryParse(e.Value.ToString(), out int value))
                     {
-                        ++hours; 
+                        for (int i = (int)e.Value; i >= 60; i -= 60)
+                        {
+                            ++hours;
+                        }
+                        e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours * 60).ToString() + " min";
                     }
-                    e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours*60).ToString() + " min";
-                    e.FormattingApplied = true; 
+                    
                 }
             }
             if (dgvSchedules.Columns[e.ColumnIndex].Name == "Price")
@@ -207,7 +210,7 @@ namespace MovieTopia
                 dgvSchedules.DataMember = "MovieSchedule";
                 dgvSchedules.CellFormatting += dgvSchedules_CellFormatting;
 
-                if (dgvSchedules.Rows.Count > 1)
+                if (dgvSchedules.Rows.Count > 0)
                 {
                     return;
                 }
