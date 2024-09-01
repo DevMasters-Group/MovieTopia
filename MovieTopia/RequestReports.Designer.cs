@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RequestReports));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblSelectReport = new System.Windows.Forms.Label();
             this.cbbReportType = new System.Windows.Forms.ComboBox();
             this.lblSelectDate = new System.Windows.Forms.Label();
@@ -90,7 +90,7 @@
             "Top 10 Genres",
             "Ticket Sales"});
             this.cbbReportType.Location = new System.Drawing.Point(213, 21);
-            this.cbbReportType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbbReportType.Margin = new System.Windows.Forms.Padding(4);
             this.cbbReportType.Name = "cbbReportType";
             this.cbbReportType.Size = new System.Drawing.Size(160, 26);
             this.cbbReportType.TabIndex = 1;
@@ -133,7 +133,7 @@
             // 
             this.dtStart.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtStart.Location = new System.Drawing.Point(96, 50);
-            this.dtStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtStart.Margin = new System.Windows.Forms.Padding(4);
             this.dtStart.Name = "dtStart";
             this.dtStart.Size = new System.Drawing.Size(311, 26);
             this.dtStart.TabIndex = 5;
@@ -143,7 +143,7 @@
             // 
             this.dtEnd.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtEnd.Location = new System.Drawing.Point(96, 80);
-            this.dtEnd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtEnd.Margin = new System.Windows.Forms.Padding(4);
             this.dtEnd.Name = "dtEnd";
             this.dtEnd.Size = new System.Drawing.Size(311, 26);
             this.dtEnd.TabIndex = 6;
@@ -153,7 +153,7 @@
             this.cbxAsc.AutoSize = true;
             this.cbxAsc.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxAsc.Location = new System.Drawing.Point(8, 22);
-            this.cbxAsc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxAsc.Margin = new System.Windows.Forms.Padding(4);
             this.cbxAsc.Name = "cbxAsc";
             this.cbxAsc.Size = new System.Drawing.Size(108, 23);
             this.cbxAsc.TabIndex = 7;
@@ -166,7 +166,7 @@
             this.cbxDesc.AutoSize = true;
             this.cbxDesc.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxDesc.Location = new System.Drawing.Point(179, 22);
-            this.cbxDesc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxDesc.Margin = new System.Windows.Forms.Padding(4);
             this.cbxDesc.Name = "cbxDesc";
             this.cbxDesc.Size = new System.Drawing.Size(118, 23);
             this.cbxDesc.TabIndex = 8;
@@ -189,7 +189,7 @@
             this.pnlReport.Controls.Add(this.lblReportType);
             this.pnlReport.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlReport.Location = new System.Drawing.Point(16, 322);
-            this.pnlReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlReport.Margin = new System.Windows.Forms.Padding(4);
             this.pnlReport.Name = "pnlReport";
             this.pnlReport.Size = new System.Drawing.Size(1211, 600);
             this.pnlReport.TabIndex = 10;
@@ -219,35 +219,38 @@
             // 
             // dgvReport
             // 
+            this.dgvReport.AllowUserToAddRows = false;
+            this.dgvReport.AllowUserToDeleteRows = false;
             this.dgvReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvReport.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvReport.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvReport.Location = new System.Drawing.Point(116, 218);
-            this.dgvReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvReport.Margin = new System.Windows.Forms.Padding(4);
             this.dgvReport.Name = "dgvReport";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvReport.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            this.dgvReport.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvReport.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvReport.RowHeadersWidth = 51;
             this.dgvReport.Size = new System.Drawing.Size(1041, 377);
             this.dgvReport.TabIndex = 5;
@@ -327,7 +330,7 @@
             this.pnlTop10.Controls.Add(this.dtEnd);
             this.pnlTop10.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlTop10.Location = new System.Drawing.Point(16, 66);
-            this.pnlTop10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlTop10.Margin = new System.Windows.Forms.Padding(4);
             this.pnlTop10.Name = "pnlTop10";
             this.pnlTop10.Size = new System.Drawing.Size(1219, 190);
             this.pnlTop10.TabIndex = 12;
@@ -354,7 +357,7 @@
             this.pnlTicketSales.Controls.Add(this.lblYear);
             this.pnlTicketSales.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pnlTicketSales.Location = new System.Drawing.Point(16, 66);
-            this.pnlTicketSales.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlTicketSales.Margin = new System.Windows.Forms.Padding(4);
             this.pnlTicketSales.Name = "pnlTicketSales";
             this.pnlTicketSales.Size = new System.Drawing.Size(1219, 190);
             this.pnlTicketSales.TabIndex = 13;
@@ -379,7 +382,7 @@
             this.cbxMonthly.AutoSize = true;
             this.cbxMonthly.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxMonthly.Location = new System.Drawing.Point(7, 34);
-            this.cbxMonthly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxMonthly.Margin = new System.Windows.Forms.Padding(4);
             this.cbxMonthly.Name = "cbxMonthly";
             this.cbxMonthly.Size = new System.Drawing.Size(87, 23);
             this.cbxMonthly.TabIndex = 13;
@@ -392,7 +395,7 @@
             this.cbxQuarterly.AutoSize = true;
             this.cbxQuarterly.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxQuarterly.Location = new System.Drawing.Point(7, 69);
-            this.cbxQuarterly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxQuarterly.Margin = new System.Windows.Forms.Padding(4);
             this.cbxQuarterly.Name = "cbxQuarterly";
             this.cbxQuarterly.Size = new System.Drawing.Size(98, 23);
             this.cbxQuarterly.TabIndex = 14;
@@ -406,7 +409,7 @@
             this.cbbYear.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbYear.FormattingEnabled = true;
             this.cbbYear.Location = new System.Drawing.Point(197, 14);
-            this.cbbYear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbbYear.Margin = new System.Windows.Forms.Padding(4);
             this.cbbYear.Name = "cbbYear";
             this.cbbYear.Size = new System.Drawing.Size(160, 26);
             this.cbbYear.TabIndex = 12;
@@ -492,7 +495,7 @@
             this.Controls.Add(this.cbbReportType);
             this.Controls.Add(this.lblSelectReport);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1280, 800);
             this.Name = "RequestReports";
             this.Text = "RequestReports";
