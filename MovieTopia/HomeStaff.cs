@@ -169,19 +169,16 @@ namespace MovieTopia
                     t.NumCols
                 HAVING
                     COUNT(ticket.SeatID) < (t.NumRows * t.NumCols)";
-                // display only movie data that is still yet to be played
 
-                // NB: select the ENTIRE child entity and store it in the dataset as well. This is used in the DetailsForm for dropdown boxes
                 string sqlMovies = "SELECT * FROM Movie";
                 string sqlTheatres = "SELECT * FROM Theatre WHERE Active = 1;";
 
-                // important to name the returned data in the dataset with the entity name
                 adapter.SelectCommand = new SqlCommand(sqlMovieSchedules, conn);
                 adapter.SelectCommand.Parameters.AddWithValue("@GenreID", GenreID);
 
                 if (string.IsNullOrWhiteSpace(dateFilter))
                 {
-                    adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value); // Use DBNull for empty filter
+                    adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value);
                 }
                 else
                 {
@@ -193,7 +190,6 @@ namespace MovieTopia
                     }
                     else
                     {
-                        // Handle invalid date format if necessary
                         adapter.SelectCommand.Parameters.AddWithValue("@DateFilter", DBNull.Value);
                     }
                 }
