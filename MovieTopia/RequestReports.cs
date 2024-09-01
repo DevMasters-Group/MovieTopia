@@ -10,18 +10,10 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Drawing.Printing;
 
-
-
 namespace MovieTopia
 {
     public partial class RequestReports : Form
     {
-        public RequestReports()
-        {
-            DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
-            InitializeComponent();
-        }
-
         private string DATABASE_URL;
         DataSet ds;
         SqlDataAdapter adapter;
@@ -31,6 +23,63 @@ namespace MovieTopia
         private string year;
         private string grouping;
         private string reportType;
+        private int padding = 20;
+
+        public RequestReports()
+        {
+            DATABASE_URL = Environment.GetEnvironmentVariable("DATABASE_URL");
+            InitializeComponent();
+        }
+
+        private void RequestReports_Resize(object sender, EventArgs e)
+        {
+            //if (this.WindowState == FormWindowState.Minimized)
+            //{
+            //    pnlReport.Size = new Size(915, 540);
+
+            //}
+            //else if (this.WindowState == FormWindowState.Maximized)
+            //{
+            //    pnlReport.Size = new Size(1830, 570);
+
+            //}
+            //else if (this.WindowState == FormWindowState.Normal)
+            //{
+            //    pnlReport.Size = new Size(915, 570);
+
+            //}
+            btnGenerate.Left = padding;
+            pnlReport.Left = padding;
+            pnlReport.Top = btnGenerate.Top + btnGenerate.Height + padding /2;
+            pnlReport.Width = this.ClientSize.Width - 2 * padding;
+            pnlReport.Height = this.ClientSize.Height - pnlReport.Top - 4 * padding;
+            pnlReport.AutoScroll = true;
+            btnSave.Left = pnlReport.Left + pnlReport.Width - btnSave.Width;
+            btnReturn.Left = pnlReport.Left + pnlReport.Width - btnSave.Width;
+            btnReturn.Top = pnlReport.Top + pnlReport.Height + padding / 2;
+
+            CenterControlsOnPanel();
+        }
+
+        private void CenterControlsOnPanel()
+        {
+            lblReportType.Left = (pnlReport.ClientSize.Width - lblReportType.Width) / 2;
+            //lblReportType.Top = (pnlReport.ClientSize.Height - lblReportType.Height) / 2;
+            lblTimePeriod.Left = (pnlReport.ClientSize.Width - lblTimePeriod.Width) / 2;
+            //lblTimePeriod.Top = (pnlReport.ClientSize.Height - lblTimePeriod.Height) / 2;
+            lblAscDesc.Left = (pnlReport.ClientSize.Width - lblAscDesc.Width) / 2;
+            //lblAscDesc.Top = (pnlReport.ClientSize.Height - lblAscDesc.Height) / 2;
+            lblGenDate.Left = (pnlReport.ClientSize.Width - lblGenDate.Width) / 2;
+            //lblGenDate.Top = (pnlReport.ClientSize.Height - lblGenDate.Height) / 2;
+            lblLine1.Left = (pnlReport.ClientSize.Width - lblLine1.Width) / 2;
+            //lblLine1.Top = (pnlReport.ClientSize.Height - lblLine1.Height) / 2;
+            dgvReport.Left = (pnlReport.ClientSize.Width - dgvReport.Width) / 2;
+            //dgvReport.Top = (pnlReport.ClientSize.Height - dgvReport.Height) / 2;
+            lblLine2.Left = (pnlReport.ClientSize.Width - lblLine2.Width) / 2;
+            //lblLine2.Top = (pnlReport.ClientSize.Height - lblLine2.Height) / 2;
+            lblEndReport.Left = (pnlReport.ClientSize.Width - lblEnd.Width) / 2;
+            //lblEnd.Top = (pnlReport.ClientSize.Height - lblEnd.Height) / 2;
+        }
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
@@ -256,6 +305,10 @@ namespace MovieTopia
             {
                 cbbYear.Items.Add(i.ToString());
             }
+
+            
+
+            
         }
 
         private void cbxAsc_CheckedChanged(object sender, EventArgs e)
@@ -319,6 +372,7 @@ namespace MovieTopia
             PrintDocument printDoc = new PrintDocument();
             try
             {
+                this.WindowState = FormWindowState.Normal;
                 //Set up the print event handler
                 printDoc.PrintPage += (sndr, args) =>
                 {
@@ -340,7 +394,7 @@ namespace MovieTopia
 
                     this.Activate();
                 }
-
+                this.WindowState = FormWindowState.Maximized;
                 MessageBox.Show("Report saved as PDF");
             }
             catch(Exception ex)
@@ -374,6 +428,16 @@ namespace MovieTopia
             {
                 cbxMonthly.Checked = false;
             }
+        }
+
+        private void lblLine2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
