@@ -40,6 +40,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnReChoose = new MovieTopia.Controls.BTN();
             this.btnSelect = new MovieTopia.Controls.BTN();
+            this.pnlSeats = new System.Windows.Forms.Panel();
             this.gbxGuide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -50,9 +51,9 @@
             // 
             this.lblStage.AutoSize = true;
             this.lblStage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblStage.Location = new System.Drawing.Point(491, 490);
+            this.lblStage.Location = new System.Drawing.Point(552, 612);
             this.lblStage.Name = "lblStage";
-            this.lblStage.Size = new System.Drawing.Size(174, 18);
+            this.lblStage.Size = new System.Drawing.Size(231, 22);
             this.lblStage.TabIndex = 115;
             this.lblStage.Text = "                                                       ";
             // 
@@ -79,9 +80,11 @@
             this.gbxGuide.Controls.Add(this.pictureBox1);
             this.gbxGuide.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbxGuide.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.gbxGuide.Location = new System.Drawing.Point(1151, 12);
+            this.gbxGuide.Location = new System.Drawing.Point(1295, 15);
+            this.gbxGuide.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbxGuide.Name = "gbxGuide";
-            this.gbxGuide.Size = new System.Drawing.Size(319, 318);
+            this.gbxGuide.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbxGuide.Size = new System.Drawing.Size(359, 398);
             this.gbxGuide.TabIndex = 117;
             this.gbxGuide.TabStop = false;
             this.gbxGuide.Text = "Seat Booking Guide";
@@ -121,9 +124,10 @@
             // 
             this.pictureBox3.BackgroundImage = global::MovieTopia.Properties.Resources.logoIconDark;
             this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(16, 130);
+            this.pictureBox3.Location = new System.Drawing.Point(18, 162);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox3.Size = new System.Drawing.Size(56, 62);
             this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             // 
@@ -131,9 +135,10 @@
             // 
             this.pictureBox2.BackgroundImage = global::MovieTopia.Properties.Resources.Seat_Icon_Main1;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(16, 213);
+            this.pictureBox2.Location = new System.Drawing.Point(18, 266);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox2.Size = new System.Drawing.Size(56, 62);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
@@ -142,9 +147,10 @@
             // 
             this.pictureBox1.BackgroundImage = global::MovieTopia.Properties.Resources.logoIconLight;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(16, 44);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 55);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.Size = new System.Drawing.Size(56, 62);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -160,10 +166,10 @@
             this.btnReChoose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReChoose.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReChoose.ForeColor = System.Drawing.Color.White;
-            this.btnReChoose.Location = new System.Drawing.Point(351, 554);
-            this.btnReChoose.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReChoose.Location = new System.Drawing.Point(395, 692);
+            this.btnReChoose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnReChoose.Name = "btnReChoose";
-            this.btnReChoose.Size = new System.Drawing.Size(180, 50);
+            this.btnReChoose.Size = new System.Drawing.Size(202, 62);
             this.btnReChoose.TabIndex = 116;
             this.btnReChoose.Text = "Go Back";
             this.btnReChoose.TextColor = System.Drawing.Color.White;
@@ -183,10 +189,10 @@
             this.btnSelect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSelect.Font = new System.Drawing.Font("Arial", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelect.ForeColor = System.Drawing.Color.Black;
-            this.btnSelect.Location = new System.Drawing.Point(620, 554);
-            this.btnSelect.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSelect.Location = new System.Drawing.Point(698, 692);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(180, 50);
+            this.btnSelect.Size = new System.Drawing.Size(202, 62);
             this.btnSelect.TabIndex = 96;
             this.btnSelect.Text = "Select";
             this.btnSelect.TextColor = System.Drawing.Color.Black;
@@ -194,11 +200,20 @@
             this.btnSelect.UseVisualStyleBackColor = false;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
+            // pnlSeats
+            // 
+            this.pnlSeats.Location = new System.Drawing.Point(404, 59);
+            this.pnlSeats.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pnlSeats.Name = "pnlSeats";
+            this.pnlSeats.Size = new System.Drawing.Size(543, 541);
+            this.pnlSeats.TabIndex = 118;
+            // 
             // Avalible_seats
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1482, 770);
+            this.ClientSize = new System.Drawing.Size(1667, 962);
+            this.Controls.Add(this.pnlSeats);
             this.Controls.Add(this.gbxGuide);
             this.Controls.Add(this.btnReChoose);
             this.Controls.Add(this.lblStage);
@@ -206,7 +221,7 @@
             this.Controls.Add(this.lblTheater_num);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(1500, 798);
+            this.MinimumSize = new System.Drawing.Size(1685, 984);
             this.Name = "Avalible_seats";
             this.Text = "Avalible_seats";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -237,6 +252,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnlSeats;
     }
 
 
