@@ -52,6 +52,32 @@ namespace MovieTopia
             AdjustColumnWidths();
         }
 
+        private void dgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            if (dgvData.Columns[e.ColumnIndex].Name == "Duration")
+            {
+                if (e.Value != null)
+                {
+                    int hours = 0;
+                    for (int i = (int)e.Value; i >= 60; i -= 60)
+                    {
+                        ++hours;
+                    }
+                    e.Value = hours.ToString() + " Hours, " + ((int)e.Value - hours * 60).ToString() + " min";
+                    e.FormattingApplied = true;
+                }
+            }
+            if (dgvData.Columns[e.ColumnIndex].Name == "Price")
+            {
+                if (e.Value != null)
+                {
+                    if (Double.TryParse(e.Value.ToString(), out double value))
+                        e.Value = "R " + value.ToString("f2");
+                }
+            }
+        }
+
         private void LoadData()
         {
             using (SqlConnection conn = new SqlConnection(DATABASE_URL))
@@ -81,6 +107,7 @@ namespace MovieTopia
                 //dgvData.DataSource = ds;
                 //dgvData.DataMember = "Movie";
                 dgvData.DataSource = ds.Tables[tblName].DefaultView;
+                dgvData.CellFormatting += dgvSchedules_CellFormatting;
             }
         }
 
@@ -120,6 +147,7 @@ namespace MovieTopia
             Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
             attributeNameMap["MovieID"] = "Movie ID";
             attributeNameMap["GenreID"] = "Genre";
+            attributeNameMap["Duration"] = "Duration (minutes)";
             attributeNameMap["PG_Rating"] = "PG Rating";
 
             DetailsForm detailsForm = new DetailsForm("Movie", ds, null, foreignKeySchemaNames, attributeNameMap);
@@ -149,11 +177,7 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
 
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     var selectedGenre = (KeyValuePair<int, string>)((ComboBox)data["GenreID"]).SelectedItem;
                     command.Parameters.AddWithValue("@GenreID", selectedGenre.Key);
                     command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
@@ -176,7 +200,6 @@ namespace MovieTopia
                         MessageBox.Show(ex.Message, "Error");
                     }
                 }
-
                 LoadData();
             }
         }
@@ -192,6 +215,7 @@ namespace MovieTopia
                 Dictionary<string, string> attributeNameMap = new Dictionary<string, string>();
                 attributeNameMap["MovieID"] = "Movie ID";
                 attributeNameMap["GenreID"] = "Genre";
+                attributeNameMap["Duration"] = "Duration (minutes)";
                 attributeNameMap["PG_Rating"] = "PG Rating";
 
                 DetailsForm detailsForm = new DetailsForm("Movie", ds, selectedRow, foreignKeySchemaNames, attributeNameMap);
@@ -216,11 +240,7 @@ namespace MovieTopia
                     using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                     {
                         SqlCommand command = new SqlCommand(sql, connection);
-                        //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                        //command.Parameters["@ID"].Value = customerID;
 
-                        // Use AddWithValue to assign Demographics.
-                        // SQL Server will implicitly convert strings into XML.
                         var selectedGenre = (KeyValuePair<int, string>)((ComboBox)data["GenreID"]).SelectedItem;
                         command.Parameters.AddWithValue("@GenreID", selectedGenre.Key);
                         command.Parameters.AddWithValue("@Title", ((TextBox)data["Title"]).Text);
@@ -244,7 +264,6 @@ namespace MovieTopia
                             MessageBox.Show(ex.Message, "Error");
                         }
                     }
-
                     LoadData();
                 }
             }
@@ -263,7 +282,6 @@ namespace MovieTopia
                 DialogResult confirm = MessageBox.Show($"Are you sure you want to delete \"{selectedRow.Cells["Title"].Value}\"?", "Delete Movie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirm == DialogResult.No) return;
                 
-
                 string sql = @"
                         DELETE FROM 
                             Movie
@@ -273,11 +291,7 @@ namespace MovieTopia
                 using (SqlConnection connection = new SqlConnection(DATABASE_URL))
                 {
                     SqlCommand command = new SqlCommand(sql, connection);
-                    //command.Parameters.Add("@GenreID", SqlDbType.Int);
-                    //command.Parameters["@ID"].Value = customerID;
 
-                    // Use AddWithValue to assign Demographics.
-                    // SQL Server will implicitly convert strings into XML.
                     command.Parameters.AddWithValue("@MovieID", selectedRow.Cells["MovieID"].Value);
 
                     try
@@ -295,7 +309,6 @@ namespace MovieTopia
                         MessageBox.Show(ex.Message, "Error");
                     }
                 }
-
                 LoadData();
             }
             else
