@@ -210,7 +210,6 @@ namespace MovieTopia
                                     Ticket (
                                         MovieScheduleID,
                                         SeatID,
-                                        Price,
                                         PurchaseDateTime,
                                         CustomerFirstName,
                                         CustomerLastName,
@@ -220,7 +219,6 @@ namespace MovieTopia
                                     (
                                         @MovieScheduleID,
                                         @SeatID,
-                                        @Price,
                                         @PurchaseDateTime,
                                         @CustomerName,
                                         @CustomerSName,
@@ -230,7 +228,6 @@ namespace MovieTopia
                                     command = new SqlCommand(sqlInsert, conn);
                                     command.Parameters.AddWithValue("@MovieScheduleID", MovieScheduleID);
                                     command.Parameters.AddWithValue("@SeatID", seatID);
-                                    command.Parameters.AddWithValue("@Price", priceT);
                                     command.Parameters.AddWithValue("@PurchaseDateTime", DateTime.Now);
                                     command.Parameters.AddWithValue("@CustomerName", txtName.Text);
                                     command.Parameters.AddWithValue("@CustomerSName", txtSurname.Text);
