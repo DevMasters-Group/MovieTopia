@@ -353,7 +353,7 @@ namespace MovieTopia
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterText = txtFilter.Text;
+            string filterText = txtFilter.Text.Replace("[", "").Replace("]", "");
             DataTable dt = ds.Tables[tblName];
 
             if (string.IsNullOrEmpty(filterText))
