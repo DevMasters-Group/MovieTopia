@@ -1,4 +1,10 @@
-﻿using System;
+﻿/// Jaden Straw - 41397673
+/// Eugene Holt - 45613192
+/// John-Ernest Chamberlain - 45669392
+/// Liam Craven - 45995958
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -121,14 +127,14 @@ namespace MovieTopia
 
         private void btnSTickets_Click(object sender, EventArgs e)
         {
-            //SellTickets sellTickets = new SellTickets();
-            //this.Hide();
-            //sellTickets.ShowDialog();
-            //this.Show();
-            HomeStaff homeStaff = new HomeStaff();
+            SellTickets sellTickets = new SellTickets();
             this.Hide();
-            homeStaff.ShowDialog();
+            sellTickets.ShowDialog();
             this.Show();
+            //HomeStaff homeStaff = new HomeStaff();
+            //this.Hide();
+            //homeStaff.ShowDialog();
+            //this.Show();
         }
 
         private void btnRReports_Click(object sender, EventArgs e)
